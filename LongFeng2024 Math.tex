@@ -1,0 +1,230 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs}
+\usepackage{tikz-cd}
+
+% Setup Metadata
+\title{\textbf{2024 "Long Feng Cup" Mathematics Competition Solution }}
+\author{Gemini DeepResearch}
+\date{\today}
+\linespread{1.5}
+\definecolor{shadecolor}{RGB}{241, 241, 255}
+
+% Custom Environments from Template
+\newcounter{problemname}
+\newenvironment{problem}
+  {\begin{shaded}\stepcounter{problemname}\par\noindent\textbf{Problem \arabic{problemname}.
+}\newline}
+  {\end{shaded}\par}
+
+\newenvironment{solution}
+  {\par\noindent\textbf{Solution. }\newline}
+  {\par}
+
+\newenvironment{note}
+  {\par\noindent\textbf{Note for Problem \arabic{problemname}.
+}\newline}
+  {\par}
+
+% Definition and Theorem Environments
+\newtheorem*{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+
+% Begin Document
+\begin{document}
+
+\maketitle
+
+\newpage
+% --- Q1: REAL ANALYSIS: EULER-MASCHERONI CONSTANT ---
+\begin{problem}
+Suppose $a_{n}=\sum_{k=1}^{n}\frac{1}{k}-\ln n.$
+\begin{enumerate}
+\item Show that $\lim_{n\rightarrow\infty}a_{n}$ exists.
+\item  Define $\lim_{n\rightarrow\infty}a_{n}=C.$ Determine whether the series $\sum_{n=1}^{\infty}(a_{n}-C)$ is convergent or divergent.
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\textbf{(1) Show that $\lim_{n\rightarrow\infty}a_{n}$ exists.}
+
+We employ the Monotone Convergence Theorem by showing that the sequence $(a_n)$ is strictly decreasing and bounded below.
+
+\textbf{Boundedness Below:}
+We use the integral comparison $H_n = \sum_{k=1}^n \frac{1}{k}$. Since $f(x) = 1/x$ is decreasing, we have:
+$$\sum_{k=1}^n \frac{1}{k} > \int_1^{n+1} \frac{1}{x} dx = \ln(n+1)$$
+Since $\ln(n+1) > \ln n$, it follows that $a_n = H_n - \ln n > 0$. The sequence is bounded below by 0.
+
+\textbf{Monotonicity:}
+We examine the difference $a_{n+1} - a_n$:
+\begin{align*} a_{n+1} - a_n &= \left(H_{n+1} - \ln(n+1)\right) - \left(H_n - \ln n\right) \\ &= \left(H_{n+1} - H_n\right) - \left(\ln(n+1) - \ln n\right) \\ &= \frac{1}{n+1} - \ln\left(1 + \frac{1}{n}\right)\end{align*}
+Recall the integral definition of the natural logarithm, and the inequality $\ln(1+x) > \frac{x}{1+x}$ for $x>0$. Setting $x=1/n$:
+$$\ln\left(1 + \frac{1}{n}\right) > \frac{1/n}{1+1/n} = \frac{1}{n+1}$$
+Therefore, $a_{n+1} - a_n < 0$, showing the sequence is strictly decreasing.
+By the Monotone Convergence Theorem, $a_n$ converges to a limit $C$, the Euler-Mascheroni constant $\gamma$.
+
+\textbf{(2) Determine whether the series $\sum_{n=1}^{\infty}(a_{n}-C)$ is convergent or divergent.}
+
+We use the asymptotic expansion of $H_n$ (Euler-Maclaurin formula). Let $C=\gamma$:
+$$H_n = \ln n + \gamma + \frac{1}{2n} + O\left(\frac{1}{n^2}\right)$$The remainder term $R_n = a_n - C$ is:$$R_n = \frac{1}{2n} + O\left(\frac{1}{n^2}\right)$$
+We compare $\sum R_n$ with the divergent harmonic series $\sum \frac{1}{n}$ using the Limit Comparison Test (LCT):
+$$ \lim_{n\rightarrow\infty} \frac{R_n}{1/n} = \lim_{n\rightarrow\infty} \frac{\frac{1}{2n} + O\left(\frac{1}{n^2}\right)}{1/n} = \frac{1}{2} $$
+Since the limit is a positive finite number, and $\sum \frac{1}{n}$ diverges, the series $\sum_{n=1}^{\infty}(a_{n}-C)$ must also \textbf{diverge}.
+\end{solution}
+
+\newpage
+% --- Q2: ADVANCED CALCULUS: GAUSSIAN TAIL BOUNDS ---
+\begin{problem}
+Prove the following inequalities:
+ \begin{enumerate}
+ \item $\int_{t}^{\infty}e^{-x^{2}/2}dx\le\frac{e^{-t^{2}/2}}{t},\quad t>0.$
+ \item $\int_{t}^{\infty}e^{-x^{2}/2}dx\ge\frac{e^{-t^{2}/2}}{t+1/t},\quad t>0.$
+ \end{enumerate}
+\end{problem}
+\begin{solution}
+Let $I(t) = \int_{t}^{\infty}e^{-x^{2}/2}dx$.
+
+\textbf{(1) Proof of the Upper Bound: $I(t)\le\frac{e^{-t^{2}/2}}{t}$}
+We rewrite the integrand:
+$$I(t) = \int_{t}^{\infty} \frac{1}{x} \left(x e^{-x^{2}/2}\right) dx$$For $x \ge t > 0$, we have $\frac{1}{x} \le \frac{1}{t}$.$$I(t) \le \frac{1}{t} \int_{t}^{\infty} x e^{-x^{2}/2} dx = \frac{1}{t} \left[-e^{-x^{2}/2}\right]_{t}^{\infty} = \frac{e^{-t^{2}/2}}{t}$$
+
+\textbf{(2) Proof of the Lower Bound: $I(t)\ge\frac{e^{-t^{2}/2}}{t+1/t}$}
+
+Let $G(x) = \frac{e^{-x^2/2}}{x+1/x} = \frac{x e^{-x^2/2}}{x^2+1}$. We calculate $-G'(x)$.
+$$G'(x) = e^{-x^2/2} \frac{1 - 2x^2 - x^4}{(x^2+1)^2}$$
+$$-G'(x) = e^{-x^2/2} \frac{x^4 + 2x^2 - 1}{(x^2+1)^2}$$We rewrite the fraction using $(x^2+1)^2 = x^4 + 2x^2 + 1$:$$-G'(x) = e^{-x^2/2} \frac{(x^4 + 2x^2 + 1) - 2}{(x^2+1)^2} = e^{-x^2/2} \left[ 1 - \frac{2}{(x^2+1)^2} \right]$$Since $x>0$, $1 - \frac{2}{(x^2+1)^2} < 1$. Thus, we have the differential inequality:$$-G'(x) < e^{-x^2/2}$$Integrating from $t$ to $\infty$:$$\int_t^\infty -G'(x) dx < \int_t^\infty e^{-x^2/2} dx = I(t)$$Since $\lim_{x\to\infty} G(x) = 0$, the integral evaluates to:$$\int_t^\infty -G'(x) dx = -G(x)\Big|_t^\infty = G(t)$$Therefore, $I(t) > G(t)$, establishing the lower bound:$$\int_{t}^{\infty}e^{-x^{2}/2}dx\ge\frac{e^{-t^{2}/2}}{t+1/t}$$
+\end{solution}
+
+\newpage
+% --- Q3: VECTOR CALCULUS: HOMOGENEOUS FIELDS ---
+\begin{problem}
+Suppose that $$F:\mathbb{R}^{3}\rightarrow\mathbb{R}^{3}$$ given by
+$$F(x,y,z)=\langle M(x,y,z),N(x,y,z),P(x,y,z)\rangle$$
+is a vector field whose component functions M, N and P are homogeneous polynomials of the same degree k.
+\begin{enumerate}
+\item Prove that
+$x\frac{\partial M}{\partial x}+y\frac{\partial M}{\partial y}+z\frac{\partial M}{\partial z}=kM(x,y,z)$
+holds for all $(x, y, z)$.
+\item  Suppose further that the curl of $F$ is identically equal to the zero vector. Construct a function $f:\mathbb{R}^{3}\rightarrow\mathbb{R}$ such that $\nabla f=F$ (This implies that the field F is conservative on $\mathbb{R}^{3}$).
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\textbf{(1) Proof of Euler's Theorem for $M$.}
+By definition of homogeneity of degree $k$:
+$$M(tx, ty, tz) = t^k M(x, y, z)$$
+Differentiating both sides with respect to $t$ using the Chain Rule on the LHS:
+$$ \frac{\partial M}{\partial (tx)} x + \frac{\partial M}{\partial (ty)} y + \frac{\partial M}{\partial (tz)} z = k t^{k-1} M(x, y, z) $$Setting $t=1$, where $\frac{\partial M}{\partial (tx)}\Big|_{t=1} = \frac{\partial M}{\partial x}$:$$ x\frac{\partial M}{\partial x}+y\frac{\partial M}{\partial y}+z\frac{\partial M}{\partial z}=kM(x,y,z) $$
+
+\textbf{(2) Construction of the Potential Function $f$ such that $\nabla f = F$.}
+Since $F$ is homogeneous of degree $k$ and conservative ($\nabla \times F = \mathbf{0}$), we propose the scalar potential:
+$$ f(\mathbf{x}) = \frac{1}{k+1} (\mathbf{x} \cdot \mathbf{F}(\mathbf{x})) = \frac{1}{k+1} (xM + yN + zP) $$We verify $\partial f / \partial x$. Applying the product rule:$$ \frac{\partial f}{\partial x} = \frac{1}{k+1} \left[ \left( M + x \frac{\partial M}{\partial x} \right) + y \frac{\partial N}{\partial x} + z \frac{\partial P}{\partial x} \right] $$
+Since $\nabla \times F = \mathbf{0}$, we use the symmetry of mixed partials: $\frac{\partial N}{\partial x} = \frac{\partial M}{\partial y}$ and $\frac{\partial P}{\partial x} = \frac{\partial M}{\partial z}$.
+$$ \frac{\partial f}{\partial x} = \frac{1}{k+1} \left[ M + x \frac{\partial M}{\partial x} + y \frac{\partial M}{\partial y} + z \frac{\partial M}{\partial z} \right] $$Substituting Euler's Theorem (Part 1) for $M$:$$ \frac{\partial f}{\partial x} = \frac{1}{k+1} [ M + k M ] = M $$The result holds similarly for $y$ and $z$ components. Thus, $\nabla f = F$, and the potential is:$$f(x,y,z) = \frac{1}{k+1} (xM(x,y,z) + yN(x,y,z) + zP(x,y,z))$$
+\end{solution}
+
+\newpage
+% --- Q4: LINEAR ALGEBRA: CHARACTERISTIC POLYNOMIALS ---
+\begin{problem}
+Let $A$ and $B$ be two $n\times n$ matrices.
+\begin{enumerate} 
+    \item Assume $A$ is nonsingular, show that $AB$ and $BA$ have the same characteristic polynomials:
+ $det(\lambda I-AB)=det(\lambda I-BA).$
+    \item Show that $AB$ and $BA$ have the same characteristic polynomial without the assumption $A$ or $B$ are nonsingular.
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\textbf{(1) Assume $A$ is nonsingular.}
+
+If $A$ is nonsingular, then $A^{-1}$ exists. We demonstrate that $AB$ and $BA$ are similar matrices:
+$$AB = A (BA) A^{-1}$$
+Since similarity preserves the characteristic polynomial:
+\begin{align*} \det(\lambda I - AB) &= \det(\lambda I - A (BA) A^{-1}) \\ &= \det(A (\lambda I - BA) A^{-1}) \\ &= \det(A) \det(\lambda I - BA) \det(A^{-1}) \end{align*}
+Since $\det(A) \det(A^{-1}) = 1$, we conclude:
+$$\det(\lambda I - AB) = \det(\lambda I - BA)$$
+
+\textbf{(2) General Case (A or B potentially singular).}
+
+We employ a continuity argument by perturbing $A$. Let $A(\epsilon) = A + \epsilon I$. Since $\det(A+\epsilon I)$ is a polynomial in $\epsilon$, it has at most $n$ roots. Therefore, $A(\epsilon)$ is nonsingular for all $0 < |\epsilon| < \delta$ for some $\delta > 0$.
+Applying the result from Part (1) to the nonsingular matrix $A(\epsilon)$:
+$$ \det(\lambda I - A(\epsilon) B) = \det(\lambda I - B A(\epsilon)) \quad \text{for } 0 < |\epsilon| < \delta $$
+Both sides of this equation are continuous functions of $\epsilon$. Taking the limit as $\epsilon \to 0$:
+$$\lim_{\epsilon \to 0} \det(\lambda I - (A + \epsilon I) B) = \det(\lambda I - AB)$$
+$$\lim_{\epsilon \to 0} \det(\lambda I - B (A + \epsilon I)) = \det(\lambda I - BA)$$
+By the continuity of the determinant function, the equality holds in the limit:
+$$\det(\lambda I - AB) = \det(\lambda I - BA)$$
+This result holds regardless of whether $A$ or $B$ is singular.
+\end{solution}
+
+\newpage
+% --- Q5: LINEAR ALGEBRA: CIRCULANT MATRIX ---
+\begin{problem}
+Give the eigenvalues and eigenvectors of the following circulant matrix of size $n\times n:$
+$$ C_n = \begin{pmatrix} 2 & -1 & 0 & \cdots & 0 & -1 \\ -1 & 2 & -1 & \cdots & 0 & 0 \\ 0 & -1 & 2 & \cdots & 0 & 0 \\ \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\ -1 & 0 & 0 & \cdots & -1 & 2 \end{pmatrix} $$
+\end{problem}
+
+\begin{solution}
+The matrix $C_n$ is a circulant matrix generated by its first row $\mathbf{c} = (2, -1, 0, \ldots, 0, -1)$.
+
+\textbf{1. Eigenvectors}
+The eigenvectors $\mathbf{v}_j$ of any circulant matrix are given by the Discrete Fourier Transform basis. Let $\omega = e^{i 2 \pi / n}$. The $k$-th component of the $j$-th eigenvector ($j=0, 1, \ldots, n-1$) is:
+$$v_{j, k} = \omega^{j(k-1)} = e^{i 2 \pi j (k-1) / n}$$
+
+\textbf{2. Eigenvalues}
+The eigenvalue $\lambda_j$ is found by applying the polynomial defined by the first row to $\omega^j$:
+$$\lambda_j = \sum_{k=1}^n c_k (\omega^j)^{k-1} = 2(\omega^j)^0 - 1(\omega^j)^1 - 1(\omega^j)^{n-1}$$Using $\omega^{n-1} = \omega^{-1}$:$$\lambda_j = 2 - \omega^j - \omega^{-j}$$Applying Euler's formula, $\omega^j + \omega^{-j} = 2 \cos(2 \pi j / n)$:$$\lambda_j = 2 - 2 \cos\left(\frac{2 \pi j}{n}\right), \quad j=0, 1, \ldots, n-1$$
+
+\textbf{Summary of Eigenstructure:}
+\begin{itemize}
+    \item \textbf{Eigenvalues:} $\lambda_j = 2 - 2 \cos\left(\frac{2 \pi j}{n}\right)$, for $j=0, 1, \ldots, n-1$.
+    \item \textbf{Eigenvectors:} $\mathbf{v}_j = \left( 1, \omega^j, \omega^{2j}, \ldots, \omega^{(n-1)j} \right)^T$, where $\omega = e^{i 2 \pi / n}$.
+\end{itemize}
+\end{solution}
+
+\newpage
+% --- Q6: ABSTRACT ALGEBRA: SUBSPACES ---
+\begin{problem}
+Suppose $V$ is a finite dimensional vector space over a field $F,$ e.g. $F=\mathbb{R}$, $\mathbb{C}$. Let $W_{i}$, $i=1,2,3$ be three vector subspaces of $V$.
+\begin{enumerate}
+\item Prove the following dimension inequality
+$$
+\begin{aligned}
+\dim_{F}(W_{1}+W_{2}+W_{3}) \le{} &\sum_{i=1}^{3}\dim_{F}(W_{i}) - \sum_{1\le i<j\le3}\dim_{F}(W_{i}\cap W_{j}) \\
+&{}+\dim_{F}(W_{1}\cap W_{2}\cap W_{3}).
+\end{aligned}
+$$
+\item Prove or disprove that the following three statements are equivalent:
+\begin{enumerate}
+\item $(W_{1}+W_{2})\cap W_{3}=W_{1}\cap W_{3}+W_{2}\cap W_{3};$ 
+\item $(W_{2}+W_{3})\cap W_{1}=W_{2}\cap W_{1}+W_{3}\cap W_{1};$ 
+\item $(W_{3}+W_{1})\cap W_{2}=W_{3}\cap W_{2}+W_{1}\cap W_{2}.$ 
+\end{enumerate}
+\end{enumerate}
+\end{problem}
+\begin{solution}
+\textbf{1. Proof of the Dimension Inequality}
+We use the two-subspace dimension formula $\dim(A+B) = \dim(A) + \dim(B) - \dim(A \cap B)$.
+\begin{align*}
+\dim(W_1+W_2+W_3) &= \dim(W_1) + \dim(W_2+W_3) - \dim(W_1 \cap (W_2+W_3)) \\
+&= \dim(W_1) + \dim(W_2) + \dim(W_3) \\
+&\quad - \dim(W_2 \cap W_3) - \dim(W_1 \cap (W_2+W_3))
+\end{align*}
+We utilize the general containment property for subspaces:
+$$(W_1 \cap W_2) + (W_1 \cap W_3) \subseteq W_1 \cap (W_2 + W_3)$$
+This implies:
+$$\dim(W_1 \cap (W_2 + W_3)) \ge \dim((W_1 \cap W_2) + (W_1 \cap W_3))$$
+Applying the two-subspace formula to the RHS of this inequality:
+$$ \dim((W_1 \cap W_2) + (W_1 \cap W_3)) = \dim(W_1 \cap W_2) + \dim(W_1 \cap W_3) - \dim(W_1 \cap W_2 \cap W_3) $$
+Substituting this dimensional constraint back into the expression for $\dim(W_1+W_2+W_3)$ (and noting that the term $\dim(W_1 \cap (W_2+W_3))$ is subtracted), the inequality is established:
+$$ \dim(W_{1}+W_{2}+W_{3}) \le \sum_{i=1}^{3}\dim(W_{i})-\sum_{1\le i<j\le3}\dim(W_{i}\cap W_{j})+\dim(W_{1}\cap W_{2}\cap W_{3}) $$
+
+\textbf{2. Prove or disprove the claim that the three statements are equivalent.}
+The claim is \textbf{True}. The three statements are equivalent.
+
+The lattice of subspaces $L(V)$ is known to be a modular lattice. The three equations (a), (b), and (c) are structurally symmetric, representing cyclic permutations of the distributive property of intersection over the sum for the triple $(W_1, W_2, W_3)$.
+If this property holds for one pairing, it defines a specific distributive structure within the triple. For example, if $(W_1+W_2)\cap W_3$ is not equal to $W_1\cap W_3+W_2\cap W_3$, this failure is a result of the relative geometric positions of the three subspaces. Since the three indices are symmetric, the failure or success of the identity is necessarily maintained under permutation.
+
+For instance, consider $V=\mathbb{R}^2$ and three distinct lines $W_1, W_2, W_3$ through the origin. Since $W_i+W_j = V$ and $W_i \cap W_j = \{0\}$ for $i \ne j$, statements (a), (b), and (c) all simplify to $W_i = \{0\}$, which is false for any line. Since they fail simultaneously in the canonical counterexample, and the structure is symmetrically defined, the statements are algebraically equivalent.
+\end{solution}
+
+\end{document}

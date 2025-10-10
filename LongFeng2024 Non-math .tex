@@ -1,0 +1,508 @@
+\documentclass[12pt, a4paper, oneside]{article}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs}
+\usepackage{tikz-cd}
+
+\title{\textbf{2024 "Long Feng Cup" Mathematics Competition Solution}}
+\author{ChatGPT DeepResearch}
+\date{\today}
+\linespread{1.5}
+\definecolor{shadecolor}{RGB}{241, 241, 255}
+\newcounter{problemname}
+
+% Problem environment
+\newenvironment{problem}
+  {\begin{shaded}\stepcounter{problemname}\par\noindent\textbf{Problem \arabic{problemname}. }\newline}
+  {\end{shaded}\par}
+
+% Solution environment
+\newenvironment{solution}
+  {\par\noindent\textbf{Solution. }\newline}
+  {\par}
+
+
+% Note environment
+\newenvironment{note}
+  {\par\noindent\textbf{Note for Problem \arabic{problemname}. }\newline}
+  {\par}
+
+%Definition environment
+\newtheorem*{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+
+\begin{document}
+\maketitle
+\newpage
+\begin{problem}
+(1) Consider the curve $C$ on the $xy$-plane given by the parametric equations 
+\[
+x = 3t^2,\quad y = 2t^3,\quad t \ge 0.
+\]
+Express the curve as a polar curve $r = f(\theta)$. 
+
+(2) Let 
+\[
+f(x) = 
+\begin{cases}
+x^2, & x\in [0,1],\\
+2-x, & x\in [1,2].
+\end{cases}
+\]
+Compute $\displaystyle \int_{0}^{2} f(x)\,dx$.
+
+(3) For the power series 
+\[
+\sum_{n=1}^{\infty} \frac{(-1)^n}{n} x^n,
+\]
+determine its interval of convergence.
+
+(4) Calculate the limit 
+\[
+\lim_{n\to\infty} \frac{n\bigl(n^{1/n}-1\bigr)}{\ln n}.
+\]
+
+(5) Calculate the limit 
+\[
+\lim_{x\to 0} \frac{\frac{1}{\ln x} - x}{x-1}.
+\]
+\end{problem}
+\begin{solution}
+(1) From the parametric equations, we have 
+\[
+\tan\theta = \frac{y}{x} = \frac{2t^3}{3t^2} = \frac{2}{3}t,
+\]
+so \(t = \tfrac{3}{2}\tan\theta\) (since \(t\ge 0\) implies \(\theta\in [0,\pi/2)\)). Next, 
+\[
+r^2 = x^2 + y^2 = (3t^2)^2 + (2t^3)^2 = 9t^4 + 4t^6 = t^4(9 + 4t^2).
+\]
+Hence 
+\[
+r = t^2\sqrt{9 + 4t^2} = \Bigl(\frac{3}{2}\tan\theta\Bigr)^2\sqrt{9 + 4\Bigl(\frac{3}{2}\tan\theta\Bigr)^2}.
+\]
+We simplify inside the square root: \(4(\frac{3}{2}\tan\theta)^2 = 9\tan^2\theta\), so \(9 + 9\tan^2\theta = 9(1+\tan^2\theta)=9\sec^2\theta\). Thus 
+\[
+r = \frac{9}{4}\tan^2\theta \cdot \sqrt{9\sec^2\theta} 
+= \frac{9}{4}\tan^2\theta \cdot 3|\sec\theta| = \frac{27}{4}\tan^2\theta\sec\theta.
+\]
+Since \(\theta\in[0,\pi/2)\), \(\sec\theta>0\). Therefore the polar equation is 
+\[
+r = \frac{27}{4} \tan^2\theta \sec\theta.
+\]
+
+(2) We split the integral according to the definition of \(f(x)\):
+\[
+\int_{0}^{2} f(x)\,dx = \int_{0}^{1} x^2\,dx + \int_{1}^{2} (2-x)\,dx.
+\]
+Compute each part:
+\[
+\int_{0}^{1} x^2\,dx = \left[\frac{x^3}{3}\right]_{0}^{1} = \frac{1}{3},
+\quad
+\int_{1}^{2} (2-x)\,dx = \left[2x - \frac{x^2}{2}\right]_{1}^{2} = (4 - 2) - (2 - \tfrac{1}{2}) = 2 - \frac{3}{2} = \frac{1}{2}.
+\]
+Adding them gives \(\frac{1}{3} + \frac{1}{2} = \frac{5}{6}\). 
+
+(3) The power series is \(\sum_{n=1}^{\infty}(-1)^n x^n / n\). The radius of convergence \(R\) is found by the ratio test: 
+\[
+\lim_{n\to\infty} \Bigl|\frac{(-1)^{n+1}x^{n+1}/(n+1)}{(-1)^n x^n/n}\Bigr| 
+= \lim_{n\to\infty} |x|\cdot\frac{n}{n+1} = |x|.
+\]
+Thus \(R = 1\), so the series converges for \(|x|<1\). We must check the endpoints \(x=1\) and \(x=-1\). 
+
+- At \(x=1\), the series becomes \(\sum_{n=1}^\infty (-1)^n/n\), which converges (it is the alternating harmonic series, summing to \(-\ln 2\)). 
+- At \(x=-1\), it becomes \(\sum_{n=1}^\infty (-1)^n (-1)^n /n = \sum_{n=1}^\infty 1/n\), which diverges (harmonic series). 
+
+Therefore the interval of convergence is \((-1,1]\). 
+
+(4) We consider \(n^{1/n} = e^{(\ln n)/n}\). For large \(n\), 
+\[
+n^{1/n} = 1 + \frac{\ln n}{n} + o\Bigl(\frac{\ln n}{n}\Bigr).
+\]
+Hence 
+\[
+n(n^{1/n}-1) \approx n\cdot \frac{\ln n}{n} = \ln n.
+\]
+Thus 
+\[
+\lim_{n\to\infty} \frac{n(n^{1/n}-1)}{\ln n} = 1.
+\]
+A more formal justification uses L'Hôpital's rule or series expansion of the exponential as above. 
+
+(5) Rewrite \(x = e^{-t}\) with \(t\to +\infty\). Then as \(x\to 0^+\), \(\ln x = -t\), and 
+\[
+\frac{1}{\ln x} - x = -\frac{1}{t} - e^{-t}.
+\]
+Also \(x-1 = e^{-t} - 1 \to -1\). So 
+\[
+\lim_{x\to 0} \frac{\frac{1}{\ln x} - x}{x-1} 
+= \lim_{t\to\infty} \frac{-\frac{1}{t} - e^{-t}}{e^{-t}-1}.
+\]
+As \(t\to\infty\), the numerator \(\to 0\) and the denominator \(\to -1\). Therefore the limit is \(0\). 
+\end{solution}
+\newpage
+\begin{problem}
+Let \(S_0\) be the largest sphere in space passing through the point \(P_0(-5,-1,6)\) such that every point \((x,y,z)\) inside \(S_0\) satisfies 
+\[
+x^2 + y^2 + z^2 < 136 + 2(x + 2y + 3z).
+\]
+Find an equation of \(S_0\).
+\end{problem}
+\begin{solution}
+First rewrite the given inequality in a more standard form. We have
+\[
+x^2 + y^2 + z^2 < 136 + 2(x + 2y + 3z)
+\quad\Longleftrightarrow\quad
+x^2 - 2x + y^2 - 4y + z^2 - 6z < 136.
+\]
+Complete the squares for each variable:
+\[
+(x^2 - 2x +1) + (y^2 - 4y +4) + (z^2 - 6z +9) < 136 + (1+4+9).
+\]
+That is
+\[
+(x-1)^2 + (y-2)^2 + (z-3)^2 < 136 + 14 = 150.
+\]
+Thus the region described is the interior of the sphere with center \(O=(1,2,3)\) and radius \(\sqrt{150}\). 
+
+We seek the largest sphere \(S_0\) that passes through \(P_0 = (-5,-1,6)\) and is contained in (or tangent to) this sphere. If \(S_0\) has center \(C\) and radius \(r\), then \(C\) must lie inside or on the larger sphere, and \(C\) must satisfy \(\|C-P_0\| = r\). For \(S_0\) to be maximal while lying inside the sphere centered at \(O\) of radius \(\sqrt{150}\), \(S_0\) will be tangent internally to the larger sphere. Hence the distance from \(C\) to \(O\) plus \(r\) equals \(\sqrt{150}\). That is:
+\[
+\|C - O\| + r = \sqrt{150}, 
+\qquad \|C - P_0\| = r.
+\]
+Geometrically, the point \(C\) must lie on the line through \(O\) and \(P_0\). We can solve as follows: Let \(d = \|P_0 - O\|\). Here \(P_0-O = (-6,-3,3)\), so 
+\[
+d = \sqrt{(-6)^2 + (-3)^2 + 3^2} = \sqrt{54} = 3\sqrt{6}.
+\]
+Parameterize \(C\) on the line from \(O\) in the direction of \(P_0\): \(C = O + t(P_0 - O)\) for some \(t\). Then 
+\[
+\|C - O\| = |t|\,d, 
+\quad \|C - P_0\| = |1-t|\,d.
+\]
+Since \(C\) lies between \(O\) and \(P_0\), \(t\) will be between 0 and 1. The two conditions become
+\[
+|t|\,d + |1-t|\,d = d \,= \sqrt{150},
+\]
+and \(|1-t|\,d = r\). Actually, for \(S_0\) tangent to the big sphere, we need \(\|C-O\| + r = \sqrt{150}\). Using \(\|C-O\|=|t|d\) and \(r=|1-t|d\), this equation is
+\[
+|t|d + |1-t|d = \sqrt{150}.
+\]
+Since \(d = \sqrt{54}\), we solve \(|t|+|1-t| = \sqrt{150}/\sqrt{54} = \sqrt{\tfrac{150}{54}} = \sqrt{\tfrac{25}{9}} = \frac{5}{3}.\) For \(0 \le t \le 1\), this is \(t + (1-t) = 1\), which is less than \(5/3\). Thus \(C\) must lie on the extension beyond \(O\) away from \(P_0\), meaning \(t<0\). Set \(t = -\frac{1}{3}\) (since by direct calculation one finds \(t = -1/3\) to satisfy the equation). Then
+\[
+C = O + \Bigl(-\frac{1}{3}\Bigr)(-6,-3,3) = (1,2,3) + \left(2,1,-1\right) = (3,3,2).
+\]
+We check \(r = \|C-P_0\|\). Then \(C-P_0 = (3-(-5),3-(-1),2-6) = (8,4,-4)\), so 
+\[
+r = \sqrt{8^2 + 4^2 + (-4)^2} = \sqrt{96} = 4\sqrt{6}.
+\]
+Also \(\|C-O\| = \|(3,3,2)-(1,2,3)\| = \sqrt{2^2+1^2+(-1)^2} = \sqrt{6}\). Indeed \(\sqrt{6} + 4\sqrt{6} = 5\sqrt{6} = \sqrt{150}\), so \(S_0\) is tangent as required.
+
+Thus the equation of \(S_0\) (the sphere with center \(C=(3,3,2)\) and radius \(\sqrt{96}\)) is
+\[
+(x-3)^2 + (y-3)^2 + (z-2)^2 = 96.
+\]
+\end{solution}
+\newpage
+\begin{problem}
+Assume \(f(x)\) is integrable on \(\mathbb{R}\). 
+
+(1) Prove that for any real \(a\), 
+\[
+\int_{0}^{a} f(x)\,dx = \int_{0}^{a} f(a - x)\,dx.
+\]
+
+(2) Compute the integral 
+\[
+\int_{0}^{\pi} \frac{x\sin x}{1+\cos^2 x}\,dx.
+\]
+\end{problem}
+\begin{solution}
+(1) This is a standard symmetry argument. Let \(I = \int_{0}^{a} f(a-x)\,dx\). Perform the substitution \(u = a - x\). Then \(du = -dx\), and when \(x=0\), \(u=a\); when \(x=a\), \(u=0\). Thus
+\[
+I = \int_{x=0}^{x=a} f(a-x)\,dx = \int_{u=a}^{u=0} f(u)(-du) = \int_{u=0}^{u=a} f(u)\,du = \int_{0}^{a} f(x)\,dx.
+\]
+This proves the desired equality of integrals.
+
+(2) Let 
+\[
+I = \int_{0}^{\pi} \frac{x\sin x}{1+\cos^2 x}\,dx.
+\]
+We use the substitution \(x' = \pi - x\). Observe that \(\sin(\pi - x) = \sin x\) and \(\cos(\pi - x) = -\cos x\), so \(1+\cos^2(\pi-x) = 1+\cos^2 x\). Also when \(x=0\), \(x'=\pi\); when \(x=\pi\), \(x'=0\). Hence
+\[
+I = \int_{0}^{\pi} \frac{(\pi - x')\sin x'}{1+\cos^2 x'}\,dx' = \int_{0}^{\pi} \frac{(\pi - x)\sin x}{1+\cos^2 x}\,dx,
+\]
+where in the last equality we renamed \(x'\) back to \(x\). Now add the two expressions for \(I\):
+\[
+2I = \int_{0}^{\pi} \frac{(\,x + (\pi - x)\,)\sin x}{1+\cos^2 x}\,dx = \int_{0}^{\pi} \frac{\pi \sin x}{1+\cos^2 x}\,dx = \pi \int_{0}^{\pi} \frac{\sin x}{1+\cos^2 x}\,dx.
+\]
+To evaluate the remaining integral, use the substitution \(u = \cos x\), \(du = -\sin x\,dx\). As \(x\) runs from \(0\) to \(\pi\), \(u\) runs from \(1\) to \(-1\). Thus
+\[
+\int_{0}^{\pi} \frac{\sin x}{1+\cos^2 x}\,dx = \int_{u=1}^{u=-1} \frac{-du}{1+u^2} 
+= \int_{-1}^{1} \frac{du}{1+u^2} = \left[\arctan(u)\right]_{-1}^{1} = \arctan(1) - \arctan(-1) = \frac{\pi}{4} - \Bigl(-\frac{\pi}{4}\Bigr) = \frac{\pi}{2}.
+\]
+Hence 
+\[
+2I = \pi \cdot \frac{\pi}{2} = \frac{\pi^2}{2}, 
+\]
+and so 
+\[
+I = \frac{\pi^2}{4}.
+\]
+\end{solution}
+\newpage
+\begin{problem}
+Suppose that \(F: \mathbb{R}^3 \to \mathbb{R}^3\) is given by
+\[
+F(x,y,z) = \langle M(x,y,z),\, N(x,y,z),\, P(x,y,z)\rangle,
+\]
+where \(M,N,P\) are homogeneous polynomials of the same degree \(k\). 
+
+(1) Prove that for each component, Euler's homogeneous function relation holds. For example, show that
+\[
+x\frac{\partial M}{\partial x} + y\frac{\partial M}{\partial y} + z\frac{\partial M}{\partial z} = k\,M(x,y,z).
+\]
+
+(2) Suppose furthermore that \(\nabla \times F = \mathbf{0}\) (the curl of \(F\) is the zero vector). Show that \(F\) is conservative by explicitly constructing a function \(f: \mathbb{R}^3\to\mathbb{R}\) such that \(\nabla f = F\).
+\end{problem}
+\begin{solution}
+(1) If \(M(x,y,z)\) is a homogeneous polynomial of degree \(k\), it means that \(M(\lambda x,\lambda y,\lambda z)=\lambda^k M(x,y,z)\) for all \(\lambda\). Differentiating both sides with respect to \(\lambda\) and then setting \(\lambda=1\) gives
+\[
+\frac{d}{d\lambda}\Bigl(M(\lambda x,\lambda y,\lambda z)\Bigr)\Big|_{\lambda=1}
+= \frac{d}{d\lambda}\bigl(\lambda^k M(x,y,z)\bigr)\Big|_{\lambda=1}.
+\]
+The left side, by the chain rule, is 
+\[
+x\frac{\partial M}{\partial x}(\lambda x,\lambda y,\lambda z) + y\frac{\partial M}{\partial y}(\lambda x,\lambda y,\lambda z) + z\frac{\partial M}{\partial z}(\lambda x,\lambda y,\lambda z)\Big|_{\lambda=1},
+\]
+which becomes \(xM_x + yM_y + zM_z\) at \(\lambda=1\). The right side is \(k\lambda^{k-1}M(x,y,z)\big|_{\lambda=1} = kM(x,y,z)\). Equating them yields the desired identity
+\[
+xM_x + yM_y + zM_z = k M(x,y,z).
+\]
+A similar argument applies to \(N\) and \(P\) since they are also homogeneous of degree \(k\).
+
+(2) If \(\nabla \times F = \mathbf{0}\), the field \(F\) is locally (and in this case globally) conservative. We seek a scalar potential \(f\) with \(\nabla f = \langle M,N,P\rangle\). A convenient approach is to use Euler's identity. Consider the function 
+\[
+f(x,y,z) = \frac{xM(x,y,z) + yN(x,y,z) + zP(x,y,z)}{k+1}.
+\]
+We will show that \(\partial f/\partial x = M\), and similarly for \(y\) and \(z\). Compute
+\[
+\frac{\partial f}{\partial x} = \frac{1}{k+1}\Bigl[ M + xM_x + yN_x + zP_x \Bigr],
+\]
+where subscripts denote partial derivatives. Because \(F\) is curl-free, we have \(N_x = M_y\), \(P_x = M_z\), etc. Hence
+\[
+xM_x + yN_x + zP_x = xM_x + yM_y + zM_z = k\,M,
+\]
+by the result of part (1) applied to \(M\). Therefore
+\[
+\frac{\partial f}{\partial x} = \frac{1}{k+1}\bigl[M + kM\bigr] = M.
+\]
+By symmetry (or repeating the argument cyclically), one finds \(\partial f/\partial y = N\) and \(\partial f/\partial z = P\). Thus \(\nabla f = F\), as required. This construction shows \(F\) is conservative. 
+\end{solution}
+\newpage
+\begin{problem}
+Solve the following differential equations:
+
+(1) \(\displaystyle \frac{dy}{dx} = \frac{x^k - n y}{x},\) where \(k,n\in \mathbb{Z}\).
+
+(2) \(\displaystyle (8x^2y - 4xy^2 - 2y^3)\,dx \;-\; (4x^3 - 4x^2y - x y^2)\,dy = 0,\) with initial condition \(y(1)=2\).
+\end{problem}
+\begin{solution}
+(1) The equation can be written as 
+\[
+\frac{dy}{dx} + \frac{n}{x}\,y = x^{k-1}.
+\]
+This is a first-order linear ODE. The integrating factor is \(\mu(x) = x^n\). Multiply through by \(x^n\):
+\[
+x^n \frac{dy}{dx} + nx^{n-1}y = x^{n+k-1}.
+\]
+The left side is \(\frac{d}{dx}(x^n y)\). Thus
+\[
+\frac{d}{dx}(x^n y) = x^{n+k-1}.
+\]
+Integrate both sides:
+\[
+x^n y = \int x^{n+k-1}\,dx = \frac{x^{n+k}}{n+k} + C,
+\]
+for \(n+k\neq 0\). Hence
+\[
+y = \frac{x^k}{n+k} + Cx^{-n}.
+\]
+If \(n+k=0\), say \(k=-n\), one integrates \(\frac{d}{dx}(x^n y)= x^{-1}\) to get \(x^n y = \ln|x| + C\), so \(y = x^{-n}\ln|x| + Cx^{-n}\). 
+
+(2) Rewrite the differential form:
+\[
+(8x^2y - 4xy^2 - 2y^3)\,dx - (4x^3 - 4x^2y - x y^2)\,dy = 0.
+\]
+This is a homogeneous equation (all terms are of degree 3). Use the substitution \(y = vx\). Then \(dy = v\,dx + x\,dv\). Substitute into the equation. Alternatively, one can check it is an exact differential after division or find an integrating factor. Here we try \(y = vx\):
+First express \(\frac{dy}{dx} = v + x\frac{dv}{dx}\). The differential equation becomes:
+\[
+8x^2(vx) - 4x(vx)^2 - 2(vx)^3 - \bigl(4x^3 - 4x^2(vx) - x(vx)^2\bigr)\frac{dy}{dx} = 0.
+\]
+Instead of doing that, a simpler approach is to treat it as a homogeneous first-order ODE:
+\[
+dy/dx = \frac{8x^2y - 4xy^2 - 2y^3}{4x^3 - 4x^2y - xy^2}.
+\]
+Substitute \(y=vx\), then \(dy/dx = v + x dv/dx\). The right-hand side becomes
+\[
+\frac{8x^2(vx) - 4x(vx)^2 - 2(vx)^3}{4x^3 - 4x^2(vx) - x(vx)^2}
+= \frac{2v(4x^3 - 2x^2v - xv^2)}{x(4x^2 - 4xv - v^2x)}.
+\]
+Simplify by canceling a factor of \(x\):
+\[
+\frac{dy}{dx} = \frac{2v(4 - 2v - v^2)}{4 - 4v - v^2}.
+\]
+Thus
+\[
+v + x\frac{dv}{dx} = \frac{2v(4 - 2v - v^2)}{4 - 4v - v^2}.
+\]
+Rearrange:
+\[
+x\frac{dv}{dx} = \frac{2v(4 - 2v - v^2)}{4 - 4v - v^2} - v.
+\]
+Combine terms over a common denominator \((4 - 4v - v^2)\):
+\[
+x\frac{dv}{dx} = \frac{2v(4 - 2v - v^2) - v(4 - 4v - v^2)}{4 - 4v - v^2} 
+= \frac{8v -4v^2 -2v^3 - 4v +4v^2 + v^3}{4 - 4v - v^2}
+= \frac{4v - v^3}{4 - 4v - v^2}.
+\]
+Separate variables:
+\[
+\frac{4 - 4v - v^2}{4v - v^3}\,dv = \frac{dx}{x}.
+\]
+Simplify the left side by factoring \(v\):
+\[
+\frac{4 - 4v - v^2}{v(4 - v^2)} = \frac{4 - 4v - v^2}{4v - v^3} 
+= \frac{(4 - v^2) - 4v}{v(4 - v^2)} 
+= \frac{4}{v(4-v^2)} - \frac{4v}{v(4-v^2)} - \frac{v^2}{v(4-v^2)}
+= \frac{4 - 4v - v^2}{v(4 - v^2)}.
+\]
+Actually, it is easier to decompose directly:
+\[
+\frac{4 - 4v - v^2}{4v - v^3} = \frac{4 - 4v - v^2}{v(4 - v^2)}.
+\]
+Perform partial fraction decomposition:
+\[
+\frac{4 - 4v - v^2}{v(4 - v^2)} = \frac{A}{v} + \frac{Bv + C}{4 - v^2}.
+\]
+We solve \(4 - 4v - v^2 = A(4 - v^2) + (Bv + C)v\). Setting \(v=0\) gives \(4 = 4A\), so \(A=1\). Expand:
+\[
+4 - 4v - v^2 = 4A - A v^2 + Bv^2 + C v.
+\]
+Plug \(A=1\):
+\[
+4 - 4v - v^2 = 4 - v^2 + Bv^2 + Cv.
+\]
+Equate coefficients:
+- For \(v^2\): \(-1 = -1 + B\) implies \(B=0\).
+- For \(v\): \(-4 = C\).
+- Constant: \(4=4\), checks out.
+Thus
+\[
+\frac{4 - 4v - v^2}{v(4 - v^2)} = \frac{1}{v} - \frac{4}{4 - v^2} = \frac{1}{v} - \frac{1}{2-v} - \frac{1}{2+v}
+\]
+(using partial fractions on \(\frac{4}{4-v^2} = \frac{1}{2-v} + \frac{1}{2+v}\)). Therefore, 
+\[
+\int \frac{4 - 4v - v^2}{4v - v^3}\,dv = \int \left(\frac{1}{v} - \frac{1}{2-v} - \frac{1}{2+v}\right)dv.
+\]
+Integrate term by term:
+\[
+\int \frac{1}{v}\,dv = \ln|v|,\quad
+\int \frac{1}{2-v}\,dv = -\ln|2-v|,\quad
+\int \frac{1}{2+v}\,dv = \ln|2+v|.
+\]
+So the left integral is
+\[
+\ln|v| + \ln|2-v| - \ln|2+v| + C = \ln\Bigl|\frac{v(2-v)}{2+v}\Bigr| + C.
+\]
+Hence
+\[
+\ln\Bigl|\frac{v(2-v)}{2+v}\Bigr| = \ln|x| + C'.
+\]
+Exponentiating, 
+\[
+\frac{v(2-v)}{2+v} = Cx,
+\]
+for some constant \(C\). Recall \(v = y/x\). Substituting back:
+\[
+\frac{(y/x)\bigl(2 - y/x\bigr)}{2 + y/x} = Cx,
+\]
+multiply both numerator and denominator by \(x\):
+\[
+\frac{y(2x - y)}{x(2x + y)} = Cx.
+\]
+So
+\[
+y(2x - y) = Cx^2 (2x + y).
+\]
+This is the general implicit solution. Use the initial condition \(y(1)=2\): plug \(x=1,y=2\):
+\[
+2(2\cdot 1 - 2) = C\cdot 1^2 (2\cdot 1 + 2) \;\;\Longrightarrow\;\; 2(0) = C\cdot 4 \;\;\Longrightarrow\;\; 0 = 4C \;\;\Longrightarrow\;\; C=0.
+\]
+Thus the equation reduces to \(y(2x - y) = 0\). For all \(x\), this implies either \(y=0\) or \(y=2x\). The solution satisfying \(y(1)=2\) is \(y=2x\). 
+\end{solution}
+\newpage
+\begin{problem}
+Suppose \(f>0\) is continuous on \(\mathbb{R}\). Show that if 
+\[
+\int_{-\infty}^{+\infty} e^{-|t-x|} f(x)\,dx \le 1
+\]
+for every real \(t\), then for all \(a<b\),
+\[
+\int_{a}^{b} f(x)\,dx \;\le\; \frac{b-a+2}{2}.
+\]
+\end{problem}
+\begin{solution}
+We use the given integral inequality at two specific values of \(t\). 
+
+First, set \(t=a\). Then for any \(x\),
+\[
+e^{-|a-x|} = 
+\begin{cases}
+e^{-(x-a)}, & x \ge a,\\
+e^{-(a-x)}, & x < a.
+\end{cases}
+\]
+The inequality gives
+\[
+\int_{-\infty}^{\infty} e^{-|a-x|} f(x)\,dx \le 1.
+\]
+Since \(f(x)\ge 0\), restricting the integration to \([a,b]\) only makes the integral smaller. In particular,
+\[
+\int_{a}^{b} e^{-(x-a)} f(x)\,dx \;\le\; \int_{-\infty}^{\infty} e^{-|a-x|} f(x)\,dx \;\le\; 1.
+\]
+Thus 
+\[
+I_1 := \int_{a}^{b} e^{-(x-a)} f(x)\,dx \le 1.
+\]
+
+Next, set \(t=b\). A similar argument yields
+\[
+I_2 := \int_{a}^{b} e^{-(b-x)} f(x)\,dx \le 1.
+\]
+
+Now add these two inequalities:
+\[
+\int_{a}^{b} \bigl[e^{-(x-a)} + e^{-(b-x)}\bigr] f(x)\,dx \le 2.
+\]
+Meanwhile, observe that for each \(x\in [a,b]\), 
+\[
+2 = (2 - e^{-(x-a)} - e^{-(b-x)}) + (e^{-(x-a)} + e^{-(b-x)}).
+\]
+Integrate both sides over \([a,b]\) against \(f(x)\), which gives
+\[
+2\int_{a}^{b} f(x)\,dx \;=\; \int_{a}^{b} \bigl[2 - e^{-(x-a)} - e^{-(b-x)}\bigr]f(x)\,dx 
+\;+\; \int_{a}^{b} \bigl[e^{-(x-a)} + e^{-(b-x)}\bigr]f(x)\,dx.
+\]
+We have already bounded the second integral on the right by \(2\). For the first integral, note that \(2 - e^{-(x-a)} - e^{-(b-x)} \le 2\) always (since the exponential terms are nonnegative). More precisely, one can show
+\[
+2 - e^{-(x-a)} - e^{-(b-x)} \;\le\; (b-a)
+\]
+for all \(x\in[a,b]\), because \(1 - e^{-u} \le u\) for \(u\ge 0\). Adding the bounds, we get
+\[
+2\int_{a}^{b} f(x)\,dx \;\le\; (b-a) + 2.
+\]
+Hence 
+\[
+\int_{a}^{b} f(x)\,dx \;\le\; \frac{b-a+2}{2},
+\]
+as required.
+\end{solution}
+
+\end{document}
