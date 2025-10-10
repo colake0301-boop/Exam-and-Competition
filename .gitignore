@@ -1,0 +1,17 @@
+# Core LaTeX Auxiliary Files (编译生成的辅助文件)
+*.aux
+*.bbl
+*.blg
+*.dvi
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.nav
+*.snm
+*.vrb
+*.cb
+*.cb2
+*.run.xml
