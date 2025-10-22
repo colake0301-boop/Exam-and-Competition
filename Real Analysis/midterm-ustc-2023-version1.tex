@@ -1,0 +1,80 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs}
+\usepackage{tikz-cd}
+
+% Setup Metadata
+\title{\textbf{Real Analysis midterm-ustc-2023-version1}}
+\date{\today}
+\linespread{1.5}
+\definecolor{shadecolor}{RGB}{241, 241, 255}
+
+% Custom Environments from Template
+\newcounter{problemname}
+\newenvironment{problem}
+ {\begin{shaded}\stepcounter{problemname}\par\noindent\textbf{Problem \arabic{problemname}.
+}\newline}
+ {\end{shaded}\par}
+
+\newenvironment{solution}
+ {\par\noindent\textbf{Solution. }\newline}
+ {\par}
+
+\newenvironment{note}
+ {\par\noindent\textbf{Note for Problem \arabic{problemname}.
+}\newline}
+ {\par}
+
+% Definition and Theorem Environments
+\newtheorem*{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+(20 points) Determine whether the following statements are true or false (provide a proof or a counterexample to explain your conclusion):
+\begin{enumerate}
+    \item[(a)] Continuous functions are measurable.
+    \item[(b)] Integrable functions are almost everywhere finite.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+(15 points) State the \textbf{Fatou's Lemma} and give an example where the inequality in the lemma is strict.
+\end{problem}
+
+\begin{problem}
+(20 points) Calculate:
+\begin{enumerate}
+    \item[(a)] $$ \lim_{n \to \infty} \int_0^n \left(1 - \frac{x}{n}\right)^n e^{x/2} \, dx $$
+    \item[(b)] $$ \lim_{n \to \infty} \int_{-1}^1 \frac{1 + nx^2}{(1 + x^2)^n} \, dx $$
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+(15 points) Let $f$ be a mapping from $\mathbb{R}^n$ to $\mathbb{R}^n$, and assume that it preserves the outer measure of Borel sets.
+Prove: For any measurable set $E \subset \mathbb{R}^n$, $f(E)$ is measurable.
+\end{problem}
+
+\begin{problem}
+(10 points) State and prove the \textbf{Borel-Cantelli Lemma}.
+\end{problem}
+
+\begin{problem}
+(10 points) Let $f, f_n \in L^1$, $n = 1, 2, \dots$ satisfying $f_n \to f$ a.e., and
+$$ \lim_{n \to \infty} \int_{\mathbb{R}^n} |f_n| \, dm = \int_{\mathbb{R}^n} |f| \, dm. $$
+Prove: For any measurable set $E \subset \mathbb{R}^n$,
+$$ \lim_{n \to \infty} \int_{E} |f_n| \, dm = \int_{E} |f| \, dm. $$
+\end{problem}
+
+\begin{problem}
+(10 points) Let $E \subset \mathbb{R}^n$ be measurable, $m(E) < +\infty$. Let $f$ be a non-negative measurable function on $E$. For $\epsilon > 0$, define
+$$ E_k(\epsilon) := \{x \in E : k\epsilon \le f(x) < (k+1)\epsilon\}, \quad k = 0, 1, 2, \dots $$
+and
+$$ A(\epsilon) := \sum_{k=0}^{\infty} k\epsilon m(E_k(\epsilon)). $$
+Prove:
+$$ \int_E f \, dm = \lim_{\epsilon \to 0} A(\epsilon). $$
+\end{problem}
+
+\end{document}

@@ -1,0 +1,96 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs}
+\usepackage{tikz-cd}
+
+% Setup Metadata
+\title{\textbf{Real Analysis midterm-ustc-2024-ren's version}}
+\date{\today}
+\linespread{1.5}
+\definecolor{shadecolor}{RGB}{241, 241, 255}
+
+% Custom Environments from Template
+\newcounter{problemname}
+\newenvironment{problem}
+ {\begin{shaded}\stepcounter{problemname}\par\noindent\textbf{Problem \arabic{problemname}.
+}\newline}
+ {\end{shaded}\par}
+
+\newenvironment{solution}
+ {\par\noindent\textbf{Solution. }\newline}
+ {\par}
+
+\newenvironment{note}
+ {\par\noindent\textbf{Note for Problem \arabic{problemname}.
+}\newline}
+ {\par}
+
+% Definition and Theorem Environments
+\newtheorem*{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+(10 points) State the definition of a \textbf{Lebesgue measurable function} on $[a, b]$, and explain why the concept of measurable functions must be introduced in Lebesgue integration theory.
+\end{problem}
+
+\begin{problem}
+(10 points) Determine whether the following statement is correct, and provide a proof or a counterexample:
+Suppose $f:[a,b]\to[a,b]$ is a \textbf{monotonically increasing continuous function} that is both injective and surjective. Then the preimage of any Lebesgue measurable subset of $[a,b]$ under the mapping $f$ must be a Lebesgue measurable set.
+\end{problem}
+
+\begin{problem}
+(10 points) Suppose $k \in \mathbb{N}$, $a_i^k \in \mathbb{R}$, $b_k \in \mathbb{R}$, and
+$$ (a_1^k)^2 + \dots + (a_n^k)^2 = 1. $$
+We define
+$$ E_k = \{x = (x_1, \dots, x_n) \in \mathbb{R}^n : a_1^k x_1 + \dots + a_n^k x_n = b_k\}. $$
+Prove:
+$$ \bigcup_{k=1}^{\infty} E_k \ne \mathbb{R}^n. $$
+\end{problem}
+
+\begin{problem}
+(10 points) Suppose $f:\mathbb{R} \to \overline{\mathbb{R}}$ is defined as
+$$ f(x) = \begin{cases} \frac{1}{x^2}, & x \in \mathbb{R} \setminus \{0\} \\ +\infty, & x = 0. \end{cases} $$
+Starting from the definition of a \textbf{Lebesgue integrable function}, prove that this function is \textbf{not} Lebesgue integrable on $\mathbb{R}$. (Using other methods will result in zero points.)
+\end{problem}
+
+\begin{problem}
+(10 points) Suppose $f: [a, b] \to \overline{\mathbb{R}}$ is a \textbf{non-negative bounded measurable function}. Prove:
+$$ \int_{[a, b]} f(x) \, dx = \inf_{f \le \psi} \int_{[a, b]} \psi(x) \, dx $$
+where $\psi: [a, b] \to \mathbb{R}$ is a non-negative simple measurable function.
+\end{problem}
+
+\begin{problem}
+(10 points) Consider the sequence of functions:
+$$ \{f_{1,1}, f_{2,1}, f_{2,2}, \dots, f_{n,1}, f_{n,2}, \dots, f_{n,n}, \dots\}. $$
+where $f_{n,j}: [0, 1] \to \mathbb{R}$ is defined as:
+$$ f_{n,j}(x) = \chi_{\left[\frac{j-1}{n}, \frac{j}{n}\right)}(x), \quad j=1, \dots, n; \, n \in \mathbb{N}. $$
+Explain whether this sequence of functions converges in the following senses:
+\textbf{Convergence in measure, pointwise convergence, almost everywhere convergence, almost uniform convergence, $L^p$ convergence.}
+\end{problem}
+
+\begin{problem}
+(10 points) Determine whether the following statement is correct, and provide a proof or a counterexample:
+Suppose $E \subset \mathbb{R}$ is a \textbf{Lebesgue measurable set} and $E$ is a \textbf{closed set}, with $m(E)=1$. Then $E$ must have an \textbf{interior point}.
+\end{problem}
+
+\begin{problem}
+(10 points) Suppose $E \subset \mathbb{R}$ is a measurable set with finite measure. The function $f: \mathbb{R} \to \mathbb{R}$ is defined as:
+$$ f(x) = \int_E \chi_{x+E}(y) \, dy. $$
+Prove that the function $f$ is \textbf{continuous at $0 \in \mathbb{R}$}.
+\end{problem}
+
+\begin{problem}
+(10 points) Suppose $g: [0, 1] \to [0, 1]$ is a \textbf{Lebesgue measurable function}, and $f: [0, 1] \to \mathbb{R}$ is a \textbf{continuous function}, with $f(0) \le f(1)$. Prove that the following limit exists and belongs to the interval $[f(0), f(1)]$:
+$$ \lim_{n \to \infty} \int_0^1 f((g(x))^n) \, dx. $$
+\end{problem}
+
+\begin{problem}
+(10 points) Suppose $a > 0$. The function $G: (0, +\infty) \to \mathbb{R}$ is defined as:
+$$ G(x) = \int_0^{+\infty} e^{-x(t+t^{-1})} (t^{1+\alpha} + t^{1-\alpha}) \, dt. $$
+Prove that $G$ is \textbf{well-defined}, and $G \in C^{\infty}(0, +\infty)$.
+\end{problem}
+
+\end{document}

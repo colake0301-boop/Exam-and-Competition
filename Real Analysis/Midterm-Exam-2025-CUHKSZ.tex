@@ -1,0 +1,265 @@
+\documentclass[12pt, a4paper, oneside]{article}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs}
+\usepackage{tikz-cd}
+
+\title{\textbf{Midterm Exam 2025-2026 Fall}}
+\author{Cola}
+\date{\today}
+\linespread{1.5}
+\definecolor{shadecolor}{RGB}{241, 241, 255}
+\newcounter{problemname}
+
+% Problem environment
+\newenvironment{problem}
+  {\begin{shaded}\stepcounter{problemname}\par\noindent\textbf{Problem \arabic{problemname}.
+}\newline}
+  {\end{shaded}\par}
+
+% Solution environment
+\newenvironment{solution}
+  {\par\noindent\textbf{Solution. }\newline}
+  {\par}
+
+
+% Note environment
+\newenvironment{note}
+  {\par\noindent\textbf{Note for Problem \arabic{problemname}.
+}\newline}
+  {\par}
+
+%Definition environment
+\newtheorem*{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+
+\begin{document}
+
+\maketitle
+
+
+\begin{problem}
+Suppose E is a set of finite outer measure. Prove of disprove the following.
+\begin{enumerate}
+    \item E is measurable $\iff \exists$ $G_{\delta}$ set $G$ s.t.
+$E \subseteq G$ and $m(G) = m(E)$. 
+    \item E is measurable $\iff \exists$ $F_{\sigma}$ set $F$ s.t. $F \subseteq E$ and $m(F) = m(E)$.
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\textbf{(i) Part $\Rightarrow$:}
+Suppose $E$ is measurable.
+Assume $m^*(E)$ is finite.
+Claim: Suppose $E$ is of finite outer measure then there exists an open set $O$ such that $m^*(E) \le m^*(O) \le m^*(E) + \epsilon$.
+\begin{proof}[Proof of claim]
+By definition of outer measure:
+$$ m^*(E) = \inf \left\{ \sum_{k=1}^\infty |I_k| : \{I_k\}_{k=1}^\infty \text{ open intervals covers } E \right\} $$
+Then by definition of infimum, $\forall \epsilon > 0$, there exists a cover $\{I_k\}_{k=1}^\infty$ such that
+$$ m^*(E) \le \sum_{k=1}^\infty |I_k| < m^*(E) + \epsilon $$
+Now we take $O = \bigcup_{k=1}^\infty I_k$. $O$ is open and $E \subseteq O$. By subadditivity, $m^*(O) \le \sum |I_k|$.
+$$ m^*(E) \le m^*(O) \le m^*(E) + \epsilon $$
+\end{proof}
+With the claim, for all $n \in \mathbb{N}$, there exists an open set $O_n \supseteq E$ s.t.
+$$ m^*(E) \le m^*(O_n) \le m^*(E) + \frac{1}{n} $$
+Take $G = \bigcap_{n=1}^\infty O_n$. $G$ is a $G_\delta$ set.
+Since $E \subseteq G \subseteq O_n$ for all $n$, we have $m^*(E) \le m^*(G) \le m^*(O_n) \le m^*(E) + \frac{1}{n}$.
+As $n \to \infty$, $m^*(G) = m^*(E)$. Since $E$ and $G$ are measurable, $m(G) = m(E)$.
+
+\noindent \textbf{(i) Part $\Leftarrow$:}
+Conversely, this is not true.
+Consider any non-measurable set $N$ with finite outer measure.
+Then by the claim we just proved, there exists a $G_\delta$ set $G \supseteq N$ such that $m(G) = m^*(N)$.
+However, $N$ is not measurable.
+
+\vspace{1em}
+\noindent \textbf{(ii) Part $\Rightarrow$:}
+Suppose $E$ is measurable.
+Assume $m(E)$ is finite. By inner regularity, for any $\epsilon > 0$, there exists a closed set $F' \subseteq E$ such that $m(E \setminus F') < \epsilon$.
+For all $n \in \mathbb{N}$, there exists a closed set $F_n \subseteq E$ s.t. $m(E \setminus F_n) < \frac{1}{n}$.
+Take $F = \bigcup_{n=1}^\infty F_n$. $F$ is an $F_\sigma$ set and $F \subseteq E$.
+$E \setminus F = E \setminus (\bigcup F_n) = \bigcap (E \setminus F_n)$.
+$m(E \setminus F) \le m(E \setminus F_n) < \frac{1}{n}$ for all $n$.
+Thus $m(E \setminus F) = 0$.
+Since $E$ is of finite measure, $m(E \setminus F) = m(E) - m(F)$.
+So $m(E) - m(F) = 0$, which implies $m(E) = m(F)$.
+
+\noindent \textbf{(ii) Part $\Leftarrow$:}
+Suppose there is an $F_\sigma$ set $F$ such that $F \subseteq E$ and $m^*(E) = m(F)$.
+Note that $E = F \cup (E \setminus F)$.
+We must show $m^*(E \setminus F) = 0$.
+We use the excision property, which states that if $F \subseteq E$ and $F$ is a measurable set of finite measure, $m^*(E) = m(F) + m^*(E \setminus F)$.
+Since $F$ is $F_\sigma$, it is measurable. We are given $m(F) = m^*(E)$ and $m(F)$ is finite (since $m^*(E)$ is finite).
+Substituting our given condition $m^*(E) = m(F)$ into the property:
+$$ m(F) = m(F) + m^*(E \setminus F) $$
+This implies $m^*(E \setminus F) = 0$.
+$F$ is measurable (since it is $F_\sigma$).
+The set $E \setminus F$ has outer measure 0. By completeness of the Lebesgue measure, $E \setminus F$ is also measurable.
+$E = F \cup (E \setminus F)$ is the union of two measurable sets, and is therefore also measurable.
+\end{solution}
+
+\begin{note}
+We have proved the following equivalent descriptions of a measurable set E in our lectures:
+\begin{enumerate}
+    \item $m^*(A) = m^*(E \cap A) + m^*(E^c \cap A)$ for any A. (Carathéodory's criterion)
+    \item $\forall \epsilon > 0$, $\exists$ open set $O \supseteq E$ such that $m^*(O \setminus E) < \epsilon$.
+    \item $\exists$ $G_\delta$ set $G \supseteq E$ such that $m^*(G \setminus E) = 0$.
+    \item $\forall \epsilon > 0$, $\exists$ closed set $F \subseteq E$ such that $m^*(E \setminus F) < \epsilon$.
+    \item $\exists$ $F_\sigma$ set $F \subseteq E$ such that $m^*(E \setminus F) = 0$.
+\end{enumerate}
+One may find something subtle by comparing the those ocndition with this problem. But this is what makes this problem tricky. Professor Ni promised that this problem appears every year he taught.
+For further reading, one can show that A is measurable if and only if outer measure = inner measure.
+\end{note}
+
+\begin{problem}
+The set of pointwise convergence of $f_n$ is a measurable set.
+\end{problem}
+
+\begin{solution}
+The statement is \textbf{true} (assuming $f_n$ are measurable functions).
+
+A sequence of real numbers $\{a_n\}$ converges if and only if it is a Cauchy sequence.
+Let $E$ be the set of pointwise convergence. An element $x$ is in $E$ if and only if $\{f_n(x)\}$ is a Cauchy sequence.
+$$ x \in E \iff \forall k \in \mathbb{N}, \exists N \in \mathbb{N} \text{ s.t. } \forall n,m \ge N, |f_n(x) - f_m(x)| < \frac{1}{k} $$
+We can write this set $E$ using set operations:
+$$ E = \bigcap_{k=1}^\infty \bigcup_{N=1}^\infty \bigcap_{n=N}^\infty \bigcap_{m=N}^\infty \left\{ x \mid |f_n(x) - f_m(x)| < \frac{1}{k} \right\} $$
+Since each $f_n$ is measurable, the function $g_{n,m}(x) = f_n(x) - f_m(x)$ is measurable. The absolute value $|g_{n,m}(x)|$ is also measurable.
+Therefore, the set $\left\{ x \mid |f_n(x) - f_m(x)| < \frac{1}{k} \right\}$ is measurable for all $k, n, m$.
+The set $E$ is formed by countable intersections and countable unions of measurable sets. Since the collection of measurable sets is a $\sigma$-algebra, $E$ must be measurable.
+\end{solution}
+
+\begin{note}
+    Since the convergent functions may not exist, then we use Cauchy Criteria for writing down the set $f_n$ converges. This is the only trick in this problem.
+\end{note}
+
+\begin{problem}
+Let $f_n$ be everywhere measurable on E.
+\begin{enumerate}
+\item  $\forall \eta > 0$, $m(\{x \in E \mid |f_n(x)| > \eta\}) \to 0$ as $n \to \infty$.
+$\Rightarrow f_n \to 0$ pointwise a.e. on E. ? 
+\item  $\forall \delta > 0$, $\sum_{n=1}^{\infty} m(\{x \in E \mid |f_n(x)| > \delta\}) < \infty$.
+$\Rightarrow f_n \to 0$ pointwise a.e. on E. ?
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+(ii) We want to show $f_n \to 0$ pointwise a.e.
+on E.
+Consider the set where $f_n \not\to 0$, which is
+$$ \bigcup_{k=1}^\infty \left( \bigcap_{N=1}^\infty \bigcup_{n=N}^\infty \{x \in E \mid |f_n(x)| \ge \frac{1}{k}\} \right) $$
+To show this set has measure zero, it is equivalent to show that for any $k \ge 1$,
+$$ m\left( \bigcap_{N=1}^\infty \bigcup_{n=N}^\infty \{x \in E \mid |f_n(x)| \ge \frac{1}{k}\} \right) = 0 $$
+From (ii), we are given $\sum_{n=1}^{\infty} m(\{x \in E \mid |f_n(x)| > \delta\}) < \infty$ for all $\delta > 0$.
+Let $\delta = 1/k$. Then $\sum_{n=1}^{\infty} m(\{x \in E \mid |f_n(x)| \ge 1/k\}) < \infty$.
+By the Borel-Cantelli Lemma, the measure of the "lim sup" set is zero.
+This is a standard use of the Borel-Cantelli Lemma.
+\end{solution}
+
+\begin{note}
+    The first one is the standard exmaple. The proof of the second one is an standard technique. We apply the Borel Cantli lemma to show the set where $f_n$ is not convergent is of measure 0.
+\end{note}
+
+\begin{problem}
+Does there exists a continuous function $f$ on $\mathbb{R}$ s.t.
+$f = \chi_{[0,1]}$ a.e.?
+\end{problem}
+
+\begin{solution}
+By continuity of $f$, it is obviously not true.
+Here is a sketch of proof.
+Suppose such an $f$ exists.\\
+Step 1: $f \equiv 1$ on $[0,1]$.
+(If $f(x_0) \neq 1$ for $x_0 \in (0,1)$, by continuity $f \neq 1$ on an open interval, which has positive measure. This contradicts $f=1$ a.e. on $(0,1)$. So $f=1$ on $(0,1)$, and by continuity $f=1$ on $[0,1]$.)\\
+Step 2: By continuity of $f$, we get a contradiction at the end point.
+(Similarly, $f \equiv 0$ on $(-\infty, 0)$ and $(1, \infty)$. By continuity, $\lim_{x \to 0^-} f(x) = 0$, but $f(0)=1$ from Step 1. This contradicts continuity at $x=0$.)\\
+\end{solution}
+
+\begin{problem}
+Let $f(x) = \begin{cases} 1 & x \in [0,1] \cap \mathbb{Q} \\ 0 & x \in [0,1] \setminus \mathbb{Q} \end{cases}$.
+\begin{enumerate}
+\item $\forall \epsilon > 0$, $\exists$ a closed set $F_{\epsilon} \subseteq [0,1]$ s.t.
+$m([0,1] \setminus F_{\epsilon}) < \epsilon$ and $\exists g_{\epsilon}$ continuous on $[0,1]$ s.t. $f = g_{\epsilon}$ on $F_{\epsilon}$.
+\item  $\forall \epsilon > 0$, $\exists$ a closed set $F_{\epsilon} \subseteq [0,1]$ with $m([0,1] \setminus F_{\epsilon}) < \epsilon$ and a seq of continuous functions $g_{n,\epsilon}$ converges to $f$ uniformly on $F_{\epsilon}$.
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+(i) Set $\mathbb{Q} \cap [0,1] = \{a_1, a_2, ..., a_n, ...\}$.
+$\forall \epsilon > 0$, let $I_k$ be an open interval $I_k \ni a_k$ s.t. $l(I_k) < \frac{\epsilon}{2^{k+1}}$.
+Let $O_{\epsilon} = \bigcup_{k=1}^{\infty} I_k$. $O_\epsilon$ is open.
+Let $F_{\epsilon} = [0,1] \setminus O_{\epsilon}$. $F_\epsilon$ is closed.
+$m(O_\epsilon) \le \sum_{k=1}^\infty m(I_k) \le \sum_{k=1}^\infty \frac{\epsilon}{2^{k+1}} = \frac{\epsilon}{2}$.
+Then $m([0,1] \setminus F_{\epsilon}) = m(O_\epsilon) < \epsilon$.
+(Note: The solution for $g_\epsilon$ is not written, but $g_\epsilon(x) \equiv 0$ would work, since $F_\epsilon \subseteq [0,1] \setminus \mathbb{Q}$, where $f=0$.)
+
+\noindent (ii) $g_{n,\epsilon} = 1$ on $[0,1]$, with the same $F_\epsilon$ given above.
+\end{solution}
+
+\begin{problem}
+Prove or disprove that the sequence of function $\{k \sin(kx) \mid k \in \mathbb{N}, x \in [0,1]\}$ is equi-integrable.
+\end{problem}
+
+\begin{solution}
+The statement is \textbf{false}. The sequence is \textbf{not} equi-integrable.
+
+Let $f_k(x) = k \sin(kx)$. A sequence is equi-integrable on $E=[0,1]$ if it satisfies two conditions. We will show that the second condition is violated:
+$$ \forall \epsilon > 0, \exists \delta > 0 \text{ s.t. for any measurable } A \subseteq E \text{ with } m(A) < \delta, \text{ we have } \sup_k \int_A |f_k| < \epsilon $$
+We will show this fails for $\epsilon = 1$. We must show that for any $\delta > 0$, we can find a set $A$ and an integer $k$ such that $m(A) < \delta$ but $\int_A |f_k(x)| dx \ge 1$.
+
+Given any $\delta > 0$, choose an integer $k \in \mathbb{N}$ large enough so that $\frac{\pi}{k} < \delta$.
+Now, define the set $A_k = [0, \pi/k]$.
+The measure of this set is $m(A_k) = \pi/k < \delta$.
+
+Now, we compute the integral for this $k$ over this set $A_k$:
+$$ \int_{A_k} |f_k(x)| dx = \int_0^{\pi/k} |k \sin(kx)| dx $$
+For $x \in [0, \pi/k]$, we have $kx \in [0, \pi]$, so $\sin(kx) \ge 0$.
+$$ \int_0^{\pi/k} k \sin(kx) dx $$
+Let $u = kx$. Then $du = k dx$. The bounds of integration change from $x=0 \to u=0$ and $x=\pi/k \to u=\pi$.
+$$ \int_0^\pi \sin(u) du = [-\cos(u)]_0^\pi = (-\cos(\pi)) - (-\cos(0)) = -(-1) - (-1) = 2 $$
+Thus, for any $\delta > 0$, we found a set $A_k = [0, \pi/k]$ with $m(A_k) < \delta$, but $\int_{A_k} |f_k(x)| dx = 2$.
+This violates the condition for $\epsilon = 1$ (or any $\epsilon \le 2$).
+Therefore, the sequence $\{k \sin(kx)\}$ is not equi-integrable on $[0,1]$.
+\end{solution}
+
+\begin{problem}
+Let $\{f_k\}$ be an integrable sequence on E. $\forall \epsilon > 0, \exists N$ s.t. $\int_E |f_n - f_m|
+< \epsilon$, $\forall m,n \ge N$.
+\begin{enumerate}
+\item  Does $\{f_k\}$ have a subsequence converging pointwise a.e.
+to an integrable function $f$ on E?
+\item  Does $\int_E f_k$ converge?
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+(i)
+Step 1: The sequence is Cauchy in measure.
+By Chebyshev's inequality:
+$$ m(\{x \in E \mid |f_n(x) - f_m(x)| > \eta\}) \le \frac{1}{\eta} \int_E |f_n - f_m|
+$$
+Since $\{f_n\}$ is Cauchy in $L^1$, for any $\epsilon' > 0, \eta > 0$, we can choose $N$ s.t.
+for $n,m \ge N$, $\int_E |f_n - f_m| < \epsilon' \eta$.
+Thus $m(\{x \in E \mid |f_n - f_m| > \eta\}) < \epsilon'$.
+So the sequence $f_n$ is Cauchy in measure.\\
+\noindent Step 2:
+Since $f_n$ is Cauchy in measure, we can find a subsequence $\{f_{n_j}\}$ s.t.
+for each $j$,
+$$ m(\{x \in E \mid |f_{n_{j+1}}(x) - f_{n_j}(x)| > \frac{1}{2^j}\}) < \frac{1}{2^j} $$
+Let $E_j = \{x \in E \mid |f_{n_{j+1}}(x) - f_{n_j}(x)|
+> \frac{1}{2^j}\}$.
+We have $\sum_{j=1}^\infty m(E_j) < \sum_{j=1}^\infty \frac{1}{2^j} = 1 < \infty$.
+By the Borel-Cantelli Lemma, the set $E^* = \limsup E_j = \bigcap_{k=1}^\infty \bigcup_{j=k}^\infty E_j$ has $m(E^*) = 0$.
+If $x \notin E^*$, then $x$ is in only finitely many $E_j$. So $\exists J$ s.t.
+$\forall j \ge J$, $x \notin E_j$.
+This means $\forall j \ge J$, $|f_{n_{j+1}}(x) - f_{n_j}(x)| \le \frac{1}{2^j}$.
+The series $\sum_{j=J}^\infty (f_{n_{j+1}}(x) - f_{n_j}(x))$ converges absolutely (by comparison with $\sum 1/2^j$).
+This implies the sequence $\{f_{n_j}(x)\}$ is a Cauchy sequence of real numbers, and thus converges.
+This holds for all $x \notin E^*$, so $\{f_{n_j}\}$ converges pointwise a.e. to some function $f$.
+
+(ii) Trivially converges.
+(Proof: We know $| \int_E f_n - \int_E f_m | = | \int_E (f_n - f_m) | \le \int_E |f_n - f_m|$. Since $\{f_n\}$ is Cauchy in $L^1$, $\{\int_E f_n\}$ is a Cauchy sequence of real numbers, so it converges.)
+\end{solution}
+
+\begin{note}
+This is a variant of homework question, in fact much easier than the homework, you can check it on problem-13 on section5.2 of Royden.
+\end{note}
+
+\end{document}

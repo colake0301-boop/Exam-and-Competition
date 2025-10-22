@@ -1,0 +1,58 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs}
+\usepackage{tikz-cd}
+
+% Setup Metadata
+\title{\textbf{Real Analysis Midterm-ustc-2016-version2}}
+\date{\today}
+\linespread{1.5}
+\definecolor{shadecolor}{RGB}{241, 241, 255}
+
+% Custom Environments from Template
+\newcounter{problemname}
+\newenvironment{problem}
+ {\begin{shaded}\stepcounter{problemname}\par\noindent\textbf{Problem \arabic{problemname}.
+}\newline}
+ {\end{shaded}\par}
+
+\newenvironment{solution}
+ {\par\noindent\textbf{Solution. }\newline}
+ {\par}
+
+\newenvironment{note}
+ {\par\noindent\textbf{Note for Problem \arabic{problemname}.
+}\newline}
+{\par}
+
+% Definition and Theorem Environments
+\newtheorem*{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+Let $\{f_n\}$ be a sequence of measurable functions on $\mathbb{R}$. For any $x \in \mathbb{R}$, if the sequence $\{f_n(x)\}$ diverges, then $x$ is called a \textbf{divergence point} of $f_n$. Prove that the set of divergence points of $f_n$ is measurable.
+\end{problem}
+
+\begin{problem}
+ Let $E_1 \subseteq E_2 \subseteq \dots \subseteq \mathbb{R}$, and $E := \bigcup_{k=1}^{\infty} E_k$ be a \textbf{bounded set}. Prove that:
+$$m^{*}(E) = \lim_{k \to \infty} m^{*}(E_k).$$
+\end{problem}
+
+\begin{problem}
+ Let $\{f_n\}$ converge to $f$ a.e. on $[0, 1]$, and for some $r > 0$ and any $n$, we have $\int_{0}^{1}|f_{n}|^{r}dx \le M < \infty$. Prove that for any $p \in (0, r)$, $||f_n - f||_p \to 0$.
+\end{problem}
+
+\begin{problem}
+Let $\{f_n\}$ and $f$ be measurable functions, and assume that:
+$$\forall \epsilon > 0, \lim_{n \to \infty} m\{x : |f_n(x) - f(x)| \ge \epsilon\} = 0.$$
+Prove that $\{f_n\}$ has a subsequence that converges to $f$ a.e.
+\end{problem}
+
+\begin{problem}
+     State \textbf{Egorov's Theorem}, and explain why it is not true when $m(E) = \infty$.
+\end{problem}
+
+\end{document}

@@ -1,0 +1,74 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs}
+\usepackage{tikz-cd}
+
+% Setup Metadata
+\title{\textbf{Real Analysis midtern-ustc-2023-version2 }}
+\date{\today}
+\linespread{1.5}
+\definecolor{shadecolor}{RGB}{241, 241, 255}
+
+% Custom Environments from Template
+\newcounter{problemname}
+\newenvironment{problem}
+ {\begin{shaded}\stepcounter{problemname}\par\noindent\textbf{Problem \arabic{problemname}.
+}\newline}
+ {\end{shaded}\par}
+
+\newenvironment{solution}
+ {\par\noindent\textbf{Solution. }\newline}
+ {\par}
+
+\newenvironment{note}
+ {\par\noindent\textbf{Note for Problem \arabic{problemname}.
+}\newline}
+ {\par}
+
+% Definition and Theorem Environments
+\newtheorem*{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+
+\begin{document}
+
+\maketitle
+
+
+\begin{problem}
+(20 points) Determine whether the following statements are true or false (provide a proof or a counterexample to explain your conclusion):
+\begin{enumerate}
+    \item[(i)] Every monotonic function on an interval is measurable.
+    \item[(ii)] Every closed set in $\mathbb{R}^n$ is a $G_{\delta}$ set.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+(15 points) Let $f: \mathbb{R}^n \to \mathbb{R}$ be a real-valued function. Prove that the following two statements are equivalent:
+\begin{enumerate}
+    \item[(i)] For all $a \in \mathbb{R}$, $f^{-1}((a, +\infty))$ is Lebesgue measurable.
+    \item[(ii)] For any open set $G \subset \mathbb{R}$, $f^{-1}(G)$ is Lebesgue measurable.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+(10 points) Calculate:
+$$ \lim_{n \to \infty} \int_0^{\infty} \left(1 + \frac{x}{n}\right)^n e^{-2x} \, dx $$
+\end{problem}
+
+\begin{problem}
+(15 points) Let $f, f_n: [a, b] \to \mathbb{R}$, $n = 1, 2, \dots$ be non-negative and $f_n \to f$ a.e. on $[a, b]$. Prove:
+$$ \lim_{n \to \infty} \int_{[a, b]} f_n e^{-f_n} \, dm = \int_{[a, b]} f e^{-f} \, dm $$
+\end{problem}
+
+\begin{problem}
+(15 points) Let $E \subset \mathbb{R}^n$. Prove that there exists a $G_{\delta}$ set $H$ containing $E$ such that $m(H) = m_{*}(E)$.
+\end{problem}
+
+\begin{problem}
+(15 points) Let $E_1, E_2, \dots, E_n$ be measurable subsets of $[0, 1]$. If every point of $[0, 1]$ appears in at least $k$ of these sets, prove that there exists an index $i_0$ such that $m(E_{i_0}) \ge k/n$.
+\end{problem}
+
+\begin{problem}
+(10 points) Let $f: \mathbb{R} \to \mathbb{R}$ be a measurable function. Let $V \subset \mathbb{R}$ be an open set, $0 \in V$. Prove that there exists a measurable set $E$, with $m(E) > 0$, such that for all $x, y \in E$, $f(x) - f(y) \in V$.
+\end{problem}
+
+\end{document}

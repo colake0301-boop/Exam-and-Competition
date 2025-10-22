@@ -1,0 +1,88 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs}
+\usepackage{tikz-cd}
+
+% Setup Metadata
+\title{\textbf{Real Analysis midterm-ustc-2025-version1}}
+\date{\today}
+\linespread{1.5}
+\definecolor{shadecolor}{RGB}{241, 241, 255}
+
+% Custom Environments from Template
+\newcounter{problemname}
+\newenvironment{problem}
+ {\begin{shaded}\stepcounter{problemname}\par\noindent\textbf{Problem \arabic{problemname}.
+}\newline}
+ {\end{shaded}\par}
+
+\newenvironment{solution}
+ {\par\noindent\textbf{Solution. }\newline}
+ {\par}
+
+\newenvironment{note}
+ {\par\noindent\textbf{Note for Problem \arabic{problemname}.
+}\newline}
+ {\par}
+
+% Definition and Theorem Environments
+\newtheorem*{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+    \vspace{-2.5em}
+\begin{enumerate}
+    \item[(1)] State the definition of a \textbf{measurable function} $f$.
+    \item[(2)] Prove: $f$ is measurable if and only if the set $\{f > 0\}$ is measurable.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+    \vspace{-2.5em}
+\begin{enumerate}
+    \item[(1)] A measurable subset of the non-measurable set $N$ constructed in the textbook must be a null set. (Prove)
+    \item[(2)] $m(E) = 0 \Leftrightarrow$ every measurable subset of $E$ is a null set. (Prove)
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+Let $B = \{\|x\| < 1\}$ be the open ball in $\mathbb{R}^d$. Let $f$ be a non-negative measurable function such that $\int_B f \, dx = 1$. Prove:
+$$ \int_B f(x) \|x\| \, dx < 1 $$
+\end{problem}
+
+\begin{problem}
+Evaluate:
+$$ \lim_{k \to \infty} \int_0^{+\infty} \frac{x + \sin^k x}{1 - e^{-kx} + x^k} \, dx $$
+\end{problem}
+
+\begin{problem}
+Let $f, f_1, f_2, \dots$ all be measurable on $[0, 1]$.
+\begin{enumerate}
+    \item[(1)] If $f_n \xrightarrow{\text{a.e.}} f$, can we conclude $f_n \xrightarrow{L^1} f$? Prove or give a counterexample.
+    \item[(2)] If $f_n \xrightarrow{L^1} f$, can we conclude $f_n \xrightarrow{\text{a.e.}} f$? Prove or give a counterexample.
+    \item[(3)] If $f_n \xrightarrow{m} f$ (converges in measure), can we conclude $\lim_{n \to \infty} m(\{|f_n - f| > \epsilon\}) = 0$? Prove or give a counterexample.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+Let $E_k = \{|f| \ge k\}$ and $f$ be integrable. Prove:
+\begin{enumerate}
+    \item[(1)] $\lim_{k \to \infty} m(E_k) = 0$
+    \item[(2)] $\sum_{k=1}^{\infty} m(E_k) < +\infty$
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+Let $g$ be a \textbf{$1$-periodic smooth function} such that $\int_0^1 g(x) \, dx = 0$. Prove that the following hold:
+\begin{enumerate}
+    \item[(1)] For any finite interval $[a, b]$,
+    $$ \lim_{n \to \infty} \int_a^b g(nx) \, dx = 0 $$
+    \item[(2)] For any integrable function $f$,
+    $$ \lim_{n \to \infty} \int_{\mathbb{R}} f(x) g(nx) \, dx = 0 $$
+\end{enumerate}
+\end{problem}
+
+\end{document}

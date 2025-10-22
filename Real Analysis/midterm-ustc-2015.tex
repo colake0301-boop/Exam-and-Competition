@@ -1,0 +1,78 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs}
+\usepackage{tikz-cd}
+
+% Setup Metadata
+\title{\textbf{Real Analysis Midterm-ustc-2015}}
+\date{\today}
+\linespread{1.5}
+\definecolor{shadecolor}{RGB}{241, 241, 255}
+
+% Custom Environments from Template
+\newcounter{problemname}
+\newenvironment{problem}
+ {\begin{shaded}\stepcounter{problemname}\par\noindent\textbf{Problem \arabic{problemname}.
+}\newline}
+{\end{shaded}\par}
+
+\newenvironment{solution}
+ {\par\noindent\textbf{Solution. }\newline}
+{\par}
+
+\newenvironment{note}
+ {\par\noindent\textbf{Note for Problem \arabic{problemname}.
+}\newline}
+ {\par}
+
+% Definition and Theorem Environments
+\newtheorem*{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+
+\begin{document}
+
+\maketitle
+
+
+\begin{problem}
+(15 points) Let $N$ be the non-measurable set on the interval $[0, 1]$ constructed in the textbook. If $E$ is a measurable subset of $N$, prove that $m(E) = 0$.
+\end{problem}
+
+\begin{problem}
+(15 points) Let $f$ be an integrable function on $\mathbb{R}$ that is also uniformly continuous. Prove that
+$$
+\lim_{|x| \to \infty} f(x) = 0.
+$$
+\end{problem}
+
+\begin{problem}
+(15 points) Let $\{f_n\}$ be a sequence of integrable functions such that $0 \le f_1 \le f_2 \le \dots$, a.e. Prove that $\lim_{n \to \infty} \int f_n = 0$ if and only if $\lim_{n \to \infty} f_n(x) = 0$, a.e.
+\end{problem}
+
+\begin{problem}
+(15 points) Let $\{f_n\}$ be a sequence of integrable functions on $\mathbb{R}$, and $f$ be an integrable function on $\mathbb{R}$, such that
+$$
+\int_{\mathbb{R}} |f_n(x) - f(x)| \, dx \le \frac{1}{n^2} \quad (n = 1, 2, \dots).
+$$
+Prove that $f_n(x) \to f(x)$, a.e.
+\end{problem}
+
+\begin{problem}
+(15 points) Let $E \subset \mathbb{R}^d$ be a bounded measurable set. Prove that
+$$
+\lim_{h \to 0} m(E \cap (E + h)) = m(E).
+$$
+\end{problem}
+
+\begin{problem}
+(15 points) Let $m(E) < \infty$, $\{f_n\}$ be a sequence of measurable functions on $E$, and $f$ be a measurable function on $E$. Prove that $f_n$ converges to $f$ in measure on $E$ if and only if every subsequence $f_{n_k}$ of $f_n$ has a further subsequence $f_{n_{k_i}}$ that converges to $f$ almost everywhere on $E$.
+\end{problem}
+
+\begin{problem}
+(10 points) Define the function $f(x) = x^3$ on $\mathbb{R}$. Consider $f: \mathbb{R} \to \mathbb{R}$ as a mapping. Prove:
+\begin{enumerate}
+    \item[(a)] (5 points) $f$ maps null sets to null sets.
+    \item[(b)] (5 points) $f$ maps measurable sets to measurable sets.
+\end{enumerate}
+\end{problem}
+
+\end{document}

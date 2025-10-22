@@ -1,0 +1,79 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs}
+\usepackage{tikz-cd}
+
+% Setup Metadata
+\title{\textbf{Real Analysis midterm-ustc-2022  }}
+\author{Translated by Gemini DeepResearch}
+\date{\today}
+\linespread{1.5}
+\definecolor{shadecolor}{RGB}{241, 241, 255}
+
+% Custom Environments from Template
+\newcounter{problemname}
+\newenvironment{problem}
+{\begin{shaded}\stepcounter{problemname}\par\noindent\textbf{Problem \arabic{problemname}.
+}\newline}
+{\end{shaded}\par}
+
+\newenvironment{solution}
+ {\par\noindent\textbf{Solution. }\newline}
+ {\par}
+
+\newenvironment{note}
+ {\par\noindent\textbf{Note for Problem \arabic{problemname}.
+}\newline}
+ {\par}
+
+% Definition and Theorem Environments
+\newtheorem*{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+(20 points)
+\begin{enumerate}
+    \item[(a)] State the definition of the \textbf{outer measure} $m_{*}$.
+    \item[(b)] State the definition of a \textbf{measurable set}.
+    \item[(c)] Prove that $E$ is a measurable set if and only if for every $\epsilon > 0$, there exists an open set $O \supset E$ and a closed set $F \subset E$ such that $m_{*}(O-F) < \epsilon$.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+(15 points) Let $E$ be a measurable set in $\mathbb{R}^d$ satisfying $m(E) < \infty$. State \textbf{Egorov's Theorem} on $E$, and provide an example to show that the condition $m(E) < \infty$ is necessary.
+\end{problem}
+
+\begin{problem}
+(15 points) Let $A \subset [0, 1] \times [0, 1] \subset \mathbb{R}^2$ be a measurable set with \textbf{positive measure}. Prove that $A$ must contain at least one \textbf{non-measurable subset}.
+\end{problem}
+
+\begin{problem}
+(15 points) Let $f: \mathbb{R} \to \mathbb{R}$ be a \textbf{continuous function}.
+\begin{enumerate}
+    \item[(a)] Prove that the graph of $f$, $\Gamma = \{(x, y) | y = f(x)\}$, is a \textbf{closed set} in $\mathbb{R}^2$, and is therefore a measurable set.
+    \item[(b)] Prove that $\Gamma$ is a \textbf{null set} (zero measure set) in $\mathbb{R}^2$.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+(15 points) If $f$ is a \textbf{continuous function with compact support} on $\mathbb{R}$ (where $f$ having compact support means the closure of the set $\{x \in \mathbb{R} | f(x) \ne 0\}$ is compact), prove:
+\begin{enumerate}
+    \item[(a)] $\hat{f}(\xi) = \int_{\mathbb{R}} f(x) e^{-2\sqrt{-1}\pi\xi x} dx$ is a \textbf{continuous function} of $\xi$ on $\mathbb{R}$.
+    \item[(b)] $\lim_{\xi \to \infty} \hat{f}(\xi) = 0$.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+(10 points, Borel-Cantelli Lemma) Assume $\{E_k\}_{k=1}^{\infty}$ is a sequence of measurable sets that satisfies $\sum_{k=1}^{\infty} m(E_k) < \infty$. Let $E = \{x \in \mathbb{R}^d | x \in E_k \text{ for infinitely many } k\}$. Prove that $m(E) = 0$.
+\end{problem}
+
+\begin{problem}
+(10 points) Use the \textbf{Borel-Cantelli Lemma} to prove the following conclusion. Let
+$$E = \left\{x \in \mathbb{R} \left| \text{there exist infinitely many rational numbers } \frac{p}{q}, \text{ with } p \text{ and } q \text{ coprime, such that } \left|x - \frac{p}{q}\right| < \frac{1}{q^{2.022}}\right.\right\}.$$
+Prove that $m(E) = 0$.
+\end{problem}
+
+\end{document}
