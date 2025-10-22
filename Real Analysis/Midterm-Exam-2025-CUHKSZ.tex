@@ -40,8 +40,8 @@
 Suppose E is a set of finite outer measure. Prove of disprove the following.
 \begin{enumerate}
     \item E is measurable $\iff \exists$ $G_{\delta}$ set $G$ s.t.
-$E \subseteq G$ and $m(G) = m(E)$. 
-    \item E is measurable $\iff \exists$ $F_{\sigma}$ set $F$ s.t. $F \subseteq E$ and $m(F) = m(E)$.
+$E \subseteq G$ and $m(G) = m^*(E)$. 
+    \item E is measurable $\iff \exists$ $F_{\sigma}$ set $F$ s.t. $F \subseteq E$ and $m(F) = m^*(E)$.
 \end{enumerate}
 \end{problem}
 
@@ -109,6 +109,7 @@ One may find something subtle by comparing the those ocndition with this problem
 For further reading, one can show that A is measurable if and only if outer measure = inner measure.
 \end{note}
 
+\newpage
 \begin{problem}
 The set of pointwise convergence of $f_n$ is a measurable set.
 \end{problem}
@@ -129,9 +130,9 @@ The set $E$ is formed by countable intersections and countable unions of measura
 \begin{note}
     Since the convergent functions may not exist, then we use Cauchy Criteria for writing down the set $f_n$ converges. This is the only trick in this problem.
 \end{note}
-
+\newpage
 \begin{problem}
-Let $f_n$ be everywhere measurable on E.
+Let $f_n$ be everywhere measurable on E. 
 \begin{enumerate}
 \item  $\forall \eta > 0$, $m(\{x \in E \mid |f_n(x)| > \eta\}) \to 0$ as $n \to \infty$.
 $\Rightarrow f_n \to 0$ pointwise a.e. on E. ? 
@@ -156,7 +157,7 @@ This is a standard use of the Borel-Cantelli Lemma.
 \begin{note}
     The first one is the standard exmaple. The proof of the second one is an standard technique. We apply the Borel Cantli lemma to show the set where $f_n$ is not convergent is of measure 0.
 \end{note}
-
+\newpage
 \begin{problem}
 Does there exists a continuous function $f$ on $\mathbb{R}$ s.t.
 $f = \chi_{[0,1]}$ a.e.?
@@ -171,7 +172,7 @@ Step 1: $f \equiv 1$ on $[0,1]$.
 Step 2: By continuity of $f$, we get a contradiction at the end point.
 (Similarly, $f \equiv 0$ on $(-\infty, 0)$ and $(1, \infty)$. By continuity, $\lim_{x \to 0^-} f(x) = 0$, but $f(0)=1$ from Step 1. This contradicts continuity at $x=0$.)\\
 \end{solution}
-
+\newpage
 \begin{problem}
 Let $f(x) = \begin{cases} 1 & x \in [0,1] \cap \mathbb{Q} \\ 0 & x \in [0,1] \setminus \mathbb{Q} \end{cases}$.
 \begin{enumerate}
@@ -179,6 +180,7 @@ Let $f(x) = \begin{cases} 1 & x \in [0,1] \cap \mathbb{Q} \\ 0 & x \in [0,1] \se
 $m([0,1] \setminus F_{\epsilon}) < \epsilon$ and $\exists g_{\epsilon}$ continuous on $[0,1]$ s.t. $f = g_{\epsilon}$ on $F_{\epsilon}$.
 \item  $\forall \epsilon > 0$, $\exists$ a closed set $F_{\epsilon} \subseteq [0,1]$ with $m([0,1] \setminus F_{\epsilon}) < \epsilon$ and a seq of continuous functions $g_{n,\epsilon}$ converges to $f$ uniformly on $F_{\epsilon}$.
 \end{enumerate}
+(A direct Quote of Lusin and Egroff is not allowed.)
 \end{problem}
 
 \begin{solution}
@@ -193,6 +195,11 @@ Then $m([0,1] \setminus F_{\epsilon}) = m(O_\epsilon) < \epsilon$.
 \noindent (ii) $g_{n,\epsilon} = 1$ on $[0,1]$, with the same $F_\epsilon$ given above.
 \end{solution}
 
+\begin{note}
+    Although the closed set $F_\epsilon$ and the function $g$ is promisee by the Lusin theorem and Egroff theorem. 
+    This Quetion asks us to somehow construct a "concrete" $F_\epsilon$ and a concrete $g$ for the Dirchlet Fucntion. The aim is to somehow test your understanding and help you understand Lusin and Egroff better.
+\end{note}
+\newpage
 \begin{problem}
 Prove or disprove that the sequence of function $\{k \sin(kx) \mid k \in \mathbb{N}, x \in [0,1]\}$ is equi-integrable.
 \end{problem}
@@ -218,7 +225,7 @@ Thus, for any $\delta > 0$, we found a set $A_k = [0, \pi/k]$ with $m(A_k) < \de
 This violates the condition for $\epsilon = 1$ (or any $\epsilon \le 2$).
 Therefore, the sequence $\{k \sin(kx)\}$ is not equi-integrable on $[0,1]$.
 \end{solution}
-
+\newpage
 \begin{problem}
 Let $\{f_k\}$ be an integrable sequence on E. $\forall \epsilon > 0, \exists N$ s.t. $\int_E |f_n - f_m|
 < \epsilon$, $\forall m,n \ge N$.
