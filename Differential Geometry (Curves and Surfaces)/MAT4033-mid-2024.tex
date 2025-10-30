@@ -1,0 +1,298 @@
+\documentclass[12pt, a4paper, oneside]{article}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs}
+\usepackage{tikz-cd}
+
+\title{\textbf{MAT4033 Mid-term Examination Solutions}}
+\author{Cola}
+\date{\today} % You can change this
+\linespread{1.5}
+\definecolor{shadecolor}{RGB}{241, 241, 255}
+\newcounter{problemname}
+
+% Problem environment
+\newenvironment{problem}
+  {\begin{shaded}\stepcounter{problemname}\par\noindent\textbf{Problem \arabic{problemname}.
+  }\newline}
+  {\end{shaded}\par}
+
+% Solution environment
+\newenvironment{solution}
+  {\par\noindent\textbf{Solution. }\newline}
+  {\par}
+
+% Note environment
+\newenvironment{note}
+  {\par\noindent\textbf{Note for Problem \arabic{problemname}.
+  }\newline}
+  {\par}
+
+%Definition environment
+\newtheorem*{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\begin{problem}
+Let $S$ be a connected, regular surface. Let $N$ be the Gauss map on $S$.
+Assume $I_{N(p)}(dN_{p}(v))=\lambda(p)I_{p}(v)$ for any $v\in T_{p}S$ and some scalar $\lambda(p)$ depends on $p$.
+\begin{itemize}
+    \item[(a)] (10 pts) Show that for $p\in S$ with $H(p)\ne0$ then there is an open $U\subseteq S$ of $p$ such that $H$ is constant on $U$.
+    \item[(b)] (10 pts) Show that if $S$ is not in a sphere, then $H=0$.
+\end{itemize}
+\end{problem}
+
+\begin{solution}
+(a) Let $L = -dN_p$ be the Weingarten map. The given condition is:
+\[ I_{N(p)}(-L(v)) = \langle -L(v), -L(v) \rangle = \langle L(v), L(v) \rangle = \lambda(p) \langle v, v \rangle = \lambda(p) I_p(v) \]
+Since $L$ is self-adjoint ($L^T = L$), this means $L^T L = L^2 = \lambda(p)I$.
+If $k_1, k_2$ are the principal curvatures (eigenvalues of $L$), then for their corresponding eigenvectors $v_1, v_2$:
+\[ L^2(v_1) = k_1^2 v_1 = \lambda(p) v_1 \implies k_1^2 = \lambda(p) \]
+\[ L^2(v_2) = k_2^2 v_2 = \lambda(p) v_2 \implies k_2^2 = \lambda(p) \]
+Thus, $k_1^2 = k_2^2$, which implies $k_1 = \pm k_2$.
+
+We are given $H(p) \ne 0$. Since $H = (k_1+k_2)/2$, this means $k_1+k_2 \ne 0$. This rules out the case $k_1 = -k_2$ (unless $k_1=k_2=0$, which gives $H=0$).
+Therefore, we must have $k_1 = k_2$. This means any point $p$ with $H(p) \ne 0$ is an umbilical point.
+
+Let $\lambda(p) = k_1(p) = k_2(p)$. Then $H(p) = \lambda(p)$. We must show $\lambda(p)$ is locally constant.
+Since $p$ is umbilical, $L = \lambda I$, so $dN_p = -L = -\lambda I$.
+In a local chart $(u,v)$:
+$N_u = dN_p(X_u) = -\lambda X_u$
+$N_v = dN_p(X_v) = -\lambda X_v$
+
+By Clairaut's theorem, $N_{uv} = N_{vu}$.
+\[ N_{uv} = \frac{\partial}{\partial v}(-\lambda X_u) = -\lambda_v X_u - \lambda X_{uv} \text{} \]
+\[ N_{vu} = \frac{\partial}{\partial u}(-\lambda X_v) = -\lambda_u X_v - \lambda X_{vu} \text{} \]
+Equating these gives:
+\[ -\lambda_v X_u - \lambda X_{uv} = -\lambda_u X_v - \lambda X_{vu} \]
+\[ \lambda_u X_v - \lambda_v X_u = 0 \text{} \]
+Since $X_u$ and $X_v$ are linearly independent (as $S$ is a regular surface), we must have $\lambda_u = 0$ and $\lambda_v = 0$.
+This shows that $\lambda(p) = H(p)$ is constant on a neighborhood $U$ of $p$.
+
+(b) From (a), for any $p$ with $H(p) \ne 0$, $H$ is locally constant. Since $S$ is connected, the set of points where $H \ne 0$ is open. The set where $H=0$ is also open (by a similar argument, $k_1=-k_2$, and $H$ being locally zero). Since $S$ is connected, $H$ must be constant everywhere.
+If $H \ne 0$ on $S$, then $H = \lambda$ (a non-zero constant) everywhere. By (a), all points are umbilical, $k_1 = k_2 = \lambda \ne 0$.
+We show $S$ must be part of a sphere. Consider the point $C(p) = p + \frac{1}{\lambda} N(p)$.
+Let's show $C(p)$ is a constant point $C_0$ by showing its differential is zero. For any $v \in T_pS$:
+\[ dC_p(v) = v + \frac{1}{\lambda} dN_p(v) \]
+Since $p$ is umbilical with $k_1=k_2=\lambda$, we have $dN_p(v) = -\lambda v$.
+\[ dC_p(v) = v + \frac{1}{\lambda}(-\lambda v) = v - v = 0 \]
+Since $dC_p = 0$ for all $p$ and $S$ is connected, $C(p)$ is a constant point, $C_0$.
+Then $p - C_0 = -\frac{1}{\lambda} N(p)$. Taking the norm:
+\[ \|p - C_0\|^2 = \left\|-\frac{1}{\lambda} N(p)\right\|^2 = \frac{1}{\lambda^2} \|N(p)\|^2 = \frac{1}{\lambda^2} \]
+This shows that every point $p \in S$ is at a constant distance $R = 1/|\lambda|$ from the fixed point $C_0$. This is the definition of a sphere.
+We have proved: $H \ne 0 \implies S$ is part of a sphere.
+The contrapositive of this statement is: If $S$ is not in a sphere, then $H=0$.
+\end{solution}
+
+\newpage
+
+\begin{problem}
+Define the $n$-th fundamental form $I_{p}^{n}$ of a regular surface $S$ as the quadratic
+form given by the bilinear form $\langle(-dN)^{n}v,w\rangle$ for $v, w\in T_{p}S$. Show:
+\[ I_{p}^{n}=2HI_{p}^{n-1}-KI_{p}^{n-2} \quad \text{for } n\ge3 \text{} \]
+\end{problem}
+
+\begin{solution}
+Let $L = -dN_p$ be the Weingarten map. The $n$-th fundamental form is given by the bilinear form $B_n(v,w) = \langle L^n v, w \rangle$.
+We want to show the equality of bilinear forms:
+\[ \langle L^n v, w \rangle = 2H \langle L^{n-1} v, w \rangle - K \langle L^{n-2} v, w \rangle \]
+Since $L$ is self-adjoint, $L^n, L^{n-1}, L^{n-2}$ are also self-adjoint. This means all three terms in the equation are symmetric bilinear forms.
+By the polarization identity, two symmetric bilinear forms $B_1$ and $B_2$ are equal if and only if their induced quadratic forms are equal, i.e., $B_1(v,v) = B_2(v,v)$ for all $v$.
+Thus, it is sufficient to show the equality for $w=v$:
+\[ \langle L^n v, v \rangle = 2H \langle L^{n-1} v, v \rangle - K \langle L^{n-2} v, v \rangle \]
+Let $\{e_1, e_2\}$ be an orthonormal basis of $T_pS$ consisting of eigenvectors of $L$ (which exist because $L$ is self-adjoint). Let $k_1$ and $k_2$ be the corresponding principal curvatures (eigenvalues).
+\[ L(e_1) = k_1 e_1 \quad \text{and} \quad L(e_2) = k_2 e_2 \]
+Any vector $v \in T_pS$ can be written as $v = a e_1 + b e_2$ for some $a, b \in \mathbb{R}$.
+
+Let's compute the Left-Hand Side (LHS):
+$L^n v = L^n(a e_1 + b e_2) = a L^n e_1 + b L^n e_2 = a k_1^n e_1 + b k_2^n e_2$.
+\[ \text{LHS} = \langle L^n v, v \rangle = \langle a k_1^n e_1 + b k_2^n e_2, a e_1 + b e_2 \rangle = a^2 k_1^n + b^2 k_2^n \]
+(since $\langle e_1, e_1 \rangle = 1$, $\langle e_2, e_2 \rangle = 1$, $\langle e_1, e_2 \rangle = 0$).
+
+Now let's compute the Right-Hand Side (RHS):
+First, we find the terms for $n-1$ and $n-2$:
+\[ \langle L^{n-1} v, v \rangle = a^2 k_1^{n-1} + b^2 k_2^{n-1} \]
+\[ \langle L^{n-2} v, v \rangle = a^2 k_1^{n-2} + b^2 k_2^{n-2} \]
+We also know $2H = k_1 + k_2$ and $K = k_1 k_2$.
+\[ \text{RHS} = 2H \langle L^{n-1} v, v \rangle - K \langle L^{n-2} v, v \rangle \]
+\[ \text{RHS} = (k_1 + k_2)(a^2 k_1^{n-1} + b^2 k_2^{n-1}) - (k_1 k_2)(a^2 k_1^{n-2} + b^2 k_2^{n-2}) \]
+Expand the terms:
+\[ \text{RHS} = (a^2 k_1^n + b^2 k_1 k_2^{n-1} + a^2 k_2 k_1^{n-1} + b^2 k_2^n) - (a^2 k_1^{n-1} k_2 + b^2 k_1 k_2^{n-1}) \]
+\[ \text{RHS} = a^2 k_1^n + b^2 k_1 k_2^{n-1} + a^2 k_1^{n-1} k_2 + b^2 k_2^n - a^2 k_1^{n-1} k_2 - b^2 k_1 k_2^{n-1} \]
+The middle terms cancel out:
+\[ \text{RHS} = a^2 k_1^n + b^2 k_2^n \]
+We see that $\text{LHS} = \text{RHS}$.
+Since the quadratic forms are equal, the corresponding symmetric bilinear forms are equal. This proves the identity.
+\end{solution}
+
+\newpage
+
+\begin{problem}
+Let $U\subset\mathbb{R}^{2}$ be an open set and $f:U\rightarrow\mathbb{R}^{2}$ be a $C^{1}$-map, and we consider images of $f$ in $\mathbb{R}^{2}$ as vectors.
+Let $\alpha$ be a regular simple closed curve parametrized by arc
+length in $U$.
+\begin{itemize}
+    \item[(a)] (10 pts) Suppose $\alpha^{\prime}(t)=f(\alpha(t))$ on $\alpha$. Show that there exists $(x_{0},y_{0})\in U$ such that $f(x_{0},y_{0})=0$.
+    \item[(b)] (5 pts) Suppose $\alpha(t)$ is given as ellipse: $\frac{x^{2}}{a^{2}}+\frac{y^{2}}{b^{2}}=1$, and $f(x,y)=(-x,y)$. Determine the index of $\alpha$ relative to $f$ counterclockwise, i.e., $\frac{1}{2\pi}\oint_{\alpha}d\theta$, where $\theta$ is the angle of vector $f$ along $\alpha$ with respect to the $x$-axis.
+    \item[(c)] (10 pts) By parametrizing the ellipse $\alpha$ in (b), show
+    \[ \frac{1}{\sqrt{ab}}\int_{0}^{2\pi}\sqrt{a^{2}\sin^{2}t+b^{2}\cos^{2}t}dt \ge \left|\int_{\alpha}\kappa ds\right| \text{} \]
+    where $\kappa$ is the curvature of $\alpha$, and the equality holds if and only if $a=b$.
+\end{itemize}
+\end{problem}
+
+\begin{solution}
+(a) We prove this by contradiction.
+Assume $f(x,y) \ne 0$ for all $(x,y)$ in $R$, the region enclosed by $\alpha$. Since $\alpha'(t) = f(\alpha(t))$ and $\alpha$ is regular, $\alpha'(t) \ne 0$, so $f$ is also non-zero on the boundary curve $\alpha$.
+Let $\theta(t)$ be the angle that $f(\alpha(t))$ makes with the $x$-axis. The index of $f$ along $\alpha$ is $I = \frac{1}{2\pi} \oint_\alpha d\theta$.
+Since $f(\alpha(t)) = \alpha'(t)$, the vector field $f$ is the tangent vector field to the curve $\alpha$. By the Hopf-Umlaufsatz (Theorem on Turning Tangents), the total angle turned by the tangent of a simple closed curve is $\pm 2\pi$.
+Therefore, the index $I = \frac{1}{2\pi} (\pm 2\pi) = \pm 1$.
+
+On the other hand, let $f = (f_1, f_2)$. The angle $\theta = \arctan(f_2/f_1)$, so $d\theta$ is the 1-form:
+\[ d\theta = \frac{\partial \theta}{\partial x} dx + \frac{\partial \theta}{\partial y} dy = P dx + Q dy \text{} \]
+where $P = \frac{f_1 f_{2x} - f_2 f_{1x}}{f_1^2+f_2^2}$ and $Q = \frac{f_1 f_{2y} - f_2 f_{1y}}{f_1^2+f_2^2}$.
+By our assumption, $f \ne 0$ in $R$, so the denominator $f_1^2+f_2^2$ is never zero in $R$. Since $f$ is $C^1$, $P$ and $Q$ are $C^1$ functions on the simply connected region $R$.
+By Green's Theorem:
+\[ \oint_\alpha d\theta = \oint_\alpha P dx + Q dy = \iint_R \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dA \]
+$P$ and $Q$ are the components of $\nabla \theta$. Since $f$ is $C^1$, $\theta$ is $C^2$ (away from $f_1=0$), and by Clairaut's theorem:
+\[ \frac{\partial Q}{\partial x} = \frac{\partial}{\partial x}\left(\frac{\partial \theta}{\partial y}\right) = \frac{\partial^2 \theta}{\partial x \partial y} = \frac{\partial^2 \theta}{\partial y \partial x} = \frac{\partial}{\partial y}\left(\frac{\partial \theta}{\partial x}\right) = \frac{\partial P}{\partial y} \]
+Therefore, $\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} = 0$ everywhere in $R$.
+The integral becomes $\iint_R 0 \, dA = 0$.
+This implies $I = \frac{1}{2\pi} \oint_\alpha d\theta = 0$.
+
+We have reached a contradiction: $I = \pm 1$ from the Hopf-Umlaufsatz and $I = 0$ from Green's Theorem.
+The contradiction arose from the assumption that $f \ne 0$ in $R$.
+Therefore, this assumption must be false. There must exist some $(x_0, y_0)$ in $R \subset U$ such that $f(x_0, y_0) = 0$.
+
+(b) 
+To integrate over the elipse is the same to integrate over the circle, since the elipse and the circle are homotopic, and the integral(the index of the vector field on the curve) take discrete value. So the dinal result is 1 
+
+(c)
+By simplely apply the isoperimetric inequality.
+\end{solution}
+
+\newpage
+
+\begin{problem}
+Let $\alpha(s)$ be a space regular curve p.a.l with $k_{\alpha}\ne0$ and torsion $\tau\ne0$ along the curve.
+Suppose $b(s)$ is the binormal of $\alpha(s)$ and $S_{\alpha,b}$ is a surface defined by:
+\[ X(s,t)=\alpha(s)+tb(s) \quad s\in[0,1], t\in(-\epsilon,\epsilon), \epsilon>0 \text{} \]
+\begin{itemize}
+    \item[(a)] (5 pts) Show that the geodesic curvature of $\alpha$ is 0 $(k_{g}=0)$.
+    \item[(b)] (5 pts) Show that the Gaussian curvature $K<0$.
+\end{itemize}
+\end{problem}
+
+\begin{solution}
+(a) The curve $\alpha(s)$ lies on the surface $S$ and corresponds to the parameter $t=0$.
+We first find the normal vector $N$ to the surface along $\alpha(s)$.
+The partial derivatives of $X(s,t)$ are:
+\[ X_s(s,t) = \alpha'(s) + t b'(s) = t(s) + t(-\tau n(s)) \text{} \]
+\[ X_t(s,t) = b(s) \text{} \]
+Along the curve $\alpha(s)$ (i.e., at $t=0$):
+\[ X_s(s,0) = t(s) \text{} \]
+\[ X_t(s,0) = b(s) \text{} \]
+A normal vector is given by $X_s \times X_t$:
+\[ X_s \times X_t = t(s) \times b(s) = -n(s) \text{} \]
+The unit normal $N$ can be chosen as $N = -n(s)$.
+The geodesic curvature $k_g$ and normal curvature $k_n$ of $\alpha$ are related to its curvature $\kappa$ by $\kappa^2 = k_g^2 + k_n^2$.
+The normal curvature is $k_n = \langle \alpha''(s), N \rangle$.
+Since $\alpha(s)$ is p.a.l., $\alpha''(s) = \kappa(s) n(s)$.
+\[ k_n = \langle \kappa n(s), -n(s) \rangle = -\kappa \langle n(s), n(s) \rangle = -\kappa \text{} \]
+Now, using Liouville's formula:
+\[ \kappa^2 = k_g^2 + k_n^2 = k_g^2 + (-\kappa)^2 = k_g^2 + \kappa^2 \]
+This implies $k_g^2 = 0$, so $k_g = 0$.
+
+(b) The Gaussian curvature is $K = \frac{eg - f^2}{EG - F^2}$.
+Let's compute the components of the second fundamental form at a general point $(s,t)$.
+$X_{st} = \frac{\partial}{\partial t}(t - t\tau n) = -\tau n$
+$X_{tt} = \frac{\partial}{\partial t}(b(s)) = 0$
+The unit normal $N$ is $N = \frac{X_t \times X_s}{\|X_t \times X_s\|}$ (we choose this orientation to match the handwritten notes).
+\[ X_t \times X_s = b \times (t - t\tau n) = (b \times t) - t\tau (b \times n) = n - t\tau (-t) = n + t\tau t \]
+\[ \|X_t \times X_s\|^2 = \|n + t\tau t\|^2 = \langle n+t\tau t, n+t\tau t \rangle = \|n\|^2 + t^2\tau^2\|t\|^2 = 1 + t^2\tau^2 \]
+So, $N = \frac{n + t\tau t}{\sqrt{1 + t^2\tau^2}}$.
+Now we compute $e, f, g$:
+\[ g = \langle N, X_{tt} \rangle = \langle N, 0 \rangle = 0 \text{} \]
+\[ f = \langle N, X_{st} \rangle = \left\langle \frac{n + t\tau t}{\sqrt{1 + t^2\tau^2}}, -\tau n \right\rangle = \frac{\langle n, -\tau n \rangle + \langle t\tau t, -\tau n \rangle}{\sqrt{1 + t^2\tau^2}} \]
+\[ f = \frac{-\tau \langle n, n \rangle + 0}{\sqrt{1 + t^2\tau^2}} = \frac{-\tau}{\sqrt{1 + t^2\tau^2}} \text{} \]
+The denominator of $K$ is $EG - F^2 = \|X_s \times X_t\|^2 = \|-(n + t\tau t)\|^2 = 1 + t^2\tau^2$.
+Now, substitute $g=0$ into the formula for $K$:
+\[ K = \frac{e(0) - f^2}{EG - F^2} = \frac{-f^2}{EG - F^2} \text{} \]
+\[ K = \frac{-\left( \frac{-\tau}{\sqrt{1 + t^2\tau^2}} \right)^2}{1 + t^2\tau^2} = \frac{-\frac{\tau^2}{1 + t^2\tau^2}}{1 + t^2\tau^2} = \frac{-\tau^2}{(1 + t^2\tau^2)^2} \]
+We are given that $\tau \ne 0$, so $\tau^2 > 0$. The denominator $(1 + t^2\tau^2)^2$ is also positive.
+Therefore, $K < 0$.
+\end{solution}
+
+\newpage
+
+\begin{problem}
+Suppose that a surface $S$ has no umbilical point and one of its principal
+curvatures is a non-zero constant $\lambda\ne0$.
+\begin{itemize}
+    \item[(a)] (5 pts) Show that there is a parametrization $X(u,v)$ at $p\in S$ such that:
+    $I_{p}$ with $E_{p}=1$, $F_{p}=0$, and $II_{p}$ with $e_{p}=\lambda$, $f_{p}=0$.
+    \item[(b)] (5 pts) Show that curves given by $v=$ constant are circles of radius $\frac{1}{|\lambda|}$.
+    \item[(c)] (10 pts) Show that there is some curve $\alpha(v)$ and unit vectors $c_{1}(v)$, $c_{2}(v)$ with $c_{1}\perp c_{2}$
+    such that:
+    \[ X(u,v)=\alpha(v)+\frac{1}{|\lambda|}(c_{1}(v)\cos(|\lambda|u)+c_{2}(v)\sin(|\lambda|u)) \text{} \]
+\end{itemize}
+\end{problem}
+
+\begin{solution}
+(a) Since $S$ has no umbilical points, at any $p \in S$ the principal curvatures are distinct, $k_1 \ne k_2$. This means there are unique, orthogonal principal directions.
+Let $v_p, w_p \in T_pS$ be the unit principal vectors.
+Let $v_p$ be the direction for the constant principal curvature $\lambda$, and $w_p$ be the direction for the other principal curvature $\lambda'$.
+\[ -dN_p(v_p) = \lambda v_p \text{} \quad \text{and} \quad -dN_p(w_p) = \lambda' w_p \text{} \]
+By the theorem of existence of principal coordinate charts, we can find a parametrization $X(u,v)$ in a neighborhood of $p$ such that the $u$-curves and $v$-curves are lines of curvature.
+We can choose this parametrization such that at $p$, $X_u|_p = v_p$ and $X_v|_p = w_p$. We can also reparametrize the $u$-curve so that it is p.a.l., making $\|X_u\| = \sqrt{E} = 1$ at $p$.
+With this setup, we check the conditions at $p$:
+\begin{itemize}
+    \item $E_p = \langle X_u, X_u \rangle|_p = \langle v_p, v_p \rangle = 1$.
+    \item $F_p = \langle X_u, X_v \rangle|_p = \langle v_p, w_p \rangle = 0$ (since principal directions are orthogonal).
+    \item $e_p = \langle -dN_p(X_u), X_u \rangle|_p = \langle -dN_p(v_p), v_p \rangle = \langle \lambda v_p, v_p \rangle = \lambda \langle v_p, v_p \rangle = \lambda$.
+    \item $f_p = \langle -dN_p(X_u), X_v \rangle|_p = \langle -dN_p(v_p), w_p \rangle = \langle \lambda v_p, w_p \rangle = \lambda \langle v_p, w_p \rangle = 0$.
+\end{itemize}
+This shows such a parametrization exists at $p$.
+
+(b) We consider the curves $\alpha(u) = X(u, v_0)$ for a fixed $v_0$.
+From (a), we have a coordinate system of curvature lines, which means $F=0$ and $f=0$ in the neighborhood. We can reparametrize $u$ such that $E=1$ everywhere in the patch.
+The eigenvalues of the Weingarten map $L = I^{-1} II = \begin{pmatrix} E & F \\ F & G \end{pmatrix}^{-1} \begin{pmatrix} e & f \\ f & g \end{pmatrix}$ are the principal curvatures.
+With $E=1, F=0, f=0$, $L = \begin{pmatrix} 1 & 0 \\ 0 & G^{-1} \end{pmatrix} \begin{pmatrix} e & 0 \\ 0 & g \end{pmatrix} = \begin{pmatrix} e & 0 \\ 0 & g/G \end{pmatrix}$.
+The principal curvatures are $k_1 = e$ and $k_2 = g/G$.
+We are given $k_1 = \lambda$ is a non-zero constant. Thus, $e = \lambda$ (constant) on the patch.
+
+To show $\alpha(u)$ is a circle, we show it has constant non-zero curvature and zero torsion.
+$\alpha'(u) = X_u$. Since $E=1$, $\|\alpha'(u)\| = \sqrt{E} = 1$, so $u$ is arc length.
+$\alpha''(u) = X_{uu}$. We decompose $X_{uu}$ in the basis $\{X_u, X_v, N\}$:
+\[ X_{uu} = \Gamma_{11}^1 X_u + \Gamma_{11}^2 X_v + e N \]
+Since $E=1$ (constant), $E_u = \frac{\partial}{\partial u}\langle X_u, X_u \rangle = 2\langle X_{uu}, X_u \rangle = 0$. So $\Gamma_{11}^1 = 0$.
+Since $F=0$ (constant), $F_u = \frac{\partial}{\partial u}\langle X_u, X_v \rangle = \langle X_{uu}, X_v \rangle + \langle X_u, X_{uv} \rangle = 0$.
+Also $E=1$ implies $E_v = 2\langle X_{uv}, X_u \rangle = 0$, so $\langle X_u, X_{uv} \rangle = 0$.
+Plugging this into $F_u=0$ gives $\langle X_{uu}, X_v \rangle = 0$. So $\Gamma_{11}^2 = 0$.
+Thus, $\alpha''(u) = X_{uu} = e N = \lambda N$.
+The curvature of $\alpha$ is $\kappa_\alpha = \|\alpha''(u)\| = \|\lambda N\| = |\lambda|\|N\| = |\lambda|$.
+Since $\lambda \ne 0$, $\kappa_\alpha$ is a non-zero constant.
+
+Now we check the torsion $\tau_\alpha$.
+$\alpha'(u) = X_u$
+$\alpha''(u) = \lambda N$
+$\alpha'''(u) = \lambda N_u$
+By the Weingarten equations, $N_u = dN(X_u) = -L(X_u)$. Since $X_u$ is the principal direction for $k_1 = \lambda$, $L(X_u) = \lambda X_u$.
+So, $N_u = - \lambda X_u$.
+$\alpha'''(u) = \lambda(-\lambda X_u) = -\lambda^2 X_u = -\lambda^2 \alpha'(u)$.
+The torsion is given by $\tau_\alpha = \frac{\langle \alpha' \times \alpha'', \alpha''' \rangle}{\|\alpha' \times \alpha''\|^2}$.
+The numerator is $\langle X_u \times (\lambda N), -\lambda^2 X_u \rangle$. This is a determinant $\det(X_u, \lambda N, -\lambda^2 X_u)$, which is 0 because the first and third vectors are linearly dependent.
+Thus, $\tau_\alpha = 0$.
+A p.a.l. curve with constant non-zero curvature $\kappa_\alpha = |\lambda|$ and zero torsion $\tau_\alpha = 0$ is a circle (or part of one) with radius $R = 1/\kappa_\alpha = 1/|\lambda|$.
+
+(c) From (b), for any fixed $v$, the $u$-curve $X(u,v)$ is a circle of radius $R = 1/|\lambda|$.
+A circle can be parametrized by its center $\alpha(v)$, its radius $R$, and two orthogonal unit vectors $c_1(v), c_2(v)$ that span the plane of the circle.
+The parameter $u$ is the arc length. The parameter for the angle of the circle is $\theta = s/R = u / (1/|\lambda|) = |\lambda|u$.
+Therefore, the parametrization must have the form:
+\[ X(u,v) = \alpha(v) + R(c_1(v) \cos(\theta) + c_2(v) \sin(\theta)) \]
+\[ X(u,v) = \alpha(v) + \frac{1}{|\lambda|} (c_1(v) \cos(|\lambda|u) + c_2(v) \sin(|\lambda|u)) \text{} \]
+This shows the required form.
+\end{solution}
+
+\end{document}
