@@ -1,0 +1,830 @@
+\documentclass[10pt, aspectratio=169]{beamer}
+
+% --- THEME SETTINGS ---
+\usetheme{Madrid}
+\usecolortheme{default}
+\usefonttheme[onlymath]{serif} % Professional math fonts
+
+% --- NAVIGATION BAR SETTINGS ---
+% This adds the navigation dots at the top
+\useoutertheme[subsection=false]{miniframes} 
+% Adjust colors to match the "Black top, Blue bottom" look
+\setbeamercolor{section in head/foot}{fg=white, bg=black}
+\setbeamercolor{subsection in head/foot}{fg=white, bg=structure.fg!75!black}
+\setbeamercolor{mini frame}{fg=gray!50, bg=gray} % Color of the dots
+
+% --- PACKAGES ---
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{xcolor}
+\usepackage{mathrsfs}
+
+% --- METADATA ---
+\title[MAT2060 Final Review]{Final Review for MAT2060: Honors Mathematical Analysis}
+\subtitle{Metric Spaces and Multivariable Calculus}
+\author[Cola]{Cola}
+\institute[CUHKSZ]{The Chinese University of HongKong, Shenzhen}
+\date{\today}
+
+% --- CUSTOM ENVIRONMENTS ---
+\setbeamertemplate{theorems}[numbered]
+\theoremstyle{definition}
+\newtheorem{remark}{Remark}
+
+% --- STRUCTURAL SLIDES ---
+% Adds a transition slide at the start of every section
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+% --- MACROS ---
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\eps}{\varepsilon}
+
+\begin{document}
+
+% 1. Title Slide
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% 2. Outline
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+% ============================================================
+% TOPIC 1: TOPOLOGY OF METRIC SPACES
+% ============================================================
+\section{Topology of Metric Spaces}
+
+\begin{frame}{Overview: Topology of Metric Spaces}
+    \textbf{Key Concepts:}
+    \begin{itemize}
+        \item \textbf{Compactness:} 
+        Recall that in a general metric space $(X, d)$:
+        $$ \text{Compactness} \iff \text{Sequential Compactness} \iff \text{Totally Bounded} + \text{Complete} $$
+        In $\R^n$, we have the \textbf{Heine-Borel Theorem}: Compact $\iff$ Closed and Bounded.
+        
+        \item \textbf{Connectedness:}
+        $$ \text{Path-Connected} \implies \text{Connected} $$
+        The converse is not true (e.g., Topologist's Sine Curve).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Problem 1: Compactness Equivalences}
+    \begin{problem}
+        Let $(X, d)$ be a metric space and let $K \subseteq X$. Prove the equivalence of the following statements:
+        \begin{enumerate}
+            \item $K$ is compact (every open cover has a finite subcover).
+            \item $K$ is sequentially compact (every sequence has a convergent subsequence).
+            \item $K$ is totally bounded and complete.
+        \end{enumerate}
+    \end{problem}
+\end{frame}
+
+\begin{frame}{Solution to Problem 1 (1/3): Seq. Compact $\implies$ Complete \& Totally Bounded}
+    \textbf{Part A: Completeness}
+    Let $\{x_n\}$ be a Cauchy sequence in $K$. Since $K$ is sequentially compact, there exists a subsequence $\{x_{n_k}\}$ that converges to some $x \in K$. A Cauchy sequence with a convergent subsequence converges to the same limit. Thus $x_n \to x$, so $K$ is complete.
+
+    \vspace{0.5em}
+    \textbf{Part B: Totally Bounded}
+    Suppose $K$ is not totally bounded. Then $\exists \eps > 0$ such that $K$ cannot be covered by finitely many $\eps$-balls.
+    \begin{itemize}
+        \item Pick $x_1 \in K$. Then $K \not\subseteq B(x_1, \eps)$, so choose $x_2 \in K \setminus B(x_1, \eps)$.
+        \item Inductively, choose $x_n \in K \setminus \bigcup_{i=1}^{n-1} B(x_i, \eps)$.
+        \item For $n \ne m$, $d(x_n, x_m) \ge \eps$.
+        \item The sequence $\{x_n\}$ has no Cauchy subsequence, hence no convergent subsequence. Contradiction.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution to Problem 1 (2/3): Complete \& Totally Bounded $\implies$ Compact}
+    Suppose $K$ is complete and totally bounded but not compact. Let $\mathcal{U}$ be an open cover with no finite subcover.
+    \begin{enumerate}
+        \item Since $K$ is totally bounded, cover it by finitely many balls of radius $1$. At least one, say $K \cap B_1$, cannot be finitely covered by $\mathcal{U}$.
+        \item Cover $K \cap B_1$ by finitely many balls of radius $1/2$. Pick $B_2$ such that $K \cap B_1 \cap B_2$ is not finitely covered.
+        \item Inductively, find nested sets with diameter $\to 0$. Pick $x_n$ in the $n$-th intersection.
+        \item By completeness, $x_n \to x \in K$.
+        \item Since $\mathcal{U}$ covers $K$, $x \in U$ for some $U \in \mathcal{U}$. $\exists \delta > 0$ such that $B(x, \delta) \subseteq U$.
+        \item For large $n$, the chosen set lies inside $B(x, \delta)$, meaning it is covered by a single set $U$. Contradiction.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Solution to Problem 1 (3/3): Compact $\implies$ Sequentially Compact}
+    Let $K$ be compact. We prove sequential compactness by contradiction.
+    \begin{itemize}
+        \item Suppose there is a sequence $\{x_n\}$ with no convergent subsequence.
+        \item Then the set of points $S = \{x_n\}$ has no limit points.
+        \item For any $y \in K$, there exists an open ball $B(y, r_y)$ containing only finitely many terms of the sequence (if $y \in S$, it contains only $y$; if not, it can be disjoint from the tail).
+        \item The collection $\{ B(y, r_y) \}_{y \in K}$ is an open cover of $K$.
+        \item By compactness, there is a finite subcover.
+        \item The union of these finitely many balls contains only finitely many terms of the sequence, contradicting that $\{x_n\}$ is an infinite sequence.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Problem 2: Heine-Borel Theorem}
+    \begin{problem}
+        Prove $S \subseteq \R^n$ is compact if and only if $S$ is closed and bounded.
+    \end{problem}
+\end{frame}
+
+\begin{frame}{Solution to Problem 2 (1/2): Compact $\implies$ Closed \& Bounded}
+    \begin{proof}[Forward Direction]
+        \textbf{Boundedness:}
+        Consider the open cover $\mathcal{U} = \{ B(0, n) \mid n \in \N \}$. Since $S \subseteq \bigcup B(0,n) = \R^n$, this covers $S$. By compactness, there is a finite subcover $\{B(0, n_1), \dots, B(0, n_k)\}$. Let $N = \max(n_i)$. Then $S \subseteq B(0, N)$, so $S$ is bounded.
+
+        \vspace{1em}
+        \textbf{Closedness:}
+        We show $S^c$ is open. Let $y \in S^c$. For each $x \in S$, let $r_x = \frac{1}{2}d(x, y)$. The collection $\{B(x, r_x)\}$ covers $S$. By compactness, take a finite subcover corresponding to $x_1, \dots, x_m$. 
+        Let $V = \bigcap_{i=1}^m B(y, r_{x_i})$. $V$ is an open neighborhood of $y$ disjoint from $S$. Thus $S^c$ is open.
+    \end{proof}
+\end{frame}
+
+\begin{frame}{Solution to Problem 2 (2/2): Closed \& Bounded $\implies$ Compact}
+    \begin{proof}[Converse Direction (Sequential Method)]
+        Suppose $S$ is closed and bounded. We show $S$ is sequentially compact.
+        \begin{enumerate}
+            \item Let $\{\mathbf{x}_k\}$ be an arbitrary sequence in $S$.
+            \item Since $S$ is bounded, the sequence $\{\mathbf{x}_k\}$ is bounded in $\R^n$.
+            \item By the \textbf{Bolzano-Weierstrass Theorem} for $\R^n$, every bounded sequence has a convergent subsequence.
+            \item Let $\{\mathbf{x}_{k_j}\}$ be a subsequence converging to some limit $\mathbf{x} \in \R^n$.
+            \item Since $S$ is closed and $\{\mathbf{x}_{k_j}\} \subset S$, the limit must be in $S$ (i.e., $\mathbf{x} \in S$).
+            \item Thus, every sequence in $S$ has a subsequence converging to a point in $S$.
+            \item $S$ is sequentially compact $\implies$ $S$ is compact (by Problem 1).
+        \end{enumerate}
+    \end{proof}
+\end{frame}
+
+\begin{frame}{Problem 3: The Hilbert Cube}
+    \begin{problem}
+        Let $H = [0, 1]^\N$ be the set of sequences $x = (x_1, x_2, \dots)$ with $x_n \in [0, 1]$. Define a distance function:
+        $$ d(x, y) = \sum_{n=1}^\infty \frac{|x_n - y_n|}{2^n} $$
+        \begin{enumerate}
+            \item Show that $(H, d)$ is a metric space.
+            \item Show that $H$ is sequentially compact.
+        \end{enumerate}
+    \end{problem}
+\end{frame}
+
+\begin{frame}{Solution to Problem 3 (1/2): Metric Space}
+    \begin{proof}[Part 1: Metric Space]
+        \begin{itemize}
+            \item \textbf{Well-defined:} Since $|x_n - y_n| \le 1$, the series is dominated by $\sum 2^{-n} = 1$, so it converges.
+            \item \textbf{Positivity:} $d(x,y) \ge 0$. If $d(x,y)=0$, then $|x_n - y_n| = 0$ for all $n$, so $x=y$.
+            \item \textbf{Symmetry:} $|x_n - y_n| = |y_n - x_n|$, so $d(x,y) = d(y,x)$.
+            \item \textbf{Triangle Inequality:} For any $z \in H$:
+            $$ |x_n - y_n| \le |x_n - z_n| + |z_n - y_n| $$
+            Multiplying by $2^{-n}$ and summing gives $d(x,y) \le d(x,z) + d(z,y)$.
+        \end{itemize}
+    \end{proof}
+\end{frame}
+
+\begin{frame}{Solution to Problem 3 (2/2): Sequential Compactness}
+    \begin{proof}[Part 2: Diagonal Argument]
+        Let $\{x^{(k)}\}$ be a sequence in $H$.
+        \begin{itemize}
+            \item The first coordinates $x^{(k)}_1$ lie in $[0,1]$. By Bolzano-Weierstrass, there is a subsequence converging in the 1st slot.
+            \item From this, extract a sub-subsequence converging in the 2nd slot, and so on.
+            \item Let $x^{(k_j)}$ be the \textbf{diagonal sequence}. It converges pointwise to some $x \in H$: $\lim_{j\to\infty} |x^{(k_j)}_n - x_n| = 0$ for each $n$.
+            \item \textbf{Convergence in metric $d$:} Given $\eps > 0$, pick $N$ such that $\sum_{N+1}^\infty 2^{-n} < \eps/2$.
+            \item Choose $J$ large enough so for $j > J$, $\sum_{n=1}^N 2^{-n} |x^{(k_j)}_n - x_n| < \eps/2$.
+            \item Then $d(x^{(k_j)}, x) < \eps$. Thus $H$ is sequentially compact.
+        \end{itemize}
+    \end{proof}
+\end{frame}
+
+\begin{frame}{Problem 4: Connectedness Properties}
+    \begin{problem}
+        \begin{enumerate}
+            \item Show that the interval $[0,1]$ is a connected set in $\R$.
+            \item Show that if a space $X$ is path-connected, it is connected.
+        \end{enumerate}
+    \end{problem}
+\end{frame}
+
+\begin{frame}{Solution to Problem 4: Connectedness}
+    \begin{proof}
+        \textbf{1. $[0,1]$ is connected:} Suppose $[0,1] = A \cup B$ where $A, B$ are disjoint, non-empty, closed sets in $[0,1]$. Assume $0 \in A$. Let $c = \sup A$.
+        \begin{itemize}
+            \item Since $A$ is closed, $c \in A$. Thus $c < 1$ (otherwise $B$ is empty).
+            \item Since $A$ is open in $[0,1]$ (complement of $B$), there is a neighborhood $[c, c+\eps) \subseteq A$.
+            \item This contradicts $c = \sup A$. Thus, no such separation exists.
+        \end{itemize}
+
+        \vspace{0.5em}
+        \textbf{2. Path-connected $\implies$ Connected:}
+        Suppose $X$ is path-connected but disconnected, so $X = U \cup V$ disjoint open sets. Pick $u \in U, v \in V$. Let $\gamma: [0,1] \to X$ be a path from $u$ to $v$.
+        \begin{itemize}
+            \item Consider sets $\gamma^{-1}(U)$ and $\gamma^{-1}(V)$ in $[0,1]$.
+            \item They are disjoint, non-empty, and open in $[0,1]$ (by continuity).
+            \item Their union is $[0,1]$, contradicting that $[0,1]$ is connected.
+        \end{itemize}
+    \end{proof}
+\end{frame}
+
+\begin{frame}{Problem 5: Open Connected Sets}
+    \begin{problem}
+        Show that any \textbf{open}, connected subset of a Euclidean space (or normed vector space) is path-connected.
+    \end{problem}
+\end{frame}
+
+\begin{frame}{Solution to Problem 5: Open Connected $\implies$ Path-Connected}
+    \begin{proof}
+        Let $U \subseteq \R^n$ be open and connected. Fix $x_0 \in U$. Define $A = \{ x \in U \mid \exists \text{ path from } x_0 \text{ to } x \text{ in } U \}$.
+        \begin{enumerate}
+            \item \textbf{$A$ is open:} Let $x \in A$. Since $U$ is open, $\exists B(x, r) \subseteq U$. Balls are convex (hence path-connected). Any $y \in B(x,r)$ connects to $x$, then to $x_0$. So $B(x,r) \subseteq A$.
+            \item \textbf{$U \setminus A$ is open:} Let $y \in U \setminus A$. $\exists B(y, r) \subseteq U$. If any $z \in B(y, r)$ were in $A$, we could connect $x_0 \to z \to y$, implying $y \in A$ (contradiction). So $B(y, r) \subseteq U \setminus A$.
+            \item \textbf{Conclusion:} $A$ is a non-empty ($x_0 \in A$) open and closed subset of connected $U$. Thus $A = U$.
+        \end{enumerate}
+    \end{proof}
+\end{frame}
+
+\begin{frame}{Problem 6: The Counterexample}
+    \begin{problem}
+        Consider the "Topologist's Sine Curve":
+        $$ S = \left\{ (x, \sin(1/x)) \in \R^2 \mid x \in (0, 1] \right\} \cup \{ (0, y) \mid y \in [-1, 1] \} $$
+        Prove that $S$ is connected but \textbf{not} path-connected.
+    \end{problem}
+    
+    \vspace{1em}
+    \textit{Note: This illustrates that path-connectedness is strictly stronger than connectedness for general sets.}
+\end{frame}
+
+\begin{frame}{Solution to Problem 6: Topologist's Sine Curve}
+    \begin{proof}
+        \textbf{Connected:} Let $G = \{(x, \sin(1/x)) \mid x \in (0,1]\}$. $G$ is the continuous image of the connected set $(0,1]$, so $G$ is connected. $S = \bar{G}$ (the closure adds the segment $\{0\} \times [-1,1]$). The closure of a connected set is connected.
+
+        \vspace{0.5em}
+        \textbf{Not Path-Connected:} Suppose there is a path $\gamma: [0,1] \to S$ from $(0,0)$ to $(1/\pi, 0)$. Let $\gamma(t) = (x(t), y(t))$.
+        \begin{itemize}
+            \item Since $x(t)$ is continuous and $x(0)=0, x(1)>0$, there are points arbitrarily close to $t=0$ with $x(t)>0$.
+            \item As $t \to 0$, $x(t) \to 0$, so $1/x(t) \to \infty$.
+            \item $\sin(1/x(t))$ oscillates between -1 and 1 infinitely often.
+            \item This prevents $y(t)$ from converging to any specific value if we approach along the curve, contradicting the continuity of $\gamma$ at $0$.
+        \end{itemize}
+    \end{proof}
+\end{frame}
+
+% ============================================================
+% TOPIC 2: TIETZE EXTENSION THEOREM
+% ============================================================
+\section{Tietze Extension Theorem}
+
+\begin{frame}{Overview: Tietze Extension Theorem}
+    \textbf{The Theorem:} Let $X$ be a metric space (or normal topological space) and $F \subseteq X$ be a closed set. If $f: F \to \R$ is continuous, there exists a continuous extension $\tilde{f}: X \to \R$ such that $\tilde{f}|_F = f$.
+
+    \vspace{0.5em}
+    \textbf{Key Tool (Urysohn's Lemma):}
+    The proof relies heavily on the ability to separate disjoint closed sets.
+    If $A, B \subseteq X$ are disjoint and closed, there exists a continuous function $\varphi: X \to [0,1]$ such that:
+    $$ \varphi(A) = \{0\} \quad \text{and} \quad \varphi(B) = \{1\}. $$
+\end{frame}
+
+\begin{frame}{Problem 7: Urysohn's Lemma}
+    \begin{problem}
+        Let $(X, d)$ be a metric space. Let $A, B$ be disjoint closed subsets of $X$. Construct a continuous function $\varphi: X \to [0,1]$ satisfying Urysohn's property.
+    \end{problem}
+\end{frame}
+
+\begin{frame}{Solution to Problem 7}
+    \begin{proof}
+        Using the distance function to a set, $d(x, E) = \inf \{ d(x, y) \mid y \in E \}$, which is continuous.
+        Define:
+        $$ \varphi(x) = \frac{d(x, A)}{d(x, A) + d(x, B)} $$
+        \begin{itemize}
+            \item Since $A, B$ are closed and disjoint, $d(x, A) + d(x, B) > 0$ for all $x$, so $\varphi$ is well-defined and continuous.
+            \item If $x \in A$, $d(x, A) = 0 \implies \varphi(x) = 0$.
+            \item If $x \in B$, $d(x, B) = 0 \implies \varphi(x) = 1$.
+            \item Clearly $0 \le \varphi(x) \le 1$.
+        \end{itemize}
+    \end{proof}
+\end{frame}
+
+\begin{frame}{Problem 8: Proof Strategy of Tietze Extension}
+    \begin{problem}
+        Describe the strategy to prove the Tietze Extension Theorem using Urysohn's Lemma.
+    \end{problem}
+    
+    \textbf{Solution Sketch:}
+    The proof uses an iterative approximation:
+    1. Assume $|f(x)| \le M$.
+    2. Define sets $A = \{x \mid f(x) \le -M/3\}$ and $B = \{x \mid f(x) \ge M/3\}$.
+    3. Use Urysohn to find $g_1$ approximating $f$ on these sets.
+    4. Consider the error $f - g_1$, which is bounded by $2M/3$.
+    5. Repeat inductively to get a series of functions $\sum g_n$ that converges uniformly to an extension of $f$.
+\end{frame}
+
+\begin{frame}{Problem 9 \& 10: Extensions on $\R$}
+    \begin{problem}
+        If $F \subseteq \R$ is closed, show explicitly that any continuous $f: F \to \R$ can be extended to $\R$ (e.g., by linear interpolation on the gaps).
+    \end{problem}
+    
+    \begin{problem}
+        \textbf{Prove or Disprove:} Any continuous function $f: (0, 1] \to \R$ can be extended to a continuous function on $\R$.
+    \end{problem}
+    
+    \textbf{Answer to 10:} False. Consider $f(x) = 1/x$. It is continuous on $(0, 1]$ but cannot be extended to $x=0$ continuously. (Extension requires uniform continuity or boundedness if the domain is not closed).
+\end{frame}
+
+% ============================================================
+% TOPIC 3: STONE-WEIERSTRASS
+% ============================================================
+\section{Stone-Weierstrass Theorem}
+
+\begin{frame}{Overview: Stone-Weierstrass}
+    \textbf{Theorem:} Let $X$ be a compact Hausdorff space. Let $\mathcal{A}$ be a subalgebra of $C(X, \R)$ such that:
+    \begin{enumerate}
+        \item $\mathcal{A}$ separates points ($x \ne y \implies \exists f \in \mathcal{A}, f(x) \ne f(y)$).
+        \item $\mathcal{A}$ vanishes at no point (or contains constants).
+    \end{enumerate}
+    Then $\mathcal{A}$ is dense in $C(X, \R)$ in the uniform norm.
+
+    \vspace{0.5em}
+    \textbf{Corollary:} Polynomials are dense in $C[a, b]$.
+\end{frame}
+
+\begin{frame}{Problem 11: The Moment Problem}
+    \begin{problem}
+        Let $f \in C[0, 1]$. Suppose that for all $n = 0, 1, 2, \dots$,
+        $$ \int_0^1 x^n f(x) \, dx = 0. $$
+        Prove that $f(x) \equiv 0$.
+    \end{problem}
+\end{frame}
+
+\begin{frame}{Solution to Problem 11}
+    \begin{proof}
+        \begin{enumerate}
+            \item By the Stone-Weierstrass theorem, the set of polynomials is dense in $C[0,1]$.
+            \item Therefore, there exists a sequence of polynomials $P_k(x)$ such that $P_k \to f$ uniformly.
+            \item By linearity of the integral and the hypothesis, $\int_0^1 P_k(x) f(x) \, dx = 0$ for any polynomial $P_k$.
+            \item Taking the limit as $k \to \infty$:
+            $$ \int_0^1 (f(x))^2 \, dx = \lim_{k \to \infty} \int_0^1 P_k(x) f(x) \, dx = 0. $$
+            \item Since $f^2 \ge 0$ and is continuous, $\int f^2 = 0 \implies f \equiv 0$.
+        \end{enumerate}
+    \end{proof}
+\end{frame}
+
+\begin{frame}{Problem 12 \& 13: Separability}
+    \begin{problem}
+        Prove that $C[0, 1]$ is a \textbf{separable} metric space (has a countable dense subset).
+    \end{problem}
+    \textbf{Hint:} Use polynomials with rational coefficients $\Q[x]$.
+
+    \vspace{1em}
+    \begin{problem}
+        Prove that a compact metric space is separable. 
+    \end{problem}
+\end{frame}
+
+\begin{frame}{Solution to Problem 12: Separability of $C[0,1]$}
+    \begin{proof}
+        We show that the set of polynomials with rational coefficients, denoted $\Q[x]$, is a countable dense subset of $C[0,1]$.
+        \begin{enumerate}
+            \item \textbf{Countability:} $\Q[x] = \bigcup_{n=0}^\infty \{ a_n x^n + \dots + a_0 \mid a_i \in \Q \}$. Since $\Q$ is countable, each set of degree $n$ polynomials is countable. A countable union of countable sets is countable.
+            \item \textbf{Density:} Let $f \in C[0,1]$ and $\eps > 0$. By the \textbf{Weierstrass Approximation Theorem}, there exists a polynomial $P(x)$ (with real coefficients) such that $\|f - P\|_\infty < \eps/2$.
+            \item Let $P(x) = \sum_{k=0}^n c_k x^k$. For each $c_k$, choose $q_k \in \Q$ such that $|c_k - q_k| < \frac{\eps}{2(n+1)}$. Let $Q(x) = \sum q_k x^k$.
+            \item Then $\|P - Q\|_\infty \le \sum |c_k - q_k| < \eps/2$.
+            \item By Triangle Inequality: $\|f - Q\|_\infty \le \|f - P\| + \|P - Q\| < \eps$.
+        \end{enumerate}
+    \end{proof}
+\end{frame}
+
+\begin{frame}{Solution to Problem 13: Separability of Compact Spaces}
+    \begin{proof}
+        Let $(X, d)$ be a compact metric space.
+        \begin{enumerate}
+            \item Since $X$ is compact, it is totally bounded.
+            \item For each $n \in \N$, there exists a finite set of points $A_n = \{x_{n,1}, \dots, x_{n, k_n}\}$ such that the balls of radius $1/n$ centered at $A_n$ cover $X$.
+            \item Define $D = \bigcup_{n=1}^\infty A_n$. As a countable union of finite sets, $D$ is countable.
+            \item \textbf{Density:} Let $x \in X$ and $\eps > 0$. Choose $n$ such that $1/n < \eps$.
+            \item Since $A_n$ centers cover $X$, there exists $y \in A_n \subseteq D$ such that $d(x, y) < 1/n < \eps$.
+            \item Thus $D$ is dense in $X$.
+        \end{enumerate}
+    \end{proof}
+\end{frame}
+
+% ============================================================
+% TOPIC 4: ARZELA-ASCOLI THEOREM
+% ============================================================
+\section{Arzela-Ascoli Theorem}
+
+\begin{frame}{Overview: Arzela-Ascoli Theorem}
+    \textbf{Theorem:} Let $X$ be a compact metric space. A subset $K \subseteq C(X, \R)$ is compact in the uniform topology if and only if $K$ is:
+    \begin{enumerate}
+        \item \textbf{Closed},
+        \item \textbf{Bounded} (pointwise bounded, which implies uniformly bounded on compact $X$), and
+        \item \textbf{Equicontinuous}.
+    \end{enumerate}
+    
+    \vspace{0.5em}
+    \textbf{Interpretation:}
+    This theorem characterizes the compact sets in the infinite-dimensional space $C(X, \R)$. It is the function space analog of the Heine-Borel theorem, adding the condition of "equicontinuity" to replace the loss of finite dimensionality.
+\end{frame}
+
+\begin{frame}{Problem 14: Equicontinuity Definitions}
+    \begin{problem}
+        Let $\mathcal{F}$ be a family of functions on a compact metric space $(X, d)$. Show that the following definitions are equivalent:
+        \begin{enumerate}
+            \item \textbf{Pointwise Equicontinuity:} $\forall x \in X, \forall \eps > 0, \exists \delta(x, \eps) > 0$ such that $d(x, y) < \delta \implies |f(x) - f(y)| < \eps, \forall f \in \mathcal{F}$.
+            \item \textbf{Uniform Equicontinuity:} $\forall \eps > 0, \exists \delta(\eps) > 0$ such that $d(x, y) < \delta \implies |f(x) - f(y)| < \eps, \forall f \in \mathcal{F}, \forall x,y \in X$.
+        \end{enumerate}
+    \end{problem}
+\end{frame}
+
+\begin{frame}{Solution to Problem 14: Equicontinuity}
+    \begin{proof}
+        $(2 \implies 1)$ is trivial. We prove $(1 \implies 2)$ using compactness.
+        \begin{enumerate}
+            \item Let $\eps > 0$. By (1), for each $x \in X$, there exists $\delta_x > 0$ such that $f(B(x, \delta_x)) \subseteq B(f(x), \eps/2)$ for all $f \in \mathcal{F}$.
+            \item The balls $\{B(x, \delta_x/2)\}_{x \in X}$ form an open cover of $X$.
+            \item By compactness, there is a finite subcover centered at $x_1, \dots, x_k$.
+            \item Let $\delta = \min \{ \delta_{x_1}/2, \dots, \delta_{x_k}/2 \} > 0$.
+            \item Let $y, z \in X$ with $d(y, z) < \delta$. Then $y \in B(x_i, \delta_{x_i}/2)$ for some $i$.
+            \item By triangle inequality: $d(z, x_i) \le d(z, y) + d(y, x_i) < \delta + \delta_{x_i}/2 \le \delta_{x_i}$.
+            \item So both $y, z \in B(x_i, \delta_{x_i})$. For any $f \in \mathcal{F}$:
+            $$ |f(y) - f(z)| \le |f(y) - f(x_i)| + |f(x_i) - f(z)| < \eps/2 + \eps/2 = \eps. $$
+        \end{enumerate}
+    \end{proof}
+\end{frame}
+
+\begin{frame}{Problem 15: Necessity of Compactness}
+    \begin{problem}
+        Show that the assumption that $X$ is compact is necessary for the Arzela-Ascoli theorem.
+        Specifically, find a sequence of functions $f_n$ on a non-compact space $X$ that is uniformly bounded and equicontinuous, but admits no uniformly convergent subsequence.
+    \end{problem}
+\end{frame}
+
+\begin{frame}{Solution to Problem 15}
+    Let $X = \R$ (which is not compact).
+    Consider the "sliding bump" functions:
+    $$ f_n(x) = \max(0, 1 - |x-n|) $$
+    \begin{itemize}
+        \item \textbf{Bounded:} $|f_n(x)| \le 1$ for all $x, n$.
+        \item \textbf{Equicontinuous:} Since $|f_n'(x)| \le 1$ wherever defined, they are all Lipschitz continuous with constant 1. Thus, they are equicontinuous.
+        \item \textbf{No Convergent Subsequence:}
+        For any $n \ne m$, $\|f_n - f_m\|_\infty = 1$ (since the supports $[n-1, n+1]$ and $[m-1, m+1]$ are disjoint for large enough difference).
+        Since the distance between any distinct terms is 1, no subsequence is Cauchy, so no subsequence converges uniformly.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Problem 16: Dini's Theorem}
+    \begin{problem}
+        Let $f_n$ be a monotone sequence of continuous functions on a compact metric space $S$. Suppose that $f_n$ converges pointwise to a continuous function $f$ on $S$. Prove or disprove that the convergence is uniform.
+    \end{problem}
+    \textit{This is known as Dini's Theorem.}
+\end{frame}
+
+\begin{frame}{Solution to Problem 16: Dini's Theorem}
+    \begin{proof}
+        \textbf{Prove:} The convergence is uniform.
+        Let $g_n = |f_n - f|$. Since $f_n$ is monotone and converges to $f$, $g_n$ is a monotonic sequence decreasing to 0 pointwise (assume $f_n \downarrow f$; if $f_n \uparrow f$, take $f - f_n$). Since $f_n, f$ are continuous, $g_n$ is continuous.
+        
+        Let $\eps > 0$. For each $x \in S$, $g_n(x) \downarrow 0$, so $\exists N_x$ s.t. $g_{N_x}(x) < \eps$. By continuity, there is an open neighborhood $U_x$ such that $g_{N_x}(y) < \eps$ for all $y \in U_x$.
+        
+        $\{U_x\}_{x \in S}$ covers $S$. By compactness, there is a finite subcover $U_{x_1}, \dots, U_{x_k}$. Let $N = \max(N_{x_1}, \dots, N_{x_k})$.
+        For any $y \in S$, $y \in U_{x_i}$ for some $i$. Since $g_n$ is decreasing, for all $n \ge N \ge N_{x_i}$:
+        $$ 0 \le g_n(y) \le g_{N_{x_i}}(y) < \eps. $$
+        Thus convergence is uniform.
+    \end{proof}
+\end{frame}
+
+% ============================================================
+% TOPIC 5: BAIRE CATEGORY THEOREM
+% ============================================================
+\section{Baire Category Theorem}
+
+\begin{frame}{Overview: Baire Category Theorem}
+    \textbf{Theorem (Baire Category Theorem):} Let $(X, d)$ be a complete metric space. If $\{U_n\}_{n=1}^\infty$ is a countable collection of open dense subsets of $X$, then their intersection $\bigcap_{n=1}^\infty U_n$ is dense in $X$.
+    
+    \vspace{0.5em}
+    \textbf{Corollary:} A complete metric space $X$ is not a countable union of nowhere dense sets. \\(i.e., $X$ is of \textbf{Second Category}).
+    
+    \vspace{0.5em}
+    \textbf{Connection:}
+    If $X = \bigcup A_n$ with $A_n$ nowhere dense, then $\bar{A}_n$ has empty interior, so $U_n = (\bar{A}_n)^c$ is open and dense. BCT implies $\bigcap U_n \neq \emptyset$, so $X \neq \bigcup \bar{A}_n \supseteq \bigcup A_n$.
+\end{frame}
+
+\begin{frame}{Problem 17: Removing Lines from $\R^2$}
+    \begin{problem}
+        Let $\{l_i\}_{i=1}^\infty$ be a countable collection of straight lines in $\R^2$. Show that $\R^2 \setminus \bigcup_{i=1}^\infty l_i$ is dense in $\R^2$.
+    \end{problem}
+    
+    \vspace{0.5em}
+    \textit{We will provide a direct proof using nested balls (simulating the proof of BCT) as suggested in the notes.}
+\end{frame}
+
+\begin{frame}{Solution to Problem 17 (Nested Balls)}
+    \begin{proof}
+        Let $B_0$ be an arbitrary open ball in $\R^2$. We want to show $B_0 \cap (\R^2 \setminus \bigcup l_i) \neq \emptyset$.
+        
+        \textbf{Step 1:} Since $l_1$ has empty interior, $B_0 \not\subseteq l_1$. We can find a closed ball $\overline{B}_1 \subset B_0$ such that $\overline{B}_1 \cap l_1 = \emptyset$. We can ensure radius $r_1 \le r_0/2$.
+        
+        \textbf{Step 2:} Similarly, inside $B_1$, pick $\overline{B}_2$ such that $\overline{B}_2 \cap l_2 = \emptyset$ and $r_2 \le r_1/2$.
+        
+        \textbf{Induction:} We obtain a sequence of nested closed balls $\overline{B}_1 \supset \overline{B}_2 \supset \dots$ such that $\overline{B}_n \cap l_n = \emptyset$ and $r_n \to 0$.
+        
+        \textbf{Conclusion:} By completeness of $\R^2$, $\bigcap_{n=1}^\infty \overline{B}_n = \{x\}$.
+        $x \in B_0$, and for all $n$, $x \notin l_n$. Thus $x \in B_0 \setminus \bigcup l_i$.
+    \end{proof}
+\end{frame}
+
+\begin{frame}{Problem 18: Generic Nowhere Differentiability}
+    \begin{problem}
+        Let $C[0,1]$ be the complete metric space of continuous functions equipped with the sup-norm.
+        Show that the set of functions which are nowhere differentiable is of the \textbf{Second Category} (i.e., "most" continuous functions are nowhere differentiable).
+    \end{problem}
+    
+    \vspace{1em}
+    \textit{This is a classic application of BCT, credited to Banach and Mazurkiewicz.}
+\end{frame}
+
+\begin{frame}{Solution to Problem 18 (1/4): Setup}
+    \textbf{Goal:} Show that the set of functions differentiable at even one point is of the \textbf{First Category}.
+    
+    Define the set $E_n$ for each $n \in \N$:
+    $$ E_n = \left\{ f \in C[0,1] \mid \exists x_0 \in [0,1] \text{ s.t. } \forall y \in [0,1], |f(y) - f(x_0)| \le n |y - x_0| \right\} $$
+    
+    \textbf{Connection to Differentiability:}
+    If $f$ is differentiable at $x_0$, then $f'(x_0)$ exists, so the difference quotient is bounded near $x_0$. Since $f$ is bounded on $[0,1]$, the difference quotient is bounded globally by some integer $n$.
+    Thus, $\{ f \in C[0,1] \mid f \text{ is diff. at some point} \} \subseteq \bigcup_{n=1}^\infty E_n$.
+    
+    We must show each $E_n$ is \textbf{nowhere dense}.
+\end{frame}
+
+\begin{frame}{Solution to Problem 18 (2/4): Closedness}
+    \textbf{Step 1: Show $E_n$ is closed.}
+    Let $\{f_k\} \subset E_n$ be a sequence converging uniformly to $f$.
+    \begin{itemize}
+        \item For each $k$, there exists $x_k \in [0,1]$ such that $|f_k(y) - f_k(x_k)| \le n|y-x_k|$ for all $y$.
+        \item By Bolzano-Weierstrass, $\{x_k\}$ has a subsequence converging to some $x \in [0,1]$. Assume w.l.o.g. $x_k \to x$.
+        \item Fix $y$. By uniform convergence $f_k \to f$ and continuity:
+        $$ |f(y) - f(x)| = \lim_{k \to \infty} |f_k(y) - f_k(x_k)| \le \lim_{k \to \infty} n|y - x_k| = n|y - x|. $$
+        \item Thus $f \in E_n$. So $E_n$ is closed.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution to Problem 18 (3/4): Nowhere Dense}
+    \textbf{Step 2: Show $E_n$ has empty interior.}
+    It suffices to show that for any $f \in C[0,1]$ and $\eps > 0$, there exists $g \in B(f, \eps)$ such that $g \notin E_n$.
+    \begin{itemize}
+        \item Approximate $f$ by a piecewise linear function $p$ (polygonal path) such that $\|f - p\| < \eps/2$.
+        \item Let $M$ be the maximum slope of $p$.
+        \item Construct a "sawtooth" function $\phi(x)$ that oscillates very rapidly with slope $K > n + M$ and amplitude bounded by $\eps/2$.
+        \item Define $g(x) = p(x) + \phi(x)$. Then $\|g - f\| \le \|g-p\| + \|p-f\| < \eps$.
+        \item At any point $x$, the slope of $g$ is roughly slope($p$) + slope($\phi$). Since slope($\phi$) dominates, $|g(y)-g(x)|/|y-x|$ will exceed $n$ locally.
+        \item Thus $g \notin E_n$. $E_n$ contains no open ball.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution to Problem 18 (4/4): Conclusion}
+    \begin{proof}[Final Argument]
+        \begin{enumerate}
+            \item We showed each $E_n$ is closed and has empty interior, i.e., $E_n$ is \textbf{nowhere dense}.
+            \item The set of functions differentiable at at least one point is contained in the countable union $\bigcup_{n=1}^\infty E_n$.
+            \item Therefore, the set of differentiable functions is of the \textbf{First Category} (meager).
+            \item By the Baire Category Theorem, $C[0,1]$ is of Second Category.
+            \item The complement—functions that are \textbf{nowhere differentiable}—must be of the \textbf{Second Category} and is therefore dense in $C[0,1]$.
+        \end{enumerate}
+    \end{proof}
+\end{frame}
+
+\begin{frame}{Problem 19: Generic Nowhere Monotonicity}
+    \begin{problem}
+        Let $C[0,1]$ be the space of continuous functions on $[0,1]$. Show that the set of functions which are nowhere monotone (i.e., not monotone on any sub-interval) is of the \textbf{Second Category} (generic).
+    \end{problem}
+    \textit{This result implies that "most" continuous functions wiggle infinitely often at all scales.}
+\end{frame}
+
+\begin{frame}{Solution to Problem 19 (1/2): Setup \& Closedness}
+    Let $M \subset C[0,1]$ be the set of functions monotone on some open sub-interval. We show $M$ is of the First Category.
+    
+    Let $\{I_n\}_{n=1}^\infty$ enumerate all open intervals in $[0,1]$ with rational endpoints.
+    Let $M_n^+$ be the set of functions non-decreasing on $I_n$, and $M_n^-$ be non-increasing on $I_n$. Then $M = \bigcup_{n=1}^\infty (M_n^+ \cup M_n^-)$.
+    
+    \textbf{Step 1: Closedness.}
+    If sequence $\{f_k\} \subset M_n^+$ converges uniformly to $f$, then monotonicity is preserved. For any $x, y \in I_n$ with $x < y$:
+    $f(y) - f(x) = \lim (f_k(y) - f_k(x)) \ge 0$. Thus $f \in M_n^+$.
+    Similarly, $M_n^-$ is closed.
+\end{frame}
+
+\begin{frame}{Solution to Problem 19 (2/2): Nowhere Dense \& Conclusion}
+    \textbf{Step 2: Nowhere Dense.}
+    We show $M_n^+$ has empty interior. Let $f \in M_n^+$ and $\eps > 0$.
+    \begin{itemize}
+        \item Add a high-frequency "zig-zag" function $\phi(x)$ (small amplitude $<\eps$) to $f$.
+        \item The zig-zags will break the monotonicity of $f$ within $I_n$.
+        \item Thus, every ball around $f$ contains a function not in $M_n^+$.
+    \end{itemize}
+    Since $M_n^+$ is closed and has empty interior, it is nowhere dense (same for $M_n^-$).
+    
+    \textbf{Conclusion:}
+    $M$ is a countable union of nowhere dense sets $\implies$ First Category.
+    The complement (nowhere monotone functions) is Second Category.
+\end{frame}
+
+% ============================================================
+% TOPIC 6: MULTIVARIABLE DIFFERENTIATION
+% ============================================================
+\section{Multivariable Differentiation}
+
+\begin{frame}{Overview: Differentiation}
+    \textbf{Topics:}
+    \begin{itemize}
+        \item \textbf{Taylor Series ($n=2$):} Using differential operators:
+        $$ f(x+h, y+k) \approx \sum_{j=0}^2 \frac{1}{j!} \left( h \frac{\partial}{\partial x} + k \frac{\partial}{\partial y} \right)^j f(x,y) $$
+        \item \textbf{Implicit Function Theorem (IFT):} Conditions under which non-linear equations $F(\mathbf{x}, \mathbf{y}) = 0$ can be locally solved for $\mathbf{y}$ as a function of $\mathbf{x}$. Crucially depends on the invertibility of the derivative with respect to $\mathbf{y}$.
+        \item \textbf{Inverse Function Theorem:} Regularity of the Jacobian determinant implies local invertibility.
+        \item \textbf{Bump Functions:} Smooth functions with compact support, used in partitions of unity.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Problem 20: Taylor Series}
+    \begin{problem}
+        Compute the second-order Taylor expansion of $f(x, y) = e^x \cos y$ at the point $(0, 0)$. Use the operator notation $h \frac{\partial}{\partial x} + k \frac{\partial}{\partial y}$ in your solution.
+    \end{problem}
+\end{frame}
+
+\begin{frame}{Solution to Problem 20}
+    Let $\mathbf{h} = (h, k) = (x, y)$ since we expand at $(0,0)$. The operator is $D = x \frac{\partial}{\partial x} + y \frac{\partial}{\partial y}$.
+    $$ f(x,y) \approx \sum_{j=0}^2 \frac{1}{j!} D^j f(0,0) = f(0,0) + Df(0,0) + \frac{1}{2} D^2 f(0,0) $$
+    \begin{itemize}
+        \item \textbf{$j=0$:} $f(0,0) = e^0 \cos 0 = 1$.
+        \item \textbf{$j=1$:} $Df = x(e^x \cos y) + y(-e^x \sin y)$. At $(0,0)$, $Df = x(1) + y(0) = x$.
+        \item \textbf{$j=2$:} $D^2 f = (x \partial_x + y \partial_y)(x e^x \cos y - y e^x \sin y)$
+        $$ = x(x e^x \cos y - y e^x \sin y) + y(-x e^x \sin y - y e^x \cos y) $$
+        At $(0,0)$, $D^2 f = x(x) + y(-y) = x^2 - y^2$.
+    \end{itemize}
+    $$ f(x,y) \approx 1 + x + \frac{1}{2}(x^2 - y^2) $$
+\end{frame}
+
+\begin{frame}{Problem 21: IFT in $\R^2 \times \R^2$}
+    \begin{problem}
+        Consider a $C^1$ mapping $F: \R^4 \to \R^2$, where we write points as $(x,y,u,v)$ and $F(x,y,u,v) = 0$.
+        \begin{enumerate}
+            \item State the Implicit Function Theorem conditions for solving for $u, v$ in terms of $x, y$ locally around a point $P_0$.
+            \item State the formula for the Jacobian matrix of the implicit function $G(x,y) = (u,v)$.
+            \item Prove this derivative formula in detail.
+        \end{enumerate}
+    \end{problem}
+\end{frame}
+
+\begin{frame}{Solution to Problem 21 (1/2): Statement}
+    \textbf{Theorem:} Let $F = (F_1, F_2)$ be a $C^1$ mapping near $P_0 = (x_0, y_0, u_0, v_0)$ such that $F(P_0) = 0$.
+    If the $2 \times 2$ matrix of partial derivatives with respect to the dependent variables $u, v$ is invertible at $P_0$:
+    $$ \det \frac{\partial(F_1, F_2)}{\partial(u, v)} = \det \begin{pmatrix} \partial_u F_1 & \partial_v F_1 \\ \partial_u F_2 & \partial_v F_2 \end{pmatrix} \neq 0, $$
+    then there exists a neighborhood $U$ of $(x_0, y_0)$ and a unique $C^1$ function $G: U \to \R^2$, $G(x,y) = (u(x,y), v(x,y))$, such that $F(x,y,u(x,y),v(x,y)) = 0$ for all $(x,y) \in U$.
+\end{frame}
+
+\begin{frame}{Solution to Problem 21 (2/2): Derivative Formula Proof}
+    \textbf{Proof:} We differentiate the identity $F(x, y, u(x,y), v(x,y)) = 0$ with respect to the independent variables. By the Chain Rule, for any variable $\xi \in \{x, y\}$:
+    $$ \frac{\partial F}{\partial \xi} + \frac{\partial F}{\partial u} \frac{\partial u}{\partial \xi} + \frac{\partial F}{\partial v} \frac{\partial v}{\partial \xi} = 0 $$
+    Writing this in matrix form for the Jacobian of the implicit function $D G = \begin{pmatrix} u_x & u_y \\ v_x & v_y \end{pmatrix}$:
+    $$ [D_{(x,y)} F] + [D_{(u,v)} F] \cdot [D G] = 0 $$
+    Since $[D_{(u,v)} F]$ is invertible by hypothesis:
+    $$ D G = - [D_{(u,v)} F]^{-1} [D_{(x,y)} F] $$
+    $$ \begin{pmatrix} u_x & u_y \\ v_x & v_y \end{pmatrix} = - \begin{pmatrix} F_{1u} & F_{1v} \\ F_{2u} & F_{2v} \end{pmatrix}^{-1} \begin{pmatrix} F_{1x} & F_{1y} \\ F_{2x} & F_{2y} \end{pmatrix} $$
+\end{frame}
+
+\begin{frame}{Problem 22: IFT Calculation}
+    \begin{problem}
+        Consider the system:
+        $$ \begin{cases} xu + yv + uv = 1 \\ xu^3 + yv^3 = 1 \end{cases} $$
+        \begin{enumerate}
+            \item Verify that $P = (x,y,u,v) = (1, 1, 1, 0)$ is a solution.
+            \item Can we solve for $u, v$ in terms of $x, y$ near this point?
+            \item Compute the derivative matrix $\begin{pmatrix} u_x & u_y \\ v_x & v_y \end{pmatrix}$ at $(x,y)=(1,1)$.
+        \end{enumerate}
+    \end{problem}
+    \textit{This applies the IFT conditions and formula from Problem 20.}
+\end{frame}
+
+\begin{frame}{Solution to Problem 22: Calculation}
+    Let $F_1 = xu + yv + uv - 1$ and $F_2 = xu^3 + yv^3 - 1$.
+    \begin{itemize}
+        \item \textbf{1. Verify Solution:} $1(1) + 1(0) + 1(0) = 1$ and $1(1)^3 + 1(0)^3 = 1$. \checkmark
+        \item \textbf{2. Check IFT Condition:} Calculate $J_{u,v} = \frac{\partial(F_1, F_2)}{\partial(u, v)}$ at $P(1,1,1,0)$.
+        $$ J_{u,v} = \begin{pmatrix} x+v & y+u \\ 3xu^2 & 3yv^2 \end{pmatrix}_P = \begin{pmatrix} 1+0 & 1+1 \\ 3(1)(1)^2 & 3(1)(0)^2 \end{pmatrix} = \begin{pmatrix} 1 & 2 \\ 3 & 0 \end{pmatrix} $$
+        $\det(J_{u,v}) = -6 \neq 0$. Thus, implicit functions $u(x,y), v(x,y)$ \textbf{exist}.
+        \item \textbf{3. Compute Derivatives:} $J_{x,y} = \begin{pmatrix} u & v \\ u^3 & v^3 \end{pmatrix}_P = \begin{pmatrix} 1 & 0 \\ 1 & 0 \end{pmatrix}$.
+        $$ \begin{pmatrix} u_x & u_y \\ v_x & v_y \end{pmatrix} = - \begin{pmatrix} 1 & 2 \\ 3 & 0 \end{pmatrix}^{-1} \begin{pmatrix} 1 & 0 \\ 1 & 0 \end{pmatrix} = - \frac{1}{-6} \begin{pmatrix} 0 & -2 \\ -3 & 1 \end{pmatrix} \begin{pmatrix} 1 & 0 \\ 1 & 0 \end{pmatrix} $$
+        $$ = \frac{1}{6} \begin{pmatrix} -2 & 0 \\ -2 & 0 \end{pmatrix} = \begin{pmatrix} -1/3 & 0 \\ -1/3 & 0 \end{pmatrix} $$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Further Learning: Alternative Proof of IFT}
+    \vfill
+    \centering
+    \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+        \usebeamerfont{title}Alternative Proof: Fixed Point Method\par%
+    \end{beamercolorbox}
+    
+    \vspace{2em}
+    \large
+    For those interested in a proof of the \textbf{Implicit/Inverse Function Theorem} using the \textbf{Contraction Mapping Principle} (Fixed Point Theorem), 
+    please check \textbf{Liu Siqi's video series} on Mathematical Analysis.
+    \vfill
+\end{frame}
+
+% ============================================================
+% TOPIC 7: MULTIVARIABLE INTEGRATION
+% ============================================================
+\section{Multivariable Integration}
+
+\begin{frame}{Overview: Multivariable Integration}
+    \textbf{Key Concepts:}
+    \begin{enumerate}
+        \item \textbf{Riemann Integrability:} 
+        Covered in the course, but note that the modern standard is the \textbf{Lebesgue Integration} theory (MAT3010).
+        
+        \item \textbf{Green's Formula \& Divergence Theorem:} 
+        Tools to convert between domain integrals and boundary integrals. 
+        \begin{itemize}
+            \item These are special cases of the generalized \textbf{Stokes' Theorem} on manifolds.
+            \item \textbf{Recommendation:} \textit{Differential Forms and Applications} by Do Carmo.
+        \end{itemize}
+        
+        \item \textbf{Leibniz Rule (Feynman's Trick):}
+        Differentiation under the integral sign:
+        $$ \frac{d}{dy} \int_a^b f(x,y) \, dx = \int_a^b \frac{\partial f}{\partial y}(x,y) \, dx $$
+        Valid for both proper and convergent improper integrals (under specific uniform convergence conditions).
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Problem 23: Feynman's Trick Practice}
+    \begin{problem}
+        Find the following integrals:
+        \begin{enumerate}
+            \item[(a)] $\displaystyle \int_0^1 \frac{x^b - x^a}{\ln x} \, dx, \quad b > a > 0$.
+            \item[(b)] $\displaystyle \int_0^1 \frac{\ln(1+x)}{1+x^2} \, dx$.
+        \end{enumerate}
+    \end{problem}
+\end{frame}
+
+\begin{frame}{Solution to Problem 23 (1/2): Part (a)}
+    \textbf{Technique: Parameter Integration}
+    Observe that $\frac{x^b - x^a}{\ln x} = \int_a^b x^y \, dy$.
+    $$ I = \int_0^1 \left( \int_a^b x^y \, dy \right) dx $$
+    By Fubini's Theorem (justification required for improper integral, but valid here since integrand is positive and measurable):
+    $$ I = \int_a^b \left( \int_0^1 x^y \, dx \right) dy $$
+    $$ I = \int_a^b \left[ \frac{x^{y+1}}{y+1} \right]_0^1 dy = \int_a^b \frac{1}{y+1} \, dy $$
+    $$ I = \big[ \ln(y+1) \big]_a^b = \ln(b+1) - \ln(a+1) = \ln\left(\frac{b+1}{a+1}\right) $$
+\end{frame}
+
+\begin{frame}{Solution to Problem 23 (2/2): Part (b)}
+    \textbf{Technique: Variable Substitution}
+    Let $x = \tan \theta$, so $dx = \sec^2 \theta \, d\theta$. Limits: $0 \to 0, 1 \to \pi/4$.
+    $$ I = \int_0^{\pi/4} \frac{\ln(1+\tan\theta)}{1+\tan^2\theta} \sec^2\theta \, d\theta = \int_0^{\pi/4} \ln(1+\tan\theta) \, d\theta $$
+    Use the symmetry property $\int_0^a f(x)dx = \int_0^a f(a-x)dx$:
+    $$ I = \int_0^{\pi/4} \ln\left(1+\tan\left(\frac{\pi}{4}-\theta\right)\right) d\theta $$
+    Using $\tan(\frac{\pi}{4}-\theta) = \frac{1-\tan\theta}{1+\tan\theta}$:
+    $$ 1 + \tan\left(\frac{\pi}{4}-\theta\right) = 1 + \frac{1-\tan\theta}{1+\tan\theta} = \frac{2}{1+\tan\theta} $$
+    $$ I = \int_0^{\pi/4} (\ln 2 - \ln(1+\tan\theta)) \, d\theta = \frac{\pi}{4}\ln 2 - I \implies I = \frac{\pi}{8} \ln 2 $$
+\end{frame}
+
+\begin{frame}{Problem 24: Improper Integrals with Parameters}
+    \begin{problem}
+        Compute:
+        \begin{enumerate}
+            \item[(a)] $\displaystyle J = \int_0^\infty e^{-px} \frac{\sin bx - \sin ax}{x} \, dx, \quad p>0, b>a$.
+            \item[(b)] $\displaystyle \int_0^\infty \frac{\sin ax}{x} \, dx, \quad a \ne 0$.
+        \end{enumerate}
+    \end{problem}
+\end{frame}
+
+\begin{frame}{Solution to Problem 24 (1/2): Part (a)}
+    Let $I(y) = \int_0^\infty e^{-px} \frac{\sin yx}{x} \, dx$. Then $J = I(b) - I(a)$.
+    Differentiate w.r.t. parameter $y$:
+    $$ I'(y) = \int_0^\infty e^{-px} \frac{\partial}{\partial y}\left(\frac{\sin yx}{x}\right) dx = \int_0^\infty e^{-px} \cos(yx) \, dx $$
+    This is a standard Laplace transform or integration by parts:
+    $$ I'(y) = \frac{p}{p^2 + y^2} $$
+    Integrate w.r.t. $y$:
+    $$ I(y) = \int \frac{p}{p^2+y^2} dy = \arctan\left(\frac{y}{p}\right) + C $$
+    Since $I(0) = 0 \implies C = 0$, we have $I(y) = \arctan(y/p)$.
+    $$ J = \arctan\left(\frac{b}{p}\right) - \arctan\left(\frac{a}{p}\right) $$
+\end{frame}
+
+\begin{frame}{Solution to Problem 24 (2/2): Part (b)}
+    \textbf{Dirichlet Integral:}
+    We can view this as the limit of part (a) as $p \to 0^+$ (with $b=a$ and the second term 0, effectively).
+    Alternatively, define $K(p) = \int_0^\infty e^{-px} \frac{\sin ax}{x} dx$ for $p \ge 0$.
+    $$ K'(p) = -\int_0^\infty e^{-px} \sin ax \, dx = -\frac{a}{p^2+a^2} $$
+    $$ K(p) = -\arctan\left(\frac{p}{a}\right) + C $$
+    As $p \to \infty$, $K(p) \to 0$ (Riemann-Lebesgue type decay), so $0 = -\frac{\pi}{2} + C \implies C = \frac{\pi}{2}$ (assuming $a>0$).
+    Thus $K(0) = \frac{\pi}{2}$.
+    
+    If $a < 0$, the sign flips. Thus:
+    $$ \int_0^\infty \frac{\sin ax}{x} \, dx = \frac{\pi}{2} \operatorname{sgn}(a) $$
+\end{frame}
+
+\end{document}

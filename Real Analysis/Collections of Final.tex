@@ -1,0 +1,558 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{hyperref}
+
+% --- Page Setup ---
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textbf{USTC Real Analysis}}
+\rhead{Final Exam Problem Set}
+\cfoot{\thepage}
+
+% --- Macros ---
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\m}{\mu}
+\newcommand{\dx}{\,dx}
+\newcommand{\dy}{\,dy}
+\newcommand{\dmu}{\,d\mu}
+\DeclareMathOperator{\esssup}{ess\,sup}
+
+% --- Theorem Styles ---
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}[section]
+
+% --- Title Info ---
+\title{\textbf{USTC Real Analysis Final Exam Problems}\\ \large Collected Years: 2019 -- 2025}
+\author{Compiled Collection}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% =======================================================
+% 2025
+% =======================================================
+\section{Year 2025}
+
+\subsection{Standard Class}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Measure Theory Concepts}
+    \begin{enumerate}
+        \item Briefly state the definition of the Lebesgue outer measure $m_*$.
+        \item Prove the countable subadditivity of the outer measure using the definition.
+        \item Prove: For two sets $E_1$ and $E_2$ satisfying $d(E_1, E_2) > 0$, we have $m_*(E_1 \cup E_2) = m_*(E_1) + m_*(E_2)$.
+        \item If the condition is changed to $E_1 \cap E_2 \neq \emptyset$, does the above conclusion still hold?
+    \end{enumerate}
+
+    \item \textbf{Convergence and Limits}
+    \begin{enumerate}
+        \item Let $\{f_n\}$ and $f$ be defined on $[0,1]$. Prove that $f_n$ converges to $f$ in measure ($f_n \Rightarrow f$) if and only if:
+        \[ \lim_{n\to\infty} \int_0^1 \frac{|f_n - f|}{1 + |f_n - f|} \dx = 0 \]
+        \item Calculate the limit (state the theorems used):
+        \[ \lim_{n\to\infty} \int_0^\infty \frac{n \sin(x/n)}{x(1+x^2)} \dx \]
+    \end{enumerate}
+
+    \item \textbf{Convergence Relationships}
+    \begin{enumerate}
+        \item Does there exist a nowhere continuous function that is equal to a continuous function almost everywhere?
+        \item Does $L^1$ convergence imply the existence of a subsequence that converges almost everywhere?
+        \item Does $L^\infty$ convergence imply almost everywhere convergence?
+    \end{enumerate}
+
+    \item \textbf{Bounded Variation}
+    \begin{enumerate}
+        \item Let $f(x) = 3x - x^3$. Calculate the total variation $V_{-2}^2(f)$.
+        \item Let $f \in BV[a,b]$. Prove that there exist $g \in AC[a,b]$ and $h \in BV[a,b]$ with $h'(x) = 0$ a.e. on $[a,b]$, such that $f = g - h$.
+    \end{enumerate}
+
+    \item \textbf{Absolute Continuity}
+    \begin{enumerate}
+        \item Briefly state the definition of $f \in AC[a,b]$.
+        \item Let $\alpha \in \R$ and define:
+        \[ f(x) = \begin{cases} x^\alpha, & x \in (0,1] \\ 0, & x=0 \end{cases} \]
+        Discuss for which $\alpha$ the function $f$ is absolutely continuous.
+        \item Use the definition of absolute continuity and the Vitali Covering Lemma to prove: If $f \in AC[a,b]$ and $f'(x) = 0$ a.e., then $f$ is a constant.
+    \end{enumerate}
+
+    \item \textbf{Abstract Measure Theory}
+    \begin{enumerate}
+        \item Briefly state the definitions of an Algebra and a Pre-measure. Explain how to construct an outer measure from a pre-measure.
+        \item Briefly explain how to construct a measure space from a pre-measure (Carathéodory extension).
+    \end{enumerate}
+\end{enumerate}
+
+\subsection{Honors Class (H)}
+
+\begin{enumerate}[label=\textbf{10.\arabic*.}]
+    \item Prove the following are equivalent:
+    \begin{enumerate}
+        \item[(i)] $f \in \text{Lip}[a,b]$ with Lipschitz constant $M$.
+        \item[(ii)] $f \in AC[a,b]$ and $|f'(x)| \le M$ a.e. $x \in [a,b]$.
+    \end{enumerate}
+
+    \item Assume $f \in L^2(0, +\infty)$. Prove:
+    \[ \lim_{n \to \infty} f(x+n) = 0, \quad \text{a.e. } x \in [0, +\infty). \]
+
+    \item Assume $f: \R \to \R$ satisfies:
+    \[ f\left( \int_0^1 g(x) \dx \right) \le \int_0^1 f(g(x)) \dx, \quad \forall g \in L^\infty[0,1]. \]
+    Prove that $f$ is a convex function.
+
+    \item Determine whether the following are correct (prove or provide a counterexample):
+    \begin{enumerate}
+        \item[(1)] Assuming $f, g \in AC[a,b]$, then $f(x)g(x) \in AC[a,b]$.
+        \item[(2)] Assuming $f, g \in AC[a,b]$ and $g: [a,b] \to [a,b]$, then $f(g(x)) \in AC[a,b]$.
+    \end{enumerate}
+
+    \item Let $\nu$ and $\mu$ be finite measures such that $\nu \perp \mu$ and $\nu \ll \mu$. Prove that $\nu = 0$.
+
+    \item Let $\mu$ be the counting measure on the set of natural numbers $\N = \{1, 2, \dots\}$. Define $f: \N \times \N \to \R$ as:
+    \[ f(x,y) = \begin{cases} 1, & \text{if } x=y \\ -1, & \text{if } x=y+1 \\ 0, & \text{otherwise} \end{cases} \]
+    Prove that:
+    \[ \int_{\N} \int_{\N} f(x,y) \dmu(x) \dmu(y) \ne \int_{\N} \int_{\N} f(x,y) \dmu(y) \dmu(x) \]
+    Explain why this result does not contradict the Fubini Theorem.
+
+    \item Assume $f \in AC[a,b]$. Prove that $f$ maps sets of measure zero to sets of measure zero (the Luzin $N$-property).
+
+    \item Assume $[0,1] \cap \Q = \{r_1, r_2, \dots\}$. Let $I_n = (r_n - \frac{1}{2^n}, r_n + \frac{1}{2^n})$. Prove:
+    \[ \sum_{n=1}^\infty \chi_{I_n}(x) \in L^2[0,1] \setminus \mathcal{R}[0,1] \]
+    (Note: $\mathcal{R}[0,1]$ denotes the class of Riemann integrable functions).
+
+    \item Assume $f: [0,1] \to [0,1]$ is the Cantor function.
+    \begin{enumerate}
+        \item Determine whether the following are true:
+        (i) $f \in AC[0,1]$; (ii) $f \in BV[0,1]$; (iii) $f \in \text{Lip}[0,1]$; (iv) $f'$ exists a.e. and $f' \in L^1[0,1]$.
+        \item Calculate $\int_0^1 f'(x) \dx - f(1) + f(0)$.
+        \item Calculate: (i) $\esssup_{x \in [0,1]} f(x)$; (ii) $\esssup_{x \in [0,1]} f'(x)$.
+        \item Calculate $V_0^1(f)$ (the total variation of $f$ on $[0,1]$).
+    \end{enumerate}
+\end{enumerate}
+
+% =======================================================
+% 2024
+% =======================================================
+\section{Year 2024}
+
+\subsection{Standard Class}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{True or False} (Prove or give a counterexample) (30 points)
+    \begin{enumerate}
+        \item $L^1$ convergence implies almost everywhere convergence.
+        \item Almost everywhere convergence implies convergence in measure.
+        \item $L^1$ convergence implies convergence in measure.
+    \end{enumerate}
+
+    \item \textbf{Integration Theorems} (20 points)
+    \begin{enumerate}
+        \item State and prove the Dominated Convergence Theorem.
+        \item Use the Dominated Convergence Theorem to calculate the limit:
+        \[ \lim_{n\to\infty} \int_0^\infty \frac{1}{1 + x^{\frac{\sqrt{n}}{\log(n+2024)}}} \dx \]
+    \end{enumerate}
+
+    \item \textbf{Bounded Variation and Hölder Continuity} (15 points)
+    Let $a, b > 0$ and define the function:
+    \[ f(x) = \begin{cases} x^a \sin(x^{-b}), & 0 < x \le 1 \\ 0, & x = 0 \end{cases} \]
+    Prove: $f \in BV[0,1]$ if and only if $a > b$.
+    Furthermore, if $a=b$, for any given $\alpha \in (0,1)$, construct a function that satisfies the Hölder continuity condition of order $\alpha$ (i.e., $|f(x)-f(y)| \le A|x-y|^\alpha$) but is not of bounded variation.
+
+    \item \textbf{Measure Theory} (15 points)
+    Let $\mu^*$ be an outer measure defined on a set $X$.
+    \begin{enumerate}
+        \item State the definition of a $\mu^*$-measurable set.
+        \item Let $\mathcal{M} = \{ E \subset X : E \text{ is } \mu^*\text{-measurable} \}$. Prove that $\mathcal{M}$ is a $\sigma$-algebra on $X$, and $\mu := \mu^*|_{\mathcal{M}}$ is a complete measure on $(X, \mathcal{M})$.
+    \end{enumerate}
+
+    \item \textbf{Absolute Continuity} (10 points)
+    Let $f: \R \to \R$. Prove that $f$ is Lipschitz continuous (exists $L>0$ such that $|f(x)-f(y)| \le L|x-y|$) if and only if $f$ is absolutely continuous and $|f'(x)| \le L$ for a.e. $x \in \R$.
+
+    \item \textbf{Integral Kernels} (10 points)
+    Let $f \in L^1(\R)$ satisfy:
+    \[ \lim_{\epsilon \to 0^+} \int_\R \int_\R \frac{|f(x)f(y)|}{(x-y)^2 + \epsilon^2} \dx \dy < \infty \]
+    Prove that $f(x) = 0$ a.e. on $\R$.
+\end{enumerate}
+
+% =======================================================
+% 2023
+% =======================================================
+\section{Year 2023}
+
+\subsection{Standard Class}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{True or False} (20 points)
+    \begin{enumerate}
+        \item If $f: \R \to \R$ is differentiable, then its derivative function $f'$ is measurable.
+        \item For any monotonically increasing sequence of measurable sets $\{A_k\}_{k=1}^\infty$ in $\R^n$, we have $m(\lim_{k\to\infty} A_k) = \lim_{k\to\infty} m(A_k)$.
+    \end{enumerate}
+
+    \item \textbf{Monotonicity} (15 points)
+    If a function $f$ is absolutely continuous on $[a,b]$ and $f'(x) \ge 0$ a.e., prove that $f$ is an increasing function.
+
+    \item \textbf{Variation Inequality} (15 points)
+    Let $f \in BV[a,b]$ and $V(f)$ be its total variation. Prove:
+    \[ \int_a^b |f'(t)| \, dt \le V_a^b(f). \]
+
+    \item \textbf{Indefinite Integral} (15 points)
+    Let $f \in L^1[0,1]$ and define $F(x) := \int_0^x f(t) \, dt$. Prove:
+    \begin{enumerate}
+        \item $F \in L^1[0,1]$.
+        \item $\lim_{x \to 0^+} x F(x) = 0$.
+        \item $\int_0^1 F(x) \dx = \int_0^1 (1-x) f(x) \dx$. (Note: Standard identity, user text slightly cut off but implies integration by parts formula).
+    \end{enumerate}
+
+    \item \textbf{Convergence in Measure} (15 points)
+    Let $m(E) < \infty$. If a sequence of measurable functions $\{f_n\}$ converges in measure to $f$ on $E$, and a sequence of measurable functions $\{g_n\}$ converges in measure to $g$ on $E$, prove that $\{f_n g_n\}$ converges in measure to $fg$ on $E$.
+
+    \item \textbf{Brezis-Lieb Lemma Variant} (10 points)
+    Let $\{f_k\} \subset L^1(\R)$ satisfy $f_k \to f$ almost everywhere and $\lim_{k\to\infty} \|f_k\|_1 = \|f\|_1 < \infty$. Prove:
+    \[ \lim_{k \to \infty} \|f_k - f\|_1 = 0. \]
+
+    \item \textbf{Topology of Measure} (10 points)
+    Prove: There exists a set $E \subset [0,1]$ with positive measure such that for any open interval $I \subset [0,1]$,
+    \[ 0 < m(E \cap I) < m(I). \]
+\end{enumerate}
+
+\subsection{Honors Class (H)}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Give examples to show that the following inclusion relationships are strict:
+    \[ \text{Lip}[0,1] \subset AC[0,1] \subset BV[0,1]. \]
+
+    \item Known: Two sequences of non-negative integrable functions $\{f_j\}$, $\{g_j\}$ converge a.e. to $f, g$ respectively. Also $|f_j(x)| \le g_j(x)$. If $\{g_j\}$ converges in $L^1$ norm (to $g$), prove that $\{f_j\}$ also converges in $L^1$ norm (Generalized Dominated Convergence Theorem).
+
+    \item Known: Two sequences of non-negative integrable functions $\{f_j\}, \{g_j\}$ converge in measure to $f, g$ respectively. Determine if $\{f_j g_j\}$ converges in measure to $fg$. Explain your reason.
+
+    \item Give an example to illustrate that Fubini's Theorem may not hold for general measurable functions (if conditions like $\sigma$-finiteness or integrability are violated).
+
+    \item Prove that there exist countable disjoint closed balls $B_j \subset [0,1]^3$ in $\R^3$ such that:
+    \[ m\left( [0,1]^3 \setminus \left( \bigcup_j B_j \right) \right) = 0. \]
+
+    \item Let $f(x) \in L^1(E)$ be an integrable function. Write the definition of the distribution function $f_*(t)$ (or $m(\{x : |f(x)| > t\})$) and prove:
+    \[ \int_E |f(x)| \dx = \int_0^\infty f_*(t) \, dt. \]
+
+    \item \textbf{True or False} (Give reasons):
+    \begin{enumerate}
+        \item For a monotonically increasing function $f: \R \to \R$, the derivative exists almost everywhere, the derivative is measurable, and $f' \in L^1_{loc}(\R)$.
+        \item Let $f: [0,1] \to \R$ be a monotonic function, then $\int_0^1 f'(x) = f(1) - f(0)$.
+        \item If $f: \R \to \R$ is Generalized Riemann integrable and Lebesgue integrable, then the two integral values are the same.
+    \end{enumerate}
+
+    \item Prove that the space $L^\infty(E)$ is a Banach space.
+
+    \item Let $f: [0,1] \to \R$ be defined as:
+    \[ f(x) = \begin{cases} x^{3/2} \sin(1/x), & x > 0 \\ 0, & x = 0 \end{cases} \]
+    Prove that the total variation $V_0^1(f) \le 3$.
+
+    \item Let $f \in L^1[a,b]$. Prove that:
+    \[ \lim_{h \to 0} \frac{1}{h} \int_x^{x+h} |f(t) - f(x)| \, dt = 0 \]
+    holds almost everywhere (Lebesgue Differentiation Theorem).
+\end{enumerate}
+
+% =======================================================
+% 2022
+% =======================================================
+\section{Year 2022}
+
+\subsection{Standard Class}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Concepts} (20 points)
+    \begin{enumerate}
+        \item State Lusin's Theorem (Hint: The theorem concerning measurable functions and continuity).
+        \item State the Dominated Convergence Theorem.
+        \item Let $f$ be a finite-valued measurable function defined on $\R^d$. State the definition of the Hardy-Littlewood maximal function of $f$.
+        \item State the definition of an absolutely continuous function defined on $[a,b]$.
+    \end{enumerate}
+
+    \item \textbf{Counterexamples} (20 points)
+    Construct specific sequences of real-valued functions defined on $\R$ to illustrate the following propositions:
+    \begin{enumerate}
+        \item $L^1$ convergence does not guarantee almost everywhere convergence.
+        \item $L^3$ convergence does not guarantee $L^2$ convergence.
+        \item Convergence in measure does not guarantee $L^1$ convergence.
+        \item Convergence in measure does not guarantee almost everywhere convergence.
+    \end{enumerate}
+
+    \item \textbf{Differentiability and Variation} (10 points)
+    Let $f: [0,1] \to \R$ have a continuous derivative. Is $f$ a function of bounded variation? Explain why.
+
+    \item \textbf{Bounded Convergence on Balls} (15 points)
+    Let $B$ be the unit ball in $\R^d$. Let $f_n: B \to \R$ be a sequence of measurable functions satisfying:
+    \begin{enumerate}
+        \item $f_n$ converges to $f$ almost everywhere.
+        \item $\|f_n\|_{L^\infty(B)} \le 1$ for all $n$.
+    \end{enumerate}
+    Prove:
+    \[ \lim_{n\to\infty} \int_B f_n = \int_B f. \]
+
+    \item \textbf{Series of AC Functions} (15 points)
+    Let $\{f_n\}$ be a sequence of monotonically increasing absolutely continuous functions defined on $[a,b]$. If the series $\sum f_n$ converges pointwise to $f$ on $[a,b]$, prove that $f$ is also absolutely continuous.
+
+    \item \textbf{Approximation of Identity} (15 points)
+    Let $\phi \in L^1(\R^d)$ with $\int_{\R^d} \phi = 1$. For any $t > 0$, define $\phi_t(x) = t^{-d}\phi(x/t)$.
+    \begin{enumerate}
+        \item If $f$ is a continuous function with compact support, prove that $f * \phi_t$ converges uniformly to $f$ as $t \to 0$.
+        \item If $f \in L^1(\R^d)$, prove that $\lim_{t \to 0} \|f * \phi_t - f\|_{L^1} = 0$.
+    \end{enumerate}
+
+    \item \textbf{Singular Behavior} (5 points)
+    Let $E$ be a specified set of measure zero in $\R$. Prove that there exists a monotonic function $f$ such that $f$ is not differentiable on the set $E$.
+\end{enumerate}
+
+% =======================================================
+% 2021
+% =======================================================
+\section{Year 2021}
+
+\subsection{Standard Class}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{True or False} (10 points)
+    Judge whether the following are true or false and provide reasons:
+    \begin{enumerate}
+        \item Let $\{f_i\}_{i=1}^\infty$ be a sequence of uniformly bounded integrable functions on $\R^n$. If this sequence converges almost everywhere to $f$, then there exists a subsequence that converges to $f$ in measure.
+        \item Let $\{f_i\}_{i=1}^\infty$ be a sequence of uniformly bounded non-negative integrable functions on $\R^n$. If the sequence converges uniformly to a non-negative integrable function $f$, then there exists a subsequence $\{f_{i_k}\}$ such that $\lim_{k\to\infty} \int f_{i_k} = \int f$.
+    \end{enumerate}
+
+    \item \textbf{Integrability Condition} (15 points)
+    Let $E \subset \R$ with $0 < m(E) < \infty$, and let $f(x)$ be non-negative and measurable on $\R$. Prove that $f \in L^1(\R)$ if and only if $g(x) = \int_E f(x-t) \, dt$ is integrable on $\R$.
+
+    \item \textbf{Properties of AC Functions} (15 points)
+    Assume $f: \R \to \R$ is absolutely continuous.
+    \begin{enumerate}
+        \item Prove that $f$ maps sets of measure zero to sets of measure zero.
+        \item Prove that $f$ maps measurable sets to measurable sets.
+    \end{enumerate}
+
+    \item \textbf{Maximal Function Integrability} (15 points)
+    If $f \in L^1(\R^d)$ and $f$ is not identically zero, prove that the Hardy-Littlewood maximal function $f^*$ is not in $L^1(\R^d)$.
+
+    \item \textbf{Bounded Variation Construction} (15 points)
+    Let $H$ be a function with period 2 on $\R$ given by:
+    \[ H(x) = \begin{cases} 0, & 2k-1 < x \le 2k \\ 1, & 2k < x \le 2k+1 \end{cases} \]
+    where $k \in \Z$. Prove that the function
+    \[ f(x) = \sum_{n=1}^\infty \frac{1}{n^2} H(2^n x) \]
+    is not a function of bounded variation on $[0,1]$.
+
+    \item \textbf{Nowhere Monotonic Continuous Function} (15 points)
+    We wish to construct a continuous function on $[0,1]$ that is not monotonic on any subinterval.
+    \begin{enumerate}
+        \item Prove: There exists a measurable subset $A$ of $[0,1]$ such that for any subinterval $I \subset [0,1]$, we have $0 < m(A \cap I) < m(I)$. (Hint: Use a construction similar to the Cantor set).
+        \item Construct a continuous function on $[0,1]$ such that it is not monotonic on any subinterval of $[0,1]$. (Hint: Use the conclusion from part (1) and the Fundamental Theorem of Calculus).
+    \end{enumerate}
+\end{enumerate}
+
+\subsection{Honors Class}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Is a Generalized Riemann integrable function on $\R$ necessarily Lebesgue integrable? Does the converse hold? (Give examples).
+
+    \item Let $f \in BV[0,1]$. Is the set $E = \{x \in [0,1] \mid f'(x) = \infty\}$ Lebesgue measurable?
+
+    \item Let $f, g \in AC[0,1]$ and $g([0,1]) \subset [0,1]$. Is it necessarily true that $f \circ g \in AC[0,1]$?
+
+    \item Let $f \in L^p(E)$. Prove:
+    \[ \int_E |f(x)|^p \dx = \int_0^\infty p \lambda^{p-1} m(\{x \in E \mid |f(x)| > \lambda\}) \, d\lambda \]
+
+    \item Let $\mu$ be an abstract positive measure. Define $\|f\|_{L^\infty} = \inf \{ M > 0 \mid \mu(\{x : |f(x)| > M\}) = 0 \}$.
+    \begin{enumerate}
+        \item For $f \in L^\infty(\R) \cap C(\R)$ and Lebesgue measure $m$, prove $\|f\|_{L^\infty} = \sup_{x \in \R} |f(x)|$.
+        \item For the Dirac measure $\delta_0$, give an example showing (1) is false.
+        \item If $f \in L^\infty(\R)$, does there necessarily exist $g \in C(\R)$ such that $f = g$ a.e.?
+    \end{enumerate}
+
+    \item Let $\{f_k\}$ be a countable sequence of measurable functions on $E$ satisfying $\int_E f_k^2 \dx \le C$ and $\int_E f_k f_j \dx = 0$ for $k \ne j$.
+    Prove that $\lim_{n \to \infty} \sum_{k=1}^{n^2} (n^{-\beta} f_k)^2 = 0$ a.e. (for appropriate $\beta$ derived from the inequality provided).
+
+    \item Let $g \in \mathcal{L}^+(E)$ satisfying the weak-type inequality $m\{x \in E \mid g(x) > t\} \le \frac{1}{t} \int_E f(x) \dx$. For $p \in (1, \infty)$, prove:
+    \[ \left(\int_E (g(x))^p \dx\right)^{1/p} \le \frac{p}{p-1} \left(\int_E (f(x))^p \dx\right)^{1/p} \]
+
+    \item Let $E$ be a null set. Let $\{\mathcal{O}_k\}$ be a sequence of open sets containing $E$ with $m(\mathcal{O}_k) < 2^{-k}$. Define $\Phi(x) = \int_0^x \sum_{k=1}^\infty \chi_{\mathcal{O}_k}(t) \, dt$. Prove $\Phi \in C(\R)$ and discuss the behavior of $\Phi'(x)$ for $x \in E$.
+
+    \item Let $f$ be a measurable function on $\R^2$ with $\|f\|_{L^1} = 1$. By estimating $\int_{|x|\le 1} \int_{\R^2} \frac{f(y)}{|y-x|} dy dx$, prove there exists $|x_0| \le 1$ such that $\int_{\R^2} \frac{f(y)}{|y-x_0|} dy < 2021$.
+
+    \item Let $f(x)$ be differentiable everywhere on $\R$, with $f \in L^2(\R)$ and $f' \in L^2(\R)$. Prove:
+    \begin{enumerate}
+        \item For any closed interval $[a,b]$, $f \in AC[a,b]$.
+        \item $\lim_{x \to \infty} f(x) = 0$.
+    \end{enumerate}
+\end{enumerate}
+
+% =======================================================
+% 2020
+% =======================================================
+\section{Year 2020}
+
+\subsection{Standard Class}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Positivity from Integral} (20 points)
+    If $f$ is a real-valued integrable function on $\R$, and for any measurable set $E$, $\int_E f(x) \dx \ge 0$, prove that $f \ge 0$ almost everywhere.
+
+    \item \textbf{Measurability of Slices} (20 points)
+    Determine if correct (proof not required) or false (give counterexample):
+    \begin{enumerate}
+        \item If $E$ is a measurable set in $\R^{d_1} \times \R^{d_2}$, then for almost every $y \in \R^{d_2}$, the slice $E^y = \{x \in \R^{d_1} : (x,y) \in E\}$ is measurable in $\R^{d_1}$.
+        \item If for almost every $y \in \R^{d_2}$, $E^y$ is measurable in $\R^{d_1}$, then $E$ is measurable in $\R^{d_1} \times \R^{d_2}$.
+    \end{enumerate}
+
+    \item \textbf{Signed Measures} (20 points)
+    Let $\nu, \nu_1, \nu_2$ be signed measures on $(X, \mathcal{M})$ and $\mu$ be a positive measure. Prove:
+    \begin{enumerate}
+        \item If $\nu \perp \mu$ and $\nu \ll \mu$, then $\nu = 0$.
+        \item If $\nu_1 \perp \nu_2$, then $|\nu_1| \perp |\nu_2|$.
+    \end{enumerate}
+
+    \item \textbf{Maximal Function Lower Bound} (20 points)
+    Let $f$ be an integrable function on $\R^d$ that is not identically zero. Prove there exists a constant $c > 0$ such that for all $|x| \ge 1$:
+    \[ f^*(x) \ge \frac{c}{|x|^d} \]
+    where $f^*$ is the Hardy-Littlewood maximal function.
+
+    \item \textbf{Vitali Convergence Variant} (15 points)
+    Let $\{f_n\}$ be a sequence of measurable functions on $[0,1]$ satisfying:
+    \[ \lim_{n\to\infty} f_n(x) = 0 \quad \text{a.e. } x \in [0,1] \]
+    and $\sup_n \|f_n\|_{L^2([0,1])} \le 1$. Prove that $\lim_{n\to\infty} \|f_n\|_{L^1([0,1])} = 0$.
+
+    \item \textbf{Density Topology} (15 points)
+    Let $m$ denote the Lebesgue measure on $\R$ and $A \subset \R$ be a Lebesgue measurable set. Assume that for all real numbers $a < b$:
+    \[ m(A \cap [a,b]) < \frac{b-a}{2}. \]
+    Prove that $m(A) = 0$.
+
+    \item \textbf{Differentiation in $L^1$} (15 points)
+    Let $f$ be absolutely continuous on $\R$ and $f \in L^1(\R)$. If
+    \[ \lim_{t \to 0} \int_\R \left| \frac{f(x+t) - f(x)}{t} \right| \dx = 0, \]
+    prove that $f \equiv 0$.
+\end{enumerate}
+
+\subsection{Honors Class (Midterm)}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Let $\{f_i\}_{i \in I}$ be a family of measurable functions. Let $g = \sup_{i \in I} f_i$.
+    If $I$ is countable, is $g$ measurable? If $I$ is uncountable, is $g$ measurable? Prove your conclusion.
+
+    \item Prove: A non-empty perfect set is uncountable.
+
+    \item Let $X$ be an infinite set. Prove that $X$ has the same cardinality as $X \times X$.
+
+    \item Let $\{f_n\}$ and $f$ be integrable functions satisfying $\int_0^1 |f_n(x) - f(x)| \le \frac{1}{n^2}$ for all $n$. Prove $f_n \to f$ almost everywhere.
+
+    \item Prove: There exists $f: [0,1] \to [0,1]$ such that $f'$ exists and is integrable, satisfying the strict inequality $\int_0^1 f'(x) \dx < f(1) - f(0)$.
+
+    \item Prove: There exists a non-measurable set $W$ such that every measurable subset of $W$ is a null set.
+
+    \item Calculate the limits:
+    \[ \lim_{n \to \infty} \int_0^1 \frac{\sqrt{nx}}{1+nx} \dx \quad \text{and} \quad \lim_{n \to \infty} \int_0^2 (1+x^{2n})^{1/n} \dx. \]
+
+    \item Let $f: [0,1] \to [-1,1]$ satisfy: For all $n$ and all $x_1, \dots, x_n \in [0,1]$, $|\sum_{k=1}^n f(x_k)| \le 1$. Prove $f = 0$.
+
+    \item Let $m(E) < \infty$ and $f$ be a measurable function on $E$. Prove: For any $\epsilon > 0$, there exists a bounded measurable function $g$ such that $m(\{x \in E : f(x) \ne g(x)\}) < \epsilon$.
+
+    \item Let $C$ be the standard Cantor set. Prove that $C$ has no interior points, and $\{(x,y) : e^x y \in C\}$ is a measurable set in $\R^2$. Further prove there exists a set of positive measure with no interior points.
+\end{enumerate}
+
+% =======================================================
+% 2019
+% =======================================================
+\section{Year 2019}
+
+\subsection{Standard Class}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Measure Theory Definitions} (15 points)
+    Write down the definitions of a measure and a pre-measure. Describe the steps to construct a measure from a pre-measure.
+
+    \item \textbf{True or False} (20 points)
+    Determine whether the following are true or false. Give a counterexample if false, or a brief proof if true.
+    \begin{enumerate}
+        \item Let $f$ be monotonically increasing and almost everywhere differentiable on $[a,b]$. Then:
+        \[ \int_a^b f'(x) \dx = f(b) - f(a). \]
+        \item Let $E$ be a measurable set in $\R^d$. Then for almost every $x \in E$:
+        \[ \lim_{m(B) \to 0} \frac{m(B \cap E)}{m(B)} = 1 \]
+        where $B$ denotes a ball containing $x$.
+    \end{enumerate}
+
+    \item \textbf{Limit of Integral} (10 points)
+    Let $f \in L^1(\R)$. Calculate:
+    \[ \lim_{n \to \infty} \int_\R f(x-n) \frac{x}{1+|x|} \dx. \]
+
+    \item \textbf{Distribution Functions} (15 points)
+    Let $f$ and $g$ be non-negative real-valued measurable functions on $(0,1)$ satisfying:
+    \[ m(\{x \in (0,1) : f(x) > \alpha\}) = m(\{x \in (0,1) : g(x) > \alpha\}) \]
+    for all $\alpha > 0$. Prove that:
+    \[ \int_0^1 f(x) \dx = \int_0^1 g(x) \dx. \]
+
+    \item \textbf{Bounded Variation} (15 points)
+    Prove that the function defined by:
+    \[ f(x) = \begin{cases} 0, & \text{if } x = 0 \\ x^2 \cos(1/x^2), & \text{if } 0 < x \le 1 \end{cases} \]
+    is not of bounded variation on $[0,1]$.
+
+    \item \textbf{Luzin N-Property} (15 points)
+    Let $f$ be a real-valued function on $\R$ satisfying a Lipschitz-type condition (e.g., $|f(x)-f(y)| \le C|x-y|$ for all $x, y \in \R$). Prove that $f$ maps every set of measure zero to a set of measure zero.
+
+    \item \textbf{Continuity of Convolution} (10 points)
+    Let $E \subset \R$ be measurable with $m(E) > 0$. Let
+    \[ f(x) := \int_\R \chi_E(tx) \chi_E(t) \, dt. \]
+    Prove that $f$ is continuous at $x = 1$.
+\end{enumerate}
+
+\subsection{Honors Class}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Strictly Increasing Singular Function} (15 points)
+    Is the following statement true? (Prove or give a counterexample):
+    There exists a strictly monotonically increasing function $f: \R \to \R$ such that
+    \[ \int_\R f'(x) \dx = 0. \]
+
+    \item \textbf{Tonelli's Theorem Proof} (15 points)
+    Provide a detailed proof of Tonelli's Theorem for the following special case:
+    Assume $K$ is a compact subset of $\R^2$ and $\chi_K$ is the characteristic function on $K$. Prove:
+    \[ \int_{\R^2} \chi_K(x,y) \dx \dy = \int_\R \left( \int_\R \chi_K(x,y) \dy \right) \dx. \]
+
+    \item \textbf{Orthogonal Basis and Limit} (15 points)
+    Let $L^2[0, 2\pi]$ be the set of real-valued square-integrable functions on $[0, 2\pi]$, with the inner product defined as $\langle f, g \rangle = \frac{1}{2\pi} \int_0^{2\pi} f(x)g(x) \dx$.
+    \begin{enumerate}
+        \item Write down an orthonormal basis for $L^2[0, 2\pi]$.
+        \item Prove: $\lim_{n \to \infty} \langle f(x), \sin(nx) \rangle = 0$.
+    \end{enumerate}
+
+    \item \textbf{Vitali Covering Application} (15 points)
+    Assume $f: \R \to \R$ is a monotonically increasing function, and for all $x \in \R$, the limit
+    \[ \lim_{h \to 0} \frac{f(x+h) - f(x)}{h} \]
+    exists (values in $\R$ or $\infty$). Use the Vitali Covering Lemma to prove:
+    \[ m(\{x \in \R : f'(x) = \infty\}) = 0. \]
+
+    \item \textbf{Generalized Dominated Convergence} (15 points)
+    Assume that for all $n \in \N$, $f_n$ and $f$ are non-negative Lebesgue integrable functions on $\R$ satisfying:
+    \begin{enumerate}
+        \item $\lim_{n \to \infty} f_n(x) = f(x)$ for all $x \in \R$.
+        \item $\lim_{n \to \infty} \int_\R f_n(x) \dx = \int_\R f(x) \dx$.
+    \end{enumerate}
+    Prove that:
+    \[ \lim_{n \to \infty} \|f_n - f\|_{L^1(\R)} = 0. \]
+
+    \item \textbf{BV implies AC Condition} (15 points)
+    Assume $\alpha, \beta$ are positive constants. Let $f: [0,1] \to \R$ be a continuous function satisfying:
+    \[ f(x) = x^\alpha \sin(x^{-\beta}) \quad \text{for } x \in (0,1]. \]
+    If $f \in BV[0,1]$, prove that $f \in AC[0,1]$. (Provide a detailed proof).
+
+    \item \textbf{Total Variation Calculation} (15 points)
+    Assume $f(x) = x - \frac{1}{2}x^2$. Calculate the total variation $V_0^1(f)$.
+\end{enumerate}
+
+\end{document}

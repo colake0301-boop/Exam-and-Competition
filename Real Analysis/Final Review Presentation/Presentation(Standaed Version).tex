@@ -1,0 +1,394 @@
+\documentclass[aspectratio=169, 10pt]{beamer}
+
+% --- THEME SETUP ---
+\usetheme{Madrid}            % The classic, professional academic theme
+\usecolortheme{default}      % Standard blue (professional and clean)
+\usefonttheme[onlymath]{serif} % CRITICAL: Makes math look like standard LaTeX
+
+% --- PACKAGES ---
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs}
+\usepackage{graphicx,pstricks,listings,stackengine}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{hyperref}
+
+% --- CUSTOM COMMANDS ---
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\dx}{\,dx}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+% --- METADATA ---
+\title[Final Review: Real Analysis]{Final Review: Real Analysis}
+\subtitle{Borel-Cantelli, Differentiation, $L^p$ Spaces, and Modes of Convergence}
+\author[Cola Ke]{Cola Ke}
+\institute[CUHK(SZ)]{The Chinese University of Hong Kong (Shenzhen)}
+\date{December 6, 2025}
+
+\begin{document}
+
+% --- TITLE PAGE ---
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+% ==============================================================================
+% TOPIC 1
+% ==============================================================================
+\section{Borel-Cantelli \& Convergence}
+
+\begin{frame}{Topic 1: Overview}
+    \begin{alertblock}{Key Concept: The Borel-Cantelli Lemma}
+        It is the primary tool for translating conditions on integrals or measures into pointwise almost everywhere (a.e.) convergence results.
+    \end{alertblock}
+    
+    \vspace{1em}
+    \centering
+    \textit{"The message is that the 'Borel-Cantelli' way of arguing is important!"}
+\end{frame}
+
+% --- Problem 1 ---
+\begin{frame}{Problem 1: Rapid Convergence}
+    \begin{block}{Problem}
+    Let $\{f_k\}_{k=1}^\infty$ be a sequence of integrable functions on a measurable set $E$.
+    Suppose that for every $k$:
+    $$ \int_E |f_{k+1} - f_k| < \delta_k^2 $$
+    where $\sum_{k=1}^\infty \delta_k < \infty$. \\
+    \textbf{Prove:} The sequence $\{f_k\}$ converges pointwise almost everywhere to some function $f$.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Solution to Problem 1}
+    \begin{exampleblock}{Strategy}
+    To show $f_k$ converges a.e., it suffices to show that $\sum |f_{k+1} - f_k| < \infty$ a.e.
+    \end{exampleblock}
+    
+    \begin{itemize}
+        \item Let $A_k = \{ x \in E \mid |f_{k+1}(x) - f_k(x)| > \delta_k \}$.
+        \item By Chebyshev's Inequality: 
+        $$ m(A_k) \le \frac{1}{\delta_k} \int_E |f_{k+1} - f_k| < \delta_k $$
+        \item Since $\sum \delta_k < \infty$, by the \textbf{Borel-Cantelli Lemma}, almost every $x$ belongs to only finitely many $A_k$.
+    \end{itemize}
+    \vspace{0.5em}
+    \footnotesize{\textit{Note: This is the key step in proving the Riesz-Fischer Theorem.}}
+\end{frame}
+
+% --- Problem 2 ---
+\begin{frame}{Problem 2: Beppo-Levi Argument}
+    \begin{block}{Problem}
+    Let $\{f_k\}_{k=1}^\infty$ be a sequence of integrable functions on a measurable set $E$.
+    Suppose that for every $k$:
+    $$ \int_E |f_{k+1} - f_k| < \delta_k $$
+    where $\sum_{k=1}^\infty \delta_k < \infty$. \\
+    \textbf{Prove:} The sequence $\{f_k\}$ converges pointwise almost everywhere to some function $f$.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Remark on Problem 2}
+    \textbf{Comparison:} The proof from Problem 1 (using Chebyshev directly) fails here because the power of convergence is different.
+
+    \begin{exampleblock}{Alternative Argument (Beppo-Levi)}
+    Consider the function $g(x) = \sum_{k=1}^\infty |f_{k+1}(x) - f_k(x)|$.
+    \begin{itemize}
+        \item By the Monotone Convergence Theorem (MCT): 
+        $$ \int_E g = \sum \int_E |f_{k+1} - f_k| < \sum \delta_k < \infty $$
+        \item Thus $g(x)$ is finite a.e., implying the series converges absolutely a.e.
+        \item This implies $f_k \to f$ a.e.
+    \end{itemize}
+    \end{exampleblock}
+\end{frame}
+
+% --- Problem 3 ---
+\begin{frame}{Problem 3}
+    \begin{block}{Problem}
+    Let $\{f_n\}_{n=1}^\infty$ be integrable on $\mathbb{R}$ such that:
+    $$ \int_{\mathbb{R}} |f_n(x) - f(x)| \dx \le \frac{1}{n^{1+\epsilon}} $$
+    \begin{enumerate}
+        \item[(a)] If $\epsilon > 0$, prove that $f_n \to f$ pointwise almost everywhere.
+        \item[(b)] If $\epsilon = 0$, provide a counterexample.
+    \end{enumerate}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Solution to Problem 3}
+    \textbf{Part (a) $\epsilon > 0$:}
+    Since $\sum \frac{1}{n^{1+\epsilon}} < \infty$, we can sum the integrals. By the Beppo-Levi argument (Problem 2), $\sum |f_n - f| < \infty$ a.e., implying convergence.
+
+    \vspace{1em}
+    \textbf{Part (b) $\epsilon = 0$:}
+    \begin{alertblock}{Counter-Example: The Typewriter Sequence}
+    Consider moving characteristic functions:
+    $$ \chi_{[0, 1/2]}, \chi_{[1/2, 1]}, \chi_{[0, 1/4]}, \chi_{[1/4, 1/2]}, \dots $$
+    The integral decays like $1/n$ (harmonic series diverges). The "bump" cycles through the interval infinitely often, so it diverges everywhere.
+    \end{alertblock}
+\end{frame}
+
+% --- Problem 4 ---
+\begin{frame}{Problem 4: Cauchy in Measure}
+    \begin{block}{Definition \& Problem}
+    A sequence $\{f_n\}$ is \textbf{Cauchy in Measure} if $\forall \eta, \epsilon > 0$, $\exists N$ s.t. for $n, m \ge N$:
+    $$ m(\{ x \in E \mid |f_n(x) - f_m(x)| \ge \eta \}) < \epsilon $$
+    
+    \textbf{Prove:} If $\{f_n\}$ is Cauchy in measure, then there exists a subsequence $\{f_{n_k}\}$ that converges pointwise almost everywhere.
+    \end{block}
+
+    \vspace{1em}
+    \textbf{Remark:} This is a standard result. The key strategy is utilizing the \textbf{Borel-Cantelli} argument to extract the subsequence efficiently.
+\end{frame}
+
+% --- Problem 5 ---
+\begin{frame}{Problem 5: Diophantine Approximation}
+    \begin{block}{Problem}
+    \textbf{(a) Order 2 is Universal:} 
+    Use Pigeonhole Principle to prove Dirichlet's Approximation Theorem: $\forall$ irrational $x$, $\exists \infty$ rationals $p/q$ s.t. $|x - p/q| < 1/q^2$.
+
+    \textbf{(b) Order $>2$ is Rare:}
+    Prove that the set of $x \in [0,1]$ such that $|x - p/q| < 1/q^3$ for infinitely many rationals $p/q$ has Lebesgue measure zero.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Solution to Problem 5(b)}
+    \begin{exampleblock}{Proof}
+    It suffices to show by Borel-Cantelli that the sum of measures is finite.
+    $$ \sum_{q=1}^\infty m\left( \bigcup_{p=0}^q \left\{x \in [0,1] : \left|x - \frac{p}{q}\right| < \frac{1}{q^3} \right\} \right) $$
+    
+    The measure at each level $q$ is roughly $q \cdot \frac{2}{q^3} = \frac{2}{q^2}$.
+    Since $\sum \frac{1}{q^2} < \infty$, the set of such $x$ has measure 0.
+    \end{exampleblock}
+\end{frame}
+
+% ==============================================================================
+% TOPIC 2
+% ==============================================================================
+\section{Differentiation Theory}
+
+\begin{frame}{Topic 2: Overview}
+    \textbf{Key Question:} Under what conditions does the FTC hold?
+    $$ \int_a^b f' = f(b) - f(a) $$
+
+    \begin{columns}[t]
+        \column{0.5\textwidth}
+        \textbf{Classes of Functions:}
+        \begin{itemize}
+            \item \textbf{Monotone:} Differentiable a.e.
+            \item \textbf{Bounded Variation (BV):} Diff. a.e., but FTC may fail.
+            \item \textbf{Absolute Continuity (AC):} The necessary and sufficient condition for FTC.
+        \end{itemize}
+
+        \column{0.5\textwidth}
+        \begin{alertblock}{Warning}
+        The Cantor-Lebesgue function is BV, Continuous, and Monotone, but \textbf{not} AC.
+        \end{alertblock}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Properties of AC Functions}
+    \begin{block}{Equivalence with Stronger Definition}
+        The standard definition ($\sum |f(b_k) - f(a_k)| < \epsilon$) implies:
+        $$ \sum_{k=1}^n TV(f|_{[a_k, b_k]}) < \epsilon \quad \text{whenever} \quad \sum (b_k - a_k) < \delta $$
+    \end{block}
+
+    \begin{block}{Indefinite Integral Characterization}
+        $f$ is AC on $[a,b]$ iff $f(x) = f(a) + \int_a^x g(t) \, dt$ for some integrable $g$ (where $g = f'$ a.e.).
+    \end{block}
+\end{frame}
+
+% --- Problem 6 ---
+\begin{frame}{Problem 6}
+    \begin{block}{Problem}
+    Let $\alpha, \beta > 0$. Define $f: [0,1] \to \mathbb{R}$ by:
+    $$ f(x) = \begin{cases} x^\alpha \sin(\frac{1}{x^\beta}) & 0 < x \le 1 \\ 0 & x = 0 \end{cases} $$
+    \begin{enumerate}
+        \item[(i)] Prove that if $\alpha > \beta$, then $f \in BV[0,1]$.
+        \item[(ii)] Prove that if $\alpha \le \beta$, then $f \notin BV[0,1]$.
+    \end{enumerate}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Solution to Problem 6}
+    \textbf{(i) Case $\alpha > \beta$:}
+    We calculate the derivative: $|f'(x)| \le \alpha x^{\alpha-1} + \beta x^{\alpha-\beta-1}$.
+    Since $\alpha > \beta$, the power is $> -1$. Thus $|f'|$ is integrable near 0, so $TV(f) = \int |f'| < \infty$.
+
+    \vspace{1em}
+    \textbf{(ii) Case $\alpha \le \beta$:}
+    \begin{alertblock}{Divergence}
+    We construct a partition where points $x_n$ satisfy $\sin(1/x^\beta) = \pm 1$. The sum of oscillations behaves like the harmonic series $\sum \frac{1}{n}$, which diverges.
+    \end{alertblock}
+\end{frame}
+
+% --- Problem 7 ---
+\begin{frame}{Problem 7: Inclusions}
+    \begin{block}{Problem}
+    Prove the strict inclusions: $\text{Lip} \subsetneq AC \subsetneq BV$.
+    \end{block}
+
+    \begin{exampleblock}{Counter-Examples}
+    \begin{itemize}
+        \item $\text{Lip} \subsetneq AC$: 
+        $f(x) = \sqrt{x}$ on $[0,1]$. It is AC (integral of $1/2\sqrt{x}$) but not Lipschitz (unbounded derivative at 0).
+        
+        \item $AC \subsetneq BV$: 
+        The \textbf{Cantor-Lebesgue function}. It is BV (monotone) but not AC (maps measure 0 set to measure 1 set).
+    \end{itemize}
+    \end{exampleblock}
+\end{frame}
+
+% --- Problem 8 ---
+\begin{frame}{Problem 8: Mapping Properties}
+    \begin{block}{Problem}
+    Prove that if $f$ is absolutely continuous, then $f$ maps measurable sets to measurable sets.
+    \end{block}
+
+    \textbf{Sketch of Proof:}
+    \begin{enumerate}
+        \item \textbf{Condition (N):} Show $f$ maps sets of measure 0 to sets of measure 0 (using the $\delta-\epsilon$ definition of AC).
+        \item Write measurable set $E = F \cup Z$ ($F$ is $F_\sigma$, $m(Z)=0$).
+        \item $f(F)$ is $F_\sigma$ (hence Borel/Measurable) by continuity.
+        \item $f(Z)$ is measure 0 by step 1.
+    \end{enumerate}
+\end{frame}
+
+% --- Problem 9 & 10 omitted for brevity in slides, but concepts remain similar ---
+
+% ==============================================================================
+% TOPIC 3
+% ==============================================================================
+\section{Approximation \& Separability}
+
+\begin{frame}{Topic 3: Overview}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{Density:}
+        \begin{itemize}
+            \item Simple functions
+            \item Step functions
+            \item $C_c$ (Continuous with compact support)
+        \end{itemize}
+        are dense in $L^p(\R)$ for $1 \le p < \infty$.
+
+        \column{0.5\textwidth}
+        \textbf{Separability:}
+        \begin{itemize}
+            \item $L^p$ is separable for $1 \le p < \infty$.
+            \item \alert{$L^\infty$ is NOT separable.}
+            \item $C[a,b]$ is separable (Stone-Weierstrass).
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Problem 11: Weak Compactness}
+    \begin{block}{Theorem (Reflexivity)}
+    Let $1 < p < \infty$.
+    If $\{f_n\}$ is a bounded sequence in $L^p(E)$, then $\{f_n\}$ possesses a subsequence that converges in the \textbf{weak sense}.
+    \end{block}
+    
+    \vspace{1em}
+    \textbf{Note:} This fails for $L^1$ (not reflexive).
+\end{frame}
+
+\begin{frame}{Problem 14: Weak vs Strong}
+    \begin{block}{Problem}
+    Example of a sequence converging weakly to 0 but not strongly.
+    \end{block}
+
+    \begin{exampleblock}{Example: Rademacher or Sine}
+    $f_n(x) = \sin(nx)$ on $[0, 2\pi]$.
+    \begin{itemize}
+        \item \textbf{Weakly:} $\int f_n g \to 0$ by Riemann-Lebesgue Lemma.
+        \item \textbf{Strongly:} $\norm{f_n}_p$ is constant non-zero, so it cannot converge to 0 in norm.
+    \end{itemize}
+    \end{exampleblock}
+\end{frame}
+
+% ==============================================================================
+% TOPIC 4
+% ==============================================================================
+\section{Modes of Convergence}
+
+\begin{frame}{Convergence Relationships}
+    \begin{center}
+        \resizebox{0.9\textwidth}{!}{%
+            \renewcommand{\arraystretch}{1.4}
+            \setlength{\tabcolsep}{5pt}
+            \begin{tabular}{|l|c|c|c|c|}
+                \hline
+                \multicolumn{5}{|c|}{\textbf{Does Property A imply a Subsequence has Property B?}} \\
+                \multicolumn{5}{|c|}{\small (Assume $m(E) < \infty$ and bounded in $L^p$)} \\
+                \hline
+                \textbf{A $\downarrow$ \textbackslash \ B $\rightarrow$} & \textbf{Strong ($L^p$)} & \textbf{Weak ($L^p$)} & \textbf{Ptwise a.e.} & \textbf{Measure} \\
+                \hline
+                \multicolumn{5}{|c|}{\textit{\textbf{Case 1: Reflexive Range ($1 < p < \infty$)}}} \\
+                \hline
+                \textbf{Strong} & YES & YES & YES & YES \\
+                \hline
+                \textbf{Weak} & \textcolor{red}{NO} & YES & \textcolor{red}{NO} & \textcolor{red}{NO} \\
+                \hline
+                \textbf{Pointwise a.e.} & \textcolor{red}{NO} & \textbf{YES} & YES & YES \\
+                \hline
+                \textbf{Measure} & \textcolor{red}{NO} & \textbf{YES} & YES & YES \\
+                \hline
+                \multicolumn{5}{|c|}{\textit{\textbf{Case 2: Non-Reflexive ($p = 1$)}}} \\
+                \hline
+                \textbf{Pointwise a.e.} & \textcolor{red}{NO} & \textcolor{red}{\textbf{NO}} & YES & YES \\
+                \hline
+            \end{tabular}%
+        }
+    \end{center}
+\end{frame}
+
+\begin{frame}{Problem 16: Radon-Riesz Property}
+    \begin{block}{Problem}
+    Let $1 \le p < \infty$. Suppose $f_n \to f$ a.e. and $f_n, f \in L^p$.
+    \textbf{Prove:} $f_n \to f$ in $L^p$ (Strongly) iff $\norm{f_n}_p \to \norm{f}_p$.
+    \end{block}
+
+    \begin{exampleblock}{Proof Hint}
+    Apply \textbf{Fatou's Lemma} to the sequence:
+    $$ g_n = 2^{p-1}(|f_n|^p + |f|^p) - |f_n - f|^p $$
+    Since $g_n \ge 0$, Fatou yields the result.
+    \end{exampleblock}
+\end{frame}
+
+% ==============================================================================
+% TOPIC 5
+% ==============================================================================
+\section{Counter-Example Library}
+
+\begin{frame}{Standard Counter-Example Library}
+    \begin{itemize}
+        \item \textbf{Cantor-Lebesgue Function}
+        \begin{itemize}
+            \item Continuous, Monotone, $f'=0$ a.e.
+            \item \alert{Not Absolutely Continuous.}
+        \end{itemize}
+        
+        \item \textbf{Typewriter Sequence}
+        \begin{itemize}
+            \item Converges in measure.
+            \item \alert{Diverges pointwise everywhere.}
+        \end{itemize}
+
+        \item \textbf{The Spikes ($n\chi_{[0, 1/n]}$)}
+        \begin{itemize}
+            \item Converges pointwise to 0.
+            \item \alert{Integral stays 1 (No $L^1$ convergence).}
+        \end{itemize}
+        
+        \item \textbf{Rademacher Functions / $\sin(nx)$}
+        \begin{itemize}
+            \item Weak convergence to 0.
+            \item \alert{No strong convergence.}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \centering
+    \Huge \textbf{Good Luck!}
+\end{frame}
+
+\end{document}

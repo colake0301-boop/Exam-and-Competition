@@ -1,0 +1,187 @@
+\documentclass[12pt, a4paper]{article}
+
+% --- Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem} % Key package for spacing control
+
+% --- Page Layout ---
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+% --- Headers/Footers ---
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textbf{MAT3006 Real Analysis}}
+\chead{Final Exam}
+\rhead{Fall 2025}
+\cfoot{Problem \theprobcount \quad -- \quad Page \thepage}
+
+% --- Math Macros ---
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\dx}{\, dx}
+\newcommand{\mstar}{m^*} 
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+
+% =========================================================
+%   1. THE "PROBLEM" ENVIRONMENT (One Page Per Problem)
+% =========================================================
+\newcounter{probcount}
+
+\newenvironment{problem}{%
+    \clearpage % Force new page
+    \stepcounter{probcount}%
+    \noindent \textbf{\Large Problem \theprobcount.}%
+    \par \vspace{0.2cm}%
+}{%
+    \vfill % Push footer to bottom
+    \clearpage
+}
+
+% =========================================================
+%   2. THE "PARTS" LIST (Fixes Vertical Spacing)
+% =========================================================
+\newlist{parts}{enumerate}{1}
+\setlist[parts]{
+    label=(\roman*), 
+    leftmargin=1cm, 
+    labelsep=0.5em,
+    topsep=0pt,     % <--- This eliminates the "strange" gap
+    partopsep=0pt,
+    parsep=1em      % Space between parts (i) and (ii)
+}
+
+\title{\vspace{-2cm} \textbf{Final Exam: MAT3006 Real Analysis}}
+\date{December 8, 2025}
+
+\begin{document}
+
+% --- Cover Page ---
+\maketitle
+\thispagestyle{empty}
+
+\hrule
+\vspace{1em}
+\textbf{Instructions:}
+\begin{itemize}
+    \item Attempt all problems.
+    \item Each problem is presented on a separate page.
+    \item Justify your answers with rigorous proofs.
+    \item Unless otherwise stated, $m$ denotes the Lebesgue measure.
+\end{itemize}
+\vspace{1em}
+\hrule
+\vspace{1em}
+\begin{center}
+    \textit{(Turn the page to begin)}
+\end{center}
+
+% --- Problem 1 ---
+\begin{problem}
+    \begin{parts}
+        \item Does there exist a pair of sets $E$ and $G$ such that $m^*(E) = m^*(G)$ but $m^*(G \setminus E) > 0$? Justify your answer.
+        
+        \item Suppose $E \subset \R$ is a set of positive outer measure ($m^*(E) > 0$). Show that for every $\alpha \in (0, 1)$, there exists an open interval $I$ such that:
+        \[
+        m^*(E \cap I) \ge \alpha \cdot m^*(I).
+        \]
+    \end{parts}
+\end{problem}
+
+% --- Problem 2 (Updated as requested) ---
+\begin{problem}
+    \begin{parts}
+        \item \textbf{Prove or Disprove:} If $f$ and $g$ are absolutely continuous functions on $[a,b]$, then their product $f \cdot g$ is absolutely continuous on $[a,b]$.
+        
+        \item \textbf{Prove or Disprove:} If $f, g$ are absolutely continuous on $[a,b]$, then the integration by parts formula holds:
+        \[
+        \int_{a}^{b} f'(x)g(x) \dx = f(b)g(b) - f(a)g(a) - \int_{a}^{b} f(x)g'(x) \dx.
+        \]
+    \end{parts}
+\end{problem}
+
+% --- Problem 3 ---
+\begin{problem}
+    Let $f$ be a function of bounded variation on $[a,b]$. Let $TV(f)$ denote the total variation of $f$ on $[a,b]$.
+
+    \begin{parts}
+        \item Show that:
+        \[
+        \int_{a}^{b} |f'(x)| \dx \le TV(f).
+        \]
+        
+        \item Show that the equality holds in the inequality above if and only if $f$ is absolutely continuous on $[a,b]$.
+    \end{parts}
+\end{problem}
+
+% --- Problem 4 ---
+\begin{problem}
+    \begin{parts}
+        \item Let $f$ be an absolutely continuous function on $[a,b]$.
+        \textbf{Prove or Disprove:} Given $\epsilon > 0$, there exists $\delta > 0$ such that for \textbf{any} countable collection of disjoint open intervals $(a_k, b_k) \subset [a,b]$ satisfying $\sum (b_k - a_k) < \delta$, we have:
+        \[
+        \sum_{k=1}^{\infty} |f(b_k) - f(a_k)| < \epsilon.
+        \]
+        
+        \item Show that an increasing absolutely continuous function maps sets of measure zero to sets of measure zero.
+    \end{parts}
+\end{problem}
+
+% --- Problem 5 ---
+\begin{problem}
+    Let $f$ be a bounded measurable function on a set $E$ . 
+    Show that there exist a sequence of continuous functions $\{f_n\}$ converges to $f$ pointwise a.e.
+\end{problem}
+
+% --- Problem 6 ---
+\begin{problem}
+    \begin{parts}
+        \item Let $f \in L^1([0,1])$ with $f(x) > 0$ and $\int_{0}^{1} f(x) \dx = 1$.
+        \textbf{Prove or Disprove:} 
+        \[
+        \int_{0}^{1} \log f(x) \dx \le 0.
+        \]
+        
+        \item Let $f, g$ be non-negative, bounded measurable functions on $[a,b]$ with $fg \geq 1$
+        \textbf{Prove or Disprove:}
+        \[
+        \left(\int_{0}^{1} f \right) \left(\int_{0}^{1} g \right) \ge 1.
+        \]
+    \end{parts}
+\end{problem}
+
+% --- Problem 7 ---
+\begin{problem}
+    Let $h \in L^\infty(\R)$ be a periodic function with period 1 such that $\int_{0}^{1} h(x) \dx = 0$. Define the sequence $f_n(x) = h(nx)$ for $x \in [0,1]$.
+
+    \begin{parts}
+        \item Does $\{f_n\}$ have a subsequence that converges weakly in $L^1$? If it does, what is the limit?
+        \item Does $\{f_n\}$ have a subsequence that converges pointwise  a.e.? If it does, what is the limit?
+        \item Does $\{f_n\}$ have a subsequence that converges in measure? If it does, what is the limit?
+    \end{parts}
+\end{problem}
+
+% --- Problem 8 ---
+\begin{problem}
+    Let $1 < p_1 < p_2 < \infty$. Suppose $\{f_n\}$ is a sequence of functions bounded in $L^{p_2}([a,b])$ (i.e., $\sup_n \|f_n\|_{p_2} < \infty$) and $f_n \to f$ in measure.
+
+    \vspace{1em}
+
+    \textbf{Prove or Disprove:} There exists a subsequence $\{f_{n_k}\}$ converges to $f$ in $L^{p_1}([a,b])$.
+\end{problem}
+
+% --- Problem 9 ---
+\begin{problem}
+    \begin{parts}
+        \item Let $\{f_n\} \subset L^{\infty}([a,b])$. If $\int_{a}^{x} f_n(t) \, dt \to 0$ for all $x \in [a,b]$, can we conclude that $\int_{a}^{b} f_n g \to 0$ for any $L^{1}([a,b])$ function $g$?
+        
+        \item Let $\{f_n\} \subset L^1([a,b])$. If $\int_{a}^{x} f_n(t) \, dt \to 0$ for all $x \in [a,b]$, can we conclude that $\int_{a}^{b} f_n g \to 0$ for any $g \in L^1([a,b])$?
+    \end{parts}
+\end{problem}
+
+\end{document}

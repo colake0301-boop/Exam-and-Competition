@@ -1,0 +1,479 @@
+\documentclass[english, aspectratio=169]{beamer}
+\usepackage{hyperref}
+\usefonttheme{serif}
+
+% Packages
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
+\usepackage{graphicx,pstricks,listings,stackengine}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+
+
+% --- METADATA ---
+\author{Cola Ke}
+\title{Final Review: Real Analysis}
+\subtitle{Borel-Cantelli, Differentiation, $L^p$ Spaces, and Modes of Convergence}
+\institute{The Chinese University of Hong Kong (Shenzhen)}
+\date{December 6, 2025}
+
+% --- COMMANDS ---
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\dx}{\,dx}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\begin{document}
+
+% --- TITLE PAGE ---
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+% ==============================================================================
+% TOPIC 1
+% ==============================================================================
+\section{Topic 1: Borel-Cantelli \& Convergence}
+
+\begin{frame}{Topic 1: Overview}
+    \textbf{Key Concept:} The Borel-Cantelli Lemma.
+    
+    It is the primary tool for translating conditions on integrals or measures into pointwise almost everywhere (a.e.) convergence results.
+    
+    \vspace{1em}
+    \textit{"The message is that 'Borel-Cantelli' way of arguing is important!"}
+\end{frame}
+
+% --- Problem 1 ---
+\begin{frame}{Problem 1}
+    \begin{block}{Problem}
+    Let $\{f_k\}_{k=1}^\infty$ be a sequence of integrable functions on a measurable set $E$. Suppose that for every $k$:
+    $$ \int_E |f_{k+1} - f_k| < \delta_k^2 $$
+    where $\sum_{k=1}^\infty \delta_k < \infty$.
+    
+    \textbf{Prove:} The sequence $\{f_k\}$ converges pointwise almost everywhere to some function $f$.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Solution to Problem 1}
+    \textbf{Strategy:}
+    In order to show $f_k$ converges a.e., it suffices to show that $\sum |f_{k+1} - f_k| < \infty$ a.e.
+    
+    \begin{itemize}
+        \item Let $A_k = \{ x \in E \mid |f_{k+1}(x) - f_k(x)| > \delta_k \}$.
+        \item By Chebyshev's Inequality: $m(A_k) \le \frac{1}{\delta_k} \int_E |f_{k+1} - f_k| < \delta_k$.
+        \item Since $\sum \delta_k < \infty$, by the Borel-Cantelli Lemma, almost every $x$ belongs to only finitely many $A_k$.
+    \end{itemize}
+    \textit{Note: This is the key step in proving the Riesz-Fischer Theorem.}
+\end{frame}
+
+% --- Problem 2 ---
+\begin{frame}{Problem 2}
+    \begin{block}{Problem}
+    Let $\{f_k\}_{k=1}^\infty$ be a sequence of integrable functions on a measurable set $E$. Suppose that for every $k$:
+    $$ \int_E |f_{k+1} - f_k| < \delta_k $$
+    where $\sum_{k=1}^\infty \delta_k < \infty$.
+    
+    \textbf{Prove:} The sequence $\{f_k\}$ converges pointwise almost everywhere to some function $f$.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Remark on Problem 2}
+    \textbf{Comparison:}
+    The proof from Problem 1 (using Chebyshev directly on the sets) works for Problem 1 but \textbf{not} for Problem 2 directly because the power of convergence is different.
+    
+    \textbf{Alternative Argument:}
+    Consider the function $g(x) = \sum_{k=1}^\infty |f_{k+1}(x) - f_k(x)|$.
+    \begin{itemize}
+        \item By the Monotone Convergence Theorem (MCT), $\int_E g = \sum \int_E |f_{k+1} - f_k| < \sum \delta_k < \infty$.
+        \item Thus $g(x)$ is finite a.e., implying the series converges absolutely a.e.
+        \item This implies $f_k \to f$ a.e. (The "Beppo-Levi" argument).
+    \end{itemize}
+\end{frame}
+
+% --- Problem 3 ---
+\begin{frame}{Problem 3}
+    \begin{block}{Problem}
+    Let $\{f_n\}_{n=1}^\infty$ be a sequence of integrable functions on $\mathbb{R}$ such that:
+    $$ \int_{\mathbb{R}} |f_n(x) - f(x)| \dx \le \frac{1}{n^{1+\epsilon}} $$
+    \begin{enumerate}
+        \item[(a)] If $\epsilon > 0$, prove that $f_n \to f$ pointwise almost everywhere.
+        \item[(b)] If $\epsilon = 0$, provide a counterexample to show that pointwise a.e. convergence may fail.
+    \end{enumerate}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Solution to Problem 3}
+    \textbf{Part (a) $\epsilon > 0$:}
+    Since $\sum \frac{1}{n^{1+\epsilon}} < \infty$, we can sum the integrals. By the Beppo-Levi argument (similar to Problem 2), the series $\sum |f_n - f|$ converges a.e., which implies $|f_n - f| \to 0$ a.e.
+
+    \textbf{Part (b) $\epsilon = 0$:}
+    Consider the "Typewriter Sequence" (moving characteristic functions):
+    $$ \chi_{[0, 1/2]}, \chi_{[1/2, 1]}, \chi_{[0, 1/4]}, \chi_{[1/4, 1/2]}, \dots $$
+    The integral decays like $1/n$ (harmonic series diverges), and the "bump" keeps cycling through the interval infinitely often, so it diverges everywhere.
+\end{frame}
+
+% --- Problem 4 ---
+\begin{frame}{Problem 4}
+    \begin{block}{Problem}
+    A sequence $\{f_n\}$ of measurable functions is said to be \textbf{Cauchy in Measure} if for every $\eta > 0$ and $\epsilon > 0$, there exists an integer $N$ such that for all $n, m \ge N$:
+    $$ m(\{ x \in E \mid |f_n(x) - f_m(x)| \ge \eta \}) < \epsilon $$
+    
+    \textbf{Prove:} If $\{f_n\}$ is Cauchy in measure, then there exists a subsequence $\{f_{n_k}\}$ that converges pointwise almost everywhere.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Remark on Problem 4}
+    This is a standard homework result. The key takeaway is utilizing the \textbf{Borel-Cantelli} style of argument to extract the subsequence efficiently.
+\end{frame}
+
+% --- Problem 5 ---
+\begin{frame}{Problem 5 (Diophantine Approximation)}
+    \begin{block}{Problem}
+    \textbf{(a) Order 2 is Universal:} 
+    Use the Pigeonhole Principle to prove Dirichlet's Approximation Theorem: For any irrational $x$, there exist infinitely many rational numbers $p/q$ such that $|x - p/q| < 1/q^2$.
+
+    \textbf{(b) Order $>2$ is Rare:}
+    Prove that the set of $x \in [0,1]$ such that $|x - p/q| < 1/q^3$ for infinitely many rationals $p/q$ has Lebesgue measure zero.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Solution to Problem 5(b)}
+    \textbf{Proof:}
+    It suffices to show by the Borel-Cantelli Lemma that the sum of the measures of the target intervals is finite.
+    
+    $$ \sum_{q=1}^\infty m\left( \bigcup_{p=0}^q \left\{x \in [0,1] : \left|x - \frac{p}{q}\right| < \frac{1}{q^3} \right\} \right) $$
+    
+    The measure at each level $q$ is roughly $q \cdot \frac{2}{q^3} = \frac{2}{q^2}$. Since $\sum \frac{1}{q^2} < \infty$, the set of such $x$ has measure 0.
+\end{frame}
+
+% ==============================================================================
+% TOPIC 2
+% ==============================================================================
+\section{Topic 2: Differentiation Theory}
+
+\begin{frame}{Topic 2: Overview}
+    \textbf{Key Questions:}
+    \begin{enumerate}
+        \item Which classes of functions are differentiable almost everywhere? 
+        \item Under what conditions does the Fundamental Theorem of Calculus (FTC) hold? i.e., $\int_a^b f' = f(b) - f(a), \quad \frac{d}{dx} \int_{a}^{x} f= f $.
+    \end{enumerate}
+
+    \textbf{Summary:}
+    \begin{itemize}
+        \item \textbf{Monotone Functions:} Differentiable a.e. (Proof uses Vitali Covering Lemma).
+        \item \textbf{Bounded Variation (BV):} Differentiable a.e., but FTC may fail (e.g., Cantor-Lebesgue function).
+        \item \textbf{Absolute Continuity (AC):} The necessary and sufficient condition for FTC.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Properties of Absolutely Continuous Functions}
+    \begin{itemize}
+        \item \textbf{Equivalence with Stronger Definition:} \\
+        The standard definition of absolute continuity (requiring $\sum |f(b_k) - f(a_k)| < \epsilon$) is equivalent to the stronger condition:
+        $$ \sum_{k=1}^n TV(f|_{[a_k, b_k]}) < \epsilon $$
+        whenever $\sum (b_k - a_k) < \delta$.
+
+        \item \textbf{Indefinite Integral Characterization:} \\
+        A function $f$ is absolutely continuous on $[a,b]$ if and only if it is an indefinite integral:
+        $$ f(x) = f(a) + \int_a^x g(t) \, dt $$
+        for some integrable function $g$ (specifically, $g = f'$ a.e.).
+
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Properties of Absolutely Continuous Functions}
+    \begin{itemize}
+        \item \textbf{FTC for Increasing Functions:} \\
+        An increasing continuous function $f$ is absolutely continuous if and only if it satisfies the Fundamental Theorem of Calculus:
+        $$ \int_a^b f'(x) \, dx = f(b) - f(a) $$
+    \end{itemize}
+\end{frame}
+
+% --- Problem 6 ---
+\begin{frame}{Problem 6}
+    \begin{block}{Problem}
+    Let $\alpha, \beta > 0$. Define $f: [0,1] \to \mathbb{R}$ by:
+    $$ f(x) = \begin{cases} x^\alpha \sin(\frac{1}{x^\beta}) & 0 < x \le 1 \\ 0 & x = 0 \end{cases} $$
+    
+    \begin{enumerate}
+        \item[(i)] Prove that if $\alpha > \beta$, then $f$ is of Bounded Variation (BV) on $[0,1]$.
+        \item[(ii)] Prove that if $\alpha \le \beta$, then $f$ is \textbf{not} of Bounded Variation on $[0,1]$.
+    \end{enumerate}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Solution to Problem 6}
+    \textbf{(i) Case $\alpha > \beta$:}
+    $f$ is continuously differentiable on $(0,1]$. We calculate the derivative:
+    $$ |f'(x)| \le \alpha x^{\alpha-1} + \beta x^{\alpha-\beta-1} $$
+    Since $\alpha > \beta$, the power $\alpha-\beta-1 > -1$. Thus $|f'|$ is integrable near 0.
+    Therefore, $TV(f) = \int_0^1 |f'| < \infty$.
+
+    \textbf{(ii) Case $\alpha \le \beta$:}
+    We construct a partition where the variation diverges.
+    Choose points $x_n$ where $\sin(1/x^\beta) = \pm 1$. The sum of oscillations behaves like the harmonic series $\sum \frac{1}{n}$ (or worse), which diverges to infinity.
+\end{frame}
+
+% --- Problem 7 ---
+\begin{frame}{Problem 7}
+    \begin{block}{Problem}
+    Let $\text{Lip}$, $AC$, and $BV$ denote the spaces of Lipschitz, Absolutely Continuous, and Bounded Variation functions on $[a,b]$, respectively.
+    
+    Prove the strict inclusions:
+    $$ \text{Lip} \subsetneq AC \subsetneq BV $$
+    \end{block}
+\end{frame}
+
+\begin{frame}{Solution to Problem 7}
+    \begin{itemize}
+        \item $\text{Lip} \subsetneq AC$: Consider $f(x) = \sqrt{x}$ on $[0,1]$. It is AC (integral of $1/2\sqrt{x}$) but not Lipschitz (derivative is unbounded at 0).
+        \item $AC \subsetneq BV$: Consider the Cantor-Lebesgue function. It is BV (since it is monotone) but not AC (it maps a set of measure 0 to a set of measure 1).
+    \end{itemize}
+\end{frame}
+
+% --- Problem 8 ---
+\begin{frame}{Problem 8}
+    \begin{block}{Problem}
+    Prove that if $f$ is an absolutely continuous function, then $f$ maps measurable sets to measurable sets.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Solution to Problem 8}
+    \textbf{Step 1:} Show $f$ satisfies the condition ($N$): it maps sets of measure 0 to sets of measure 0.
+    For any $\epsilon$, cover the zero-measure set $Z$ with intervals of small total length. By absolute continuity, the image of these intervals has small total length.
+
+    \textbf{Step 2:} General Measurable Set $E$.
+    Write $E = F \cup Z$ where $F$ is an $F_\sigma$ set (countable union of closed sets) and $m(Z)=0$.
+    \begin{itemize}
+        \item $f(F)$ is measurable (continuous image of an $F_\sigma$ set is $F_\sigma$, hence Borel).
+        \item $f(Z)$ has measure 0 by Step 1.
+    \end{itemize}
+    Thus $f(E) = f(F) \cup f(Z)$ is measurable.
+\end{frame}
+
+% --- Problem 9 ---
+\begin{frame}{Problem 9}
+    \begin{block}{Problem}
+    Let $f$ be a function of bounded variation on $[a,b]$, and define the total variation function $V(x) = TV(f|_{[a,x]})$.
+    
+    \begin{enumerate}
+        \item[(i)] Show that $|f'(x)| \le V'(x)$ almost everywhere, and $\int_a^b |f'(x)| \dx \le TV(f)$.
+        \item[(ii)] Prove that $V'(x) = |f'(x)|$ a.e. if and only if $f$ is absolutely continuous.
+    \end{enumerate}
+    \end{block}
+\end{frame}
+
+% --- Problem 10 ---
+\begin{frame}{Problem 10}
+    \begin{block}{Problem}
+    Let $f: [a,b] \to \mathbb{R}$ be an increasing function.
+    
+    \textbf{Prove:} $f$ is singular (i.e., $f'=0$ a.e.) if and only if:
+    For every $\epsilon > 0$, there exists a finite disjoint collection of intervals $\{(a_k, b_k)\}$ such that:
+    1. $\sum (b_k - a_k) < \epsilon$ (Small total length in domain)
+    2. $\sum (f(b_k) - f(a_k)) > f(b) - f(a) - \epsilon$ (Captures most of the growth in range).
+    \end{block}
+\end{frame}
+
+\begin{frame}{Remark on Problem 10}
+    \textbf{Intuition:}
+    If $f$ is AC, it increases "gradually" everywhere.
+    If $f$ is singular and increasing, it must accomplish a "big increase" within a "very small region" (effectively on a set of measure zero).
+\end{frame}
+
+% ==============================================================================
+% TOPIC 3
+% ==============================================================================
+\section{Topic 3: Approximation \& Separability}
+
+\begin{frame}{Topic 3: Overview}
+    \textbf{Density:}
+    \begin{itemize}
+        \item Simple functions, Step functions, and Continuous functions with compact support ($C_c$) are dense in $L^p(\R)$ for $1 \le p < \infty$.
+    \end{itemize}
+
+    \textbf{Separability:}
+    \begin{itemize}
+        \item $L^p$ is separable for $1 \le p < \infty$.
+        \item $L^\infty$ is \textbf{not} separable.
+        \item $C[a,b]$ is separable (by the Stone-Weierstrass Theorem).
+    \end{itemize}
+\end{frame}
+
+% --- Problem 11 ---
+\begin{frame}{Problem 11}
+    \begin{block}{Problem (Weak Compactness)}
+    Let $1 < p < \infty$. Prove that if $\{f_n\}$ is a bounded sequence in $L^p(E)$, then $\{f_n\}$ possesses a subsequence that converges in the \textbf{weak sense}.
+    \end{block}
+\end{frame}
+
+% --- Problem 12 ---
+\begin{frame}{Problem 12}
+    \begin{block}{Problem}
+    Let $1 < p < \infty$. Prove that a bounded sequence $\{f_n\}$ in $L^p(E)$ converges weakly to $f$ if and only if for every measurable subset $A \subseteq E$:
+    $$ \lim_{n \to \infty} \int_A f_n = \int_A f $$
+    \end{block}
+\end{frame}
+
+% --- Problem 13 ---
+\begin{frame}{Problem 13}
+    \begin{block}{Problem (Riemann-Lebesgue Lemma)}
+    Let $f \in L^1([a,b])$. Prove that:
+    $$ \lim_{n \to \infty} \int_a^b f(x) \sin(nx) \dx = 0 $$
+    \end{block}
+\end{frame}
+
+% --- Problem 14 ---
+\begin{frame}{Problem 14}
+    \begin{block}{Problem}
+    Provide an explicit example of a sequence that converges weakly to 0 but does not converge strongly (in norm) to 0.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Solution to Problem 14}
+    \textbf{Example:} The Rademacher sequence $R_n(x) = \text{sgn}(\sin(2^n \pi x))$ on $[0,1]$.
+    Or simply $f_n(x) = \sin(nx)$.
+    
+    \begin{itemize}
+        \item $f_n \rightharpoonup 0$ (weakly) by the Riemann-Lebesgue Lemma.
+        \item However, $\norm{f_n}_p$ does not go to 0 (it stays constant for Rademacher, or constant average for sin), so it does not converge strongly.
+    \end{itemize}
+\end{frame}
+
+% ==============================================================================
+% TOPIC 4
+% ==============================================================================
+\section{Topic 4: Modes of Convergence}
+
+\begin{frame}{Topic 4: Overview}
+    We study the relationships between:
+    \begin{enumerate}
+        \item Convergence in $L^p$ (Norm)
+        \item Convergence in Measure
+        \item Pointwise Convergence a.e.
+        \item Weak Convergence
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \begin{center}
+        % \resizebox{width}{height}{content} - '!' maintains aspect ratio
+        \resizebox{\textwidth}{!}{%
+            \renewcommand{\arraystretch}{1.2} % Increase vertical spacing slightly for readability
+            \setlength{\tabcolsep}{3pt}       % Reduce horizontal padding between columns
+            \begin{tabular}{|l|c|c|c|c|}
+                \hline
+                \multicolumn{5}{|c|}{\textbf{Does Property A imply a Subsequence has Property B?}} \\
+                \multicolumn{5}{|c|}{\small (Assume $m(E) < \infty$ and sequence is bounded in $L^p$)} \\
+                \hline
+                % Shortened headers to save width
+                \textbf{Prop A $\downarrow$ \textbackslash \ Prop B $\rightarrow$} & \textbf{Strong ($L^p$)} & \textbf{Weak ($L^p$)} & \textbf{Ptwise a.e.} & \textbf{Measure} \\
+                \hline
+                \multicolumn{5}{|c|}{\textit{\textbf{Case 1: Reflexive Range ($1 < p < \infty$)}}} \\
+                \hline
+                \textbf{Strong} & YES & YES & YES & YES \\
+                \hline
+                \textbf{Weak} & \textcolor{red}{NO} & YES & \textcolor{red}{NO} & \textcolor{red}{NO} \\
+                \hline
+                \textbf{Pointwise a.e.} & \textcolor{red}{NO} & \textbf{YES} & YES & YES \\
+                \hline
+                \textbf{Measure} & \textcolor{red}{NO} & \textbf{YES} & YES & YES \\
+                \hline
+                \multicolumn{5}{|c|}{\textit{\textbf{Case 2: Non-Reflexive ($p = 1$)}}} \\
+                \hline
+                \textbf{Pointwise a.e.} & \textcolor{red}{NO} & \textcolor{red}{\textbf{NO}} & YES & YES \\
+                \hline
+                \textbf{Measure} & \textcolor{red}{NO} & \textcolor{red}{\textbf{NO}} & YES & YES \\
+                \hline
+            \end{tabular}%
+        }
+    \end{center}
+\end{frame}
+
+% --- Problem 15 ---
+\begin{frame}{Problem 15}
+    \begin{block}{Problem}
+    Let $\{f_n\}$ be a bounded sequence in $L^p(E)$ such that $f_n \to f$ pointwise almost everywhere.
+    
+    \begin{enumerate}
+        \item[(i)] If $p > 1$, prove that $f_n \rightharpoonup f$ (converges weakly).
+        \item[(ii)] If $p = 1$, prove or disprove that $f_n \rightharpoonup f$.
+    \end{enumerate}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Solution to Problem 15}
+    \textbf{(i) Case $p > 1$: YES.}
+    By weak compactness (reflexivity of $L^p$), any subsequence contains a further weakly convergent subsequence. Since the pointwise limit is $f$, the weak limit must be unique and equal to $f$. Thus the entire sequence converges weakly to $f$.
+
+    \textbf{(ii) Case $p = 1$: NO.}
+    Counter-example: $f_n = n \chi_{[0, 1/n]}$.
+    \begin{itemize}
+        \item Bounded in $L^1$ ($\norm{f_n}_1 = 1$).
+        \item Converges pointwise a.e. to 0.
+        \item Test against $g \equiv 1 \in L^\infty$: $\int f_n g = 1 \not\to 0$. Thus it does not converge weakly to 0.
+    \end{itemize}
+\end{frame}
+
+% --- Problem 16 ---
+\begin{frame}{Problem 16}
+    \begin{block}{Problem (Radon-Riesz Property)}
+    Let $1 \le p < \infty$. Suppose $\{f_n\} \subset L^p(E)$ converges pointwise almost everywhere to $f \in L^p(E)$.
+    
+    \textbf{Prove:} $f_n \to f$ in $L^p$ (Strongly) if and only if $\lim_{n \to \infty} \norm{f_n}_p = \norm{f}_p$.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Remark on Problem 16}
+    The "$\Rightarrow$" direction is trivial by continuity of the norm.
+    The "$\Leftarrow$" direction is non-trivial. It usually involves applying Fatou's Lemma to the sequence:
+    $$ g_n = 2^{p-1}(|f_n|^p + |f|^p) - |f_n - f|^p $$
+    Since $g_n \ge 0$, applying Fatou yields the result.
+\end{frame}
+
+% ==============================================================================
+% TOPIC 5
+% ==============================================================================
+\section{Topic 5: Counter-Example Library}
+
+\begin{frame}{Topic 5: Overview (Standard Library)}
+    It is hard to remember every counter-example, but useful to keep a "Standard Library" to test hypotheses:
+    
+    \begin{enumerate}
+        \item \textbf{Cantor-Lebesgue Function:} (Continuous, Monotone, derivative 0 a.e., not AC).
+        \item \textbf{Typewriter Sequence:} (Converges in measure, but diverges pointwise everywhere).
+        \item \textbf{The Spikes:} $n\chi_{[0, 1/n]}$ (Converges pointwise to 0, but Integral stays 1).
+        \item \textbf{Rademacher Functions:} (Weak convergence to 0, no strong convergence).
+    \end{enumerate}
+\end{frame}
+
+% --- Problem 17 ---
+\begin{frame}{Problem 17}
+    \begin{block}{Problem}
+    Construct a sequence of Riemann integrable functions $f_n: [a,b] \to \mathbb{R}$ such that $\{f_n\}$ converges pointwise to a function $f$, but $f$ is \textbf{not} Riemann Integrable.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Remark on Problem 17}
+    \textbf{Example:} Enumerate rationals in $[0,1]$ as $\{r_1, r_2, \dots\}$. Let $f_n$ be the characteristic function of $\{r_1, \dots, r_n\}$.
+    Then $f_n \to \chi_{\mathbb{Q}}$, which is not Riemann integrable (Dirichlet function).
+    
+    \textit{Note:} If the sequence is uniformly bounded, the limit is always \textbf{Lebesgue Integrable} by the Dominated Convergence Theorem.
+\end{frame}
+
+% --- Problem 18 ---
+\begin{frame}{Problem 18}
+    \begin{block}{Problem}
+    Construct an absolutely continuous, strictly increasing function $f: [0,1] \to \mathbb{R}$ for which $f'(x) = 0$ on a set of positive measure.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Solution to Problem 18}
+    This requires a "Fat Cantor Set" construction (a Cantor-like set with positive measure). 
+    We construct a homeomorphism that maps the Fat Cantor set (measure $>0$) to a regular Cantor set (measure 0) or vice versa, ensuring strict monotonicity while keeping the derivative zero on the "gaps".
+\end{frame}
+
+\end{document}

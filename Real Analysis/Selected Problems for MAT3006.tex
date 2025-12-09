@@ -1,0 +1,1108 @@
+\documentclass[11pt, letterpaper]{article}
+
+% --- Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amsthm, amssymb, bm} % Math packages
+\usepackage{mathrsfs} % Script fonts
+\usepackage{geometry} % Margins
+\usepackage{fancyhdr} % Headers and footers
+\usepackage{lastpage} % For "Page X of Y"
+\usepackage{tcolorbox} % For the colorful problem boxes
+\usepackage{enumitem} % For better list customization
+\usepackage{tikz-cd}  % For diagrams
+\usepackage{xcolor}   % Colors
+
+% --- Geometry & Layout ---
+\geometry{
+    top=2.5cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=14.5pt
+}
+\linespread{1.15} % Slightly more space between lines for readability
+
+% --- Colors ---
+\definecolor{boxheader}{RGB}{50, 80, 150} % Dark Blue
+\definecolor{boxfill}{RGB}{245, 247, 255} % Very light blue
+
+% --- Header & Footer ---
+\pagestyle{fancy}
+\fancyhf{} % Clear all fields
+\lhead{\textbf{MAT 3006}} % Course Number
+\chead{Selected Problems} % Title
+\rhead{Cola} % Name
+\cfoot{Page \thepage\ of \pageref{LastPage}}
+
+% --- Title Information ---
+\title{\textbf{MAT3006 Selected Problems}}
+\author{Cola}
+\date{\today}
+
+% --- Custom Environments ---
+
+% 1. Modern Problem Box
+\tcbuselibrary{skins, breakable}
+\newcounter{problemname}
+\newenvironment{problem}[1][]{%
+  \stepcounter{problemname}%
+  \bigskip%
+  \begin{tcolorbox}[
+    % Logic: If #1 (title) is empty, just show "Problem X". If not, show "Problem X: Title"
+    title={\textbf{Problem \arabic{problemname}}\ifstrempty{#1}{}{: #1}}, 
+    colback=boxfill, % Background color
+    colframe=boxheader, % Frame color
+    coltitle=white, % Text color in title
+    fonttitle=\bfseries,
+    sharp corners=south, % Sharp corners at bottom
+    arc=3mm, % Rounded corners at top
+    breakable, % Allows box to split across pages
+    boxrule=0.5mm,
+    top=2mm, bottom=2mm
+  ]
+}{%
+  \end{tcolorbox}%
+}
+% 2. Clean Solution Environment
+\newenvironment{solution}{%
+    \par\vspace{0.2cm}\noindent\textbf{\textsf{Solution:}}\par
+    \begingroup\color{black!85} % Slightly softer black for solution text
+    \leftskip1em % Indent solution slightly
+}{%
+    \par\endgroup\bigskip\hrule\bigskip % Add a line separator after solution
+}
+
+\begin{document}
+\maketitle
+\begin{problem}[Uniformly Integrability and Tightness]
+In this question we would like to review for the concepts like Uniform Integrability and Tightness. Recall the definition of a family of fucntions defined on a measurable set to be uniformly integrable / tight
+\subsubsection*{Part1: $\mathcal{F}=\{f\}$}
+\begin{enumerate}
+  \item Suppose $f$ is integrable over a measurable set $E$, then $\mathcal{F}=\{f\}$ is uniform integrable.
+  \item Suppose $f$ is integrable over a measurable set $E$, then $\mathcal{F}=\{f\}$ is tight
+  \item Suppose f is a fuunction defined on a measurable set E, with \textcolor{red}{$m(E)< \infty$}, then $\mathcal{F}=\{f\}$ is uniform integrable implies f is integrable.
+  \item Suppose $f$ is tight over $E$, then $f$ is integrable over $E$.
+  \item Provide an counter example that if $m(E)=\infty$, $\mathcal{F}=\{f\}$ is uniformly integrable may not imply $f$ is uniformly integrable.
+\end{enumerate}
+\subsubsection*{Part2: Vitali-Convergence Theorem}
+\begin{enumerate}
+  \item Let $E$ be of finite measure. Suppose the sequence of functions $\{f_n\}$ is uniformly integrable over $E$.If $\{f_n\} \to f$ pointwise a.e.\ on $E$, then $f$ is integrable over $E$ and 
+    \[
+        \lim_{n \to \infty} \int_E f_n = \int_E f.
+    \]
+  \item Let $\{f_n\}$ be a sequence of functions on $E$ that is uniformly integrable and tight over $E$. Suppose $\{f_n\} \to f$ pointwise a.e.\ on $E$. Then $f$ is integrable over $E$ and
+    \[
+        \lim_{n \to \infty} \int_E f_n = \int_E f.
+    \]
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\subsubsection*{Part 1: $\mathcal{F}=\{f\}$}
+
+\begin{enumerate}
+    \item \textbf{True.}
+    Since $f$ is integrable, for any $\epsilon > 0$, there exists a $\delta > 0$ such that for any measurable set $A \subset E$ with $m(A) < \delta$, we have $\int_A |f| < \epsilon$. This is the absolute continuity of the Lebesgue integral. Since the family consists of a single function, this condition is exactly the definition of uniform integrability.
+
+    \item \textbf{True.}
+    Since $f$ is integrable over $E$, for any $\epsilon > 0$, there exists a subset $E_0 \subset E$ of finite measure such that $\int_{E \setminus E_0} |f| < \epsilon$. This is a standard property of integrable functions (often proven by approximating with simple functions of finite support or using the Monotone Convergence Theorem on restricted domains). Thus, the singleton family $\{f\}$ is tight.
+
+    \item \textbf{False.}
+    The condition $m(E) < \infty$ is crucial. If $m(E) < \infty$, then uniform integrability implies integrability (boundedness in $L^1$).
+    Specifically, if $\mathcal{F}$ is UI, there exists $\delta > 0$ corresponding to $\epsilon = 1$. Since $m(E) < \infty$, we can cover $E$ with finitely many disjoint sets $A_1, \dots, A_k$ each with measure less than $\delta$ (or simply use the fact that the total integral is bounded if the measure is finite and "tails" are controlled).
+    However, the statement asks if UI implies integrability *given* $m(E) < \infty$.
+    Let's refine: By definition of UI, there exists $\delta > 0$ such that $m(A) < \delta \implies \int_A |f| < 1$.
+    If $m(E) < \infty$, we can partition $E$ into a finite number of sets $E_1, \dots, E_N$ with $m(E_i) < \delta$. Then $\int_E |f| = \sum \int_{E_i} |f| < \sum 1 = N < \infty$.
+    So, if $m(E) < \infty$, UI $\implies$ Integrable.
+    Wait, the problem statement says "Suppose $f$ is a function... with $m(E) < \infty$, then $\mathcal{F}=\{f\}$ is uniform integrable implies f is integrable." This is **True**.
+
+    \item \textbf{False.}
+    Tightness alone does not guarantee integrability because it only controls the "tail" of the function (where the domain goes to infinity), not the "height" of the function.
+    \textbf{Counter-example:} Let $E = \mathbb{R}$. Let $f(x) = 1/x$ for $x \in (0,1)$ and $0$ elsewhere.
+    Tightness: Let $\epsilon > 0$. Choose $E_0 = [0, 1]$. Then $E \setminus E_0 = \mathbb{R} \setminus [0,1]$, where $f=0$. Thus $\int_{E \setminus E_0} |f| = 0 < \epsilon$. So $\{f\}$ is tight.
+    Integrability: $\int_E |f| = \int_0^1 \frac{1}{x} \, dx = \infty$.
+    Thus, $f$ is tight but not integrable.
+
+    \item \textbf{Counter-example ($m(E)=\infty$):}
+    Let $E = \mathbb{R}$. Let $f(x) = 1$ for all $x$.
+    Uniform Integrability: For any $\epsilon > 0$, choose $\delta = \epsilon$. If $m(A) < \delta$, then $\int_A |f| = \int_A 1 = m(A) < \epsilon$. So $f$ is uniformly integrable.
+    Integrability: $\int_{\mathbb{R}} 1 \, dx = \infty$.
+    Thus, $f$ is uniformly integrable but not integrable.
+\end{enumerate}
+
+\subsubsection*{Part 2: Vitali Convergence Theorem}
+
+\begin{enumerate}
+    \item \textbf{Proof for Finite Measure:}
+    Since $m(E) < \infty$, by \textbf{Egorov's Theorem}, for any $\delta > 0$, there exists a closed set $F \subset E$ such that $m(E \setminus F) < \delta$ and $f_n \to f$ uniformly on $F$.
+    By Fatou's Lemma, $\int |f| \le \liminf \int |f_n| \le M < \infty$ (since UI implies bounded $L^1$ norms on finite measure spaces), so $f$ is integrable.
+    
+    Now, fix $\epsilon > 0$. Since $\{f_n\}$ is UI, there exists $\delta > 0$ such that for any $A \subset E$ with $m(A) < \delta$, $\sup_n \int_A |f_n| < \epsilon/3$.
+    Also, since $f$ is integrable, we can choose $\delta$ small enough such that $\int_A |f| < \epsilon/3$ (absolute continuity of integral).
+    Using Egorov's theorem with this $\delta$, we get a set $F$.
+    Split the integral:
+    \[
+    \left| \int_E f_n - \int_E f \right| \le \int_E |f_n - f| = \int_F |f_n - f| + \int_{E \setminus F} |f_n - f|.
+    \]
+    1. On $F$: Since $f_n \to f$ uniformly, for large $n$, $|f_n(x) - f(x)| < \frac{\epsilon}{3 m(E)}$.
+       Thus $\int_F |f_n - f| < m(F) \cdot \frac{\epsilon}{3 m(E)} < \epsilon/3$.
+    2. On $E \setminus F$:
+       \[
+       \int_{E \setminus F} |f_n - f| \le \int_{E \setminus F} |f_n| + \int_{E \setminus F} |f| < \frac{\epsilon}{3} + \frac{\epsilon}{3} = \frac{2\epsilon}{3}.
+       \]
+    Combining these, $\int_E |f_n - f| < \epsilon$. Thus $\lim \int f_n = \int f$.
+
+    \item \textbf{Proof for General Measure (UI + Tightness):}
+    Since $\{f_n\}$ is tight, for any $\epsilon > 0$, there exists a set $E_0 \subset E$ of finite measure such that $\sup_n \int_{E \setminus E_0} |f_n| < \epsilon/3$.
+    By Fatou's Lemma, $\int_{E \setminus E_0} |f| \le \liminf \int_{E \setminus E_0} |f_n| \le \epsilon/3$.
+    
+    Now we split the integral over $E$:
+    \[
+    \int_E |f_n - f| = \int_{E_0} |f_n - f| + \int_{E \setminus E_0} |f_n - f|.
+    \]
+    The second term is bounded by:
+    \[
+    \int_{E \setminus E_0} |f_n| + \int_{E \setminus E_0} |f| < \frac{\epsilon}{3} + \frac{\epsilon}{3} = \frac{2\epsilon}{3}.
+    \]
+    For the first term, since $m(E_0) < \infty$, we can apply the result from Part 2.1 (Finite Measure Vitali).
+    The sequence $\{f_n\}$ restricted to $E_0$ is still uniformly integrable and converges pointwise to $f$. Thus, for sufficiently large $n$, $\int_{E_0} |f_n - f| < \epsilon/3$.
+    
+    Total bound: $< \epsilon/3 + 2\epsilon/3 = \epsilon$.
+    Thus $\lim \int_E |f_n - f| = 0$, which implies $\lim \int_E f_n = \int_E f$.
+\end{enumerate}
+\end{solution}
+
+\newpage
+\begin{problem}[The Standard Technique: Borel-Cantelli Lemma]
+In this question, we review a standard technique in real analysis related to the Borel-Cantelli Lemma.
+
+\begin{enumerate}
+    \item \textbf{(Convergence in measure in a Stronger sense $\Rightarrow$ Pointwise Convergence)} \\
+    Let $f_n$ be a sequence of measurable functions on $E$ 
+  \begin{enumerate}
+  \item  $\forall \eta > 0$, $m(\{x \in E \mid |f_n(x)| > \eta\}) \to 0$ as $n \to \infty$.
+  $\Rightarrow f_n \to 0$ pointwise a.e. on E. ? 
+  \item  $\forall \delta > 0$, $\sum_{n=1}^{\infty} m(\{x \in E \mid |f_n(x)| > \delta\}) < \infty$.
+  $\Rightarrow f_n \to 0$ pointwise a.e. on E. ?
+  \end{enumerate}
+  \item \textbf{(Convergence in Measure $\Rightarrow$ Subsequence Pointwise Convergence)}\\
+  If $\{f_n\} \to f$ in measure on $E$, then there is a subsequence $\{f_{n_k}\}$ that converges pointwise a.e.\ on $E$ to $f$.
+  \item \textbf{(Completeness of Convergence in Measure)}\\
+  A sequence $\{f_n\}$ of measurable functions on $E$ is said to be \textbf{Cauchy in measure} provided that given $\eta > 0$ and $\epsilon > 0$, there is an index $N$ such that for all $m, n \ge N$,
+\[
+    m(\{x \in E \mid |f_n(x) - f_m(x)| \ge \eta\}) < \epsilon.
+\]
+Show that if $\{f_n\}$ is Cauchy in measure, then there is a measurable function $f$ on $E$ to which the sequence $\{f_n\}$ converges in measure.
+  \item \textbf{(Keystep in Proving Riesz Ficscher)}\\
+        Let $\{f_k\}_{k=1}^\infty$ be a sequence of integrable functions over a measurable set $E$. Suppose that for every $k$:
+\[
+    \int_E |f_{k+1} - f_k| < \epsilon_k^2  \quad \text{where } \sum \epsilon_k < \infty 
+\]
+then the sequence $\{f_k\}_{k=1}^\infty$ converges pointwise a.e to $f$.
+  \item \textbf{(Variant of Riesz Ficscher)} \\
+    Let $\{f_k\}_{k=1}^\infty$ be a sequence of integrable functions over a measurable set $E$. Suppose that for every $k$:
+\[
+    \int_E |f_{k+1} - f_k| < \frac{1}{k^q}.
+\]
+Prove or disprove:
+\begin{enumerate}
+    \item $\{f_k\}_{k=1}^\infty$ converges pointwise a.e.\ to another integrable function on $E$ if $q=2$.
+    \item What if $q=1$ in (i) above?
+\end{enumerate}  
+    \item \textbf{(Variant of Riesz Ficscher)} \\
+    Let $\{f_k\}$ be an integrable sequence on $E$. Suppose the sequence is Cauchy in the $L^1$ norm, meaning:
+    \[
+        \forall \epsilon > 0, \exists N \text{ s.t. } \int_E |f_n - f_m| < \epsilon, \quad \forall m, n \ge N.
+    \]
+    Show that $\{f_k\}$ have a subsequence converging pointwise a.e. to an integrable function $f$ on $E$. 
+    \item \textbf{(Fast $L^1$ Convergence $\Rightarrow$ Pointwise Convergence)} \\
+    Suppose $\{f_n\}$ is a sequence of integrable functions on $\mathbb{R}$ such that
+    \[
+        \int_{\mathbb{R}} |f_n(x) - f(x)| \, dx \le \frac{1}{n^{1+\epsilon}}. \quad \epsilon > 0
+    \]
+    Use the Borel-Cantelli Lemma to prove that $f_n \to f$ pointwise almost everywhere. Also provide a counterexample for the case $\epsilon=0$  
+
+    \item \textbf{(Scaling a Sequence to Zero)} \\
+    Let $\{f_n\}$ be a sequence of measurable functions on $[0,1]$ that are finite almost everywhere. Prove that there exists a sequence of positive constants $\{c_n\}$ such that
+    \[
+        \frac{f_n(x)}{c_n} \to 0 \quad \text{pointwise a.e. as } n \to \infty.
+    \]
+
+    \item \textbf{(Rational Approximation / Diophantine Application)}
+        \begin{enumerate}
+    \item \textbf{(Order 2 is Universal)} Use the Pigeonhole Principle to prove Dirichlet's Approximation Theorem: For any irrational $x$, there exist infinitely many rationals $p/q$ such that
+    \[
+        \left| x - \frac{p}{q} \right| < \frac{1}{q^2}.
+    \]
+    
+    \item \textbf{(Order $>2$ is Rare)} Use the Borel-Cantelli Lemma to prove that for any $\alpha > 2$, the set of numbers $x \in [0,1]$ that are approximable to order $\alpha$ has Lebesgue measure zero.
+\end{enumerate}
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}
+
+    % Problem 1
+    \item \textbf{(Convergence in measure vs Pointwise)}
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{Statement:} $\forall \eta > 0, m(\{x \in E \mid |f_n(x)| > \eta\}) \to 0 \implies f_n \to 0$ pointwise a.e. \\
+        \textbf{Answer:} No. \\
+        \textbf{Counterexample:} Consider the "Typewriter Sequence" on $E = [0,1]$.
+        Define a sequence of intervals $I_n$ wrapping around $[0,1]$ with decreasing length. 
+        Let $f_n = \chi_{I_n}$. 
+        For any $\eta \in (0, 1)$, the measure $m(\{ |f_n| > \eta \}) = \text{length}(I_n) \to 0$. Thus, $f_n \to 0$ in measure.
+        However, for every $x \in [0,1]$, $f_n(x)$ takes the value 1 infinitely often and 0 infinitely often. Thus $\lim_{n \to \infty} f_n(x)$ does not exist anywhere.
+    
+        \item \textbf{Statement:} $\forall \delta > 0, \sum_{n=1}^{\infty} m(\{x \in E \mid |f_n(x)| > \delta\}) < \infty \implies f_n \to 0$ pointwise a.e. \\
+        \textbf{Answer:} Yes. \\
+        \textbf{Proof:}
+        Let $E_n(\delta) = \{x \in E \mid |f_n(x)| > \delta\}$.
+        We are given that $\sum_{n=1}^\infty m(E_n(\delta)) < \infty$.
+        By the \textbf{Borel-Cantelli Lemma}, the set of points belonging to infinitely many $E_n(\delta)$ has measure zero.
+        Let $A_\delta = \limsup_{n \to \infty} E_n(\delta)$. Then $m(A_\delta) = 0$.
+        
+        To handle "all $\delta$", let $\delta_k = \frac{1}{k}$. Let $A = \bigcup_{k=1}^\infty A_{1/k}$.
+        Since $A$ is a countable union of null sets, $m(A) = 0$.
+        For any $x \notin A$, and for any $k$, $x$ belongs to only finitely many $E_n(1/k)$.
+        This implies $\exists N$ such that $\forall n \ge N, |f_n(x)| \le \frac{1}{k}$.
+        Since $k$ is arbitrary, $f_n(x) \to 0$.
+    \end{enumerate}
+
+    % Problem 2
+    \item \textbf{(Convergence in Measure $\Rightarrow$ Subsequence Pointwise)} \\
+    We want to find a subsequence $f_{n_k}$ such that the set of points where it does not converge has measure zero.
+    
+    Since $f_n \to f$ in measure, for any $k \in \mathbb{N}$, we can choose an index $n_k$ (strictly increasing) such that:
+    \[
+    m\left( \left\{ x \in E \mid |f_{n_k}(x) - f(x)| \ge \frac{1}{k} \right\} \right) < \frac{1}{2^k}.
+    \]
+    Let $E_k = \{ x \in E \mid |f_{n_k}(x) - f(x)| \ge \frac{1}{k} \}$.
+    Then $\sum_{k=1}^\infty m(E_k) < \sum \frac{1}{2^k} = 1 < \infty$.
+    
+    By the \textbf{Borel-Cantelli Lemma}, $m(\limsup E_k) = 0$.
+    Let $Z = \limsup E_k$. For any $x \notin Z$, $x$ belongs to only finitely many $E_k$.
+    Thus, for sufficiently large $k$, $|f_{n_k}(x) - f(x)| < \frac{1}{k}$.
+    Taking $k \to \infty$, we get $f_{n_k}(x) \to f(x)$ for all $x \notin Z$.
+    Therefore, $f_{n_k} \to f$ pointwise almost everywhere.
+
+    % Problem 3
+    \item \textbf{(Completeness of Convergence in Measure)} \\
+    \textbf{Step 1: Extract a rapidly Cauchy subsequence.}
+    Since $\{f_n\}$ is Cauchy in measure, we can construct a subsequence $\{f_{n_k}\}$ such that for all $k$:
+    \[
+        m\left( \left\{ x \in E \mid |f_{n_{k+1}}(x) - f_{n_k}(x)| \ge \frac{1}{2^k} \right\} \right) < \frac{1}{2^k}.
+    \]
+    
+    \textbf{Step 2: Show pointwise convergence of the subsequence.}
+    Let $A_k = \{ x \in E \mid |f_{n_{k+1}}(x) - f_{n_k}(x)| \ge \frac{1}{2^k} \}$.
+    Since $\sum m(A_k) < \sum 2^{-k} < \infty$, by Borel-Cantelli, the set $Z = \limsup A_k$ has measure zero.
+    For $x \notin Z$, the series $\sum (f_{n_{k+1}}(x) - f_{n_k}(x))$ converges absolutely (dominated by $\sum 2^{-k}$).
+    Thus, $f_{n_k}(x)$ converges pointwise a.e. Define $f(x) = \lim_{k \to \infty} f_{n_k}(x)$ for $x \notin Z$ and 0 otherwise.
+
+    \textbf{Step 3: Show convergence in measure.}
+    We claim $f_n \to f$ in measure.
+    Fix $\eta, \epsilon > 0$.
+    Choose $N$ such that for $n, n_k \ge N$, $m(|f_n - f_{n_k}| \ge \eta/2) < \epsilon/2$.
+    Also, since $f_{n_k} \to f$ a.e., it converges in measure (on finite measure sets, or generally by construction here). Choose $k$ large enough so $m(|f_{n_k} - f| \ge \eta/2) < \epsilon/2$.
+    Then:
+    \[
+    \{ |f_n - f| \ge \eta \} \subseteq \{ |f_n - f_{n_k}| \ge \eta/2 \} \cup \{ |f_{n_k} - f| \ge \eta/2 \}.
+    \]
+    The measure is bounded by $\epsilon/2 + \epsilon/2 = \epsilon$.
+
+    % Problem 4 & 5 combined as they are similar
+    \item \textbf{(Riesz-Fischer Step: Beppo Levi Argument)} \\
+    Let $g_k(x) = |f_{k+1}(x) - f_k(x)|$.
+    We are given $\int_E g_k < \epsilon_k^2$ with $\sum \epsilon_k < \infty$ (implying $\sum \epsilon_k^2 < \infty$).
+    
+    Consider the function $G(x) = \sum_{k=1}^\infty |f_{k+1}(x) - f_k(x)|$.
+    By the Monotone Convergence Theorem (Beppo Levi):
+    \[
+    \int_E G(x) \, dx = \sum_{k=1}^\infty \int_E |f_{k+1} - f_k| \, dx < \sum_{k=1}^\infty \epsilon_k^2 < \infty.
+    \]
+    Since $\int G < \infty$, $G(x)$ is finite almost everywhere.
+    This implies that the series $\sum (f_{k+1} - f_k)$ converges absolutely a.e.
+    Since the series telescopes, $f_n(x) = f_1(x) + \sum_{k=1}^{n-1} (f_{k+1}(x) - f_k(x))$ converges pointwise a.e. to some function $f(x)$.
+
+    % Problem 6
+    \item \textbf{(Variant of Riesz-Fischer)} \\
+    Given $\int_E |f_{k+1} - f_k| < \frac{1}{k^q}$.
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{Case $q=2$:} True. \\
+        \textbf{Proof:}
+        Define $G(x) = \sum_{k=1}^\infty |f_{k+1}(x) - f_k(x)|$.
+        Computing the integral:
+        \[
+        \int_E G(x) = \sum_{k=1}^\infty \int_E |f_{k+1} - f_k| < \sum_{k=1}^\infty \frac{1}{k^2} < \infty.
+        \]
+        Since the integral is finite, $G(x) < \infty$ almost everywhere.
+        Absolute convergence implies convergence, so $\sum (f_{k+1} - f_k)$ converges, meaning $\{f_k\}$ converges pointwise a.e.
+    
+        \item \textbf{Case $q=1$:} False. \\
+        \textbf{Counterexample:} The harmonic series diverges.
+        Let $E = [0,1]$. Define $f_1 = 0$ and $f_{k+1} = f_k + \frac{1}{2k}$.
+        Then $\int |f_{k+1} - f_k| = \frac{1}{2k} < \frac{1}{k}$.
+        However, $f_n(x) = \sum_{k=1}^{n-1} \frac{1}{2k} \to \infty$ for all $x$.
+        Thus it does not converge to an integrable function (infinity is not integrable).
+    \end{enumerate}
+
+    % Problem 7
+    \item \textbf{(Cauchy in $L^1$ $\Rightarrow$ Subsequence)} \\
+    Since $\{f_n\}$ is Cauchy in $L^1$, we can extract a "rapidly Cauchy" subsequence.
+    Choose indices $n_1 < n_2 < \dots$ such that:
+    \[
+        \| f_{n_{k+1}} - f_{n_k} \|_1 < \frac{1}{2^k}.
+    \]
+    Let $\epsilon_k^2 = \frac{1}{2^k}$. Since $\sum \frac{1}{2^k} < \infty$, by the result of Problem 4, the subsequence $\{f_{n_k}\}$ converges pointwise almost everywhere.
+
+    % Problem 8
+    \item \textbf{(Fast $L^1$ Convergence $\Rightarrow$ Pointwise)} \\
+    Given $\int |f_n - f| \le \frac{1}{n^{1+\epsilon}}$.
+    
+    \textbf{Using Borel-Cantelli:}
+    Let $A_n = \{ x \in \mathbb{R} \mid |f_n(x) - f(x)| \ge \frac{1}{n^\alpha} \}$ for some $0 < \alpha < \epsilon$.
+    Using Chebyshev's Inequality:
+    \[
+    m(A_n) \le \frac{1}{n^{-\alpha}} \int |f_n - f| \le n^\alpha \cdot \frac{1}{n^{1+\epsilon}} = \frac{1}{n^{1+\epsilon-\alpha}}.
+    \]
+    Since $\epsilon - \alpha > 0$, the exponent $p = 1 + (\epsilon - \alpha) > 1$.
+    Thus $\sum m(A_n) < \infty$.
+    By Borel-Cantelli, $m(\limsup A_n) = 0$.
+    For almost every $x$, $|f_n(x) - f(x)| < \frac{1}{n^\alpha}$ for large $n$, which implies $f_n(x) \to f(x)$.
+
+    \textbf{Counterexample for $\epsilon=0$:}
+    Consider the "Harmonic Typewriter" on $[0,1]$.
+    Let $I_n$ be intervals of width $1/n$ wrapping around $[0,1]$. Let $f_n = \chi_{I_n}$.
+    $\int |f_n| = 1/n$.
+    However, $\sum 1/n = \infty$, so the intervals cover every point infinitely many times.
+    $f_n(x)$ oscillates between 0 and 1 indefinitely.
+
+    % Problem 9
+    \item \textbf{(Scaling a Sequence to Zero)} \\
+    For each $n$, the function $f_n$ is finite almost everywhere.
+    For any $k \in \mathbb{N}$, let $E_{n,k} = \{ x \mid |f_n(x)| > k \}$.
+    Since $\lim_{k \to \infty} m(E_{n,k}) = 0$, we can choose a constant $c_n$ sufficiently large such that:
+    \[
+    m\left( \left\{ x \;\Big|\; \frac{|f_n(x)|}{c_n} > \frac{1}{n} \right\} \right) < \frac{1}{2^n}.
+    \]
+    Let $A_n = \{ x \mid |f_n(x)/c_n| > 1/n \}$.
+    Then $\sum m(A_n) < \sum 2^{-n} < \infty$.
+    By Borel-Cantelli, for almost every $x$, $|f_n(x)/c_n| \le 1/n$ for sufficiently large $n$.
+    Since $1/n \to 0$, we have $f_n(x)/c_n \to 0$ a.e.
+
+    % Problem 10
+    \item \textbf{(Rational Approximation)}
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{Order 2 is Universal (Dirichlet):}
+        By the Pigeonhole Principle (partitioning $[0,1)$ into $q$ bins), for any irrational $x$ and integer $N$, there exist $p, q$ with $1 \le q \le N$ such that $|qx - p| < 1/N \le 1/q$. Thus $|x - p/q| < 1/q^2$.
+    
+        \item \textbf{Order $\alpha > 2$ is Rare:}
+        Let $A_q = \bigcup_{p=0}^q \{ x \in [0,1] \mid |x - p/q| < 1/q^\alpha \}$.
+        The measure of each interval is $2/q^\alpha$. There are roughly $q$ such intervals (for $p=0 \dots q$).
+        \[
+        m(A_q) \le q \cdot \frac{2}{q^\alpha} = \frac{2}{q^{\alpha-1}}.
+        \]
+        We want to check if $x$ falls into infinitely many such sets.
+        Sum the measures: $\sum_{q=1}^\infty m(A_q) \le \sum \frac{2}{q^{\alpha-1}}$.
+        Since $\alpha > 2$, $\alpha - 1 > 1$, so the series converges.
+        By Borel-Cantelli, the set of such $x$ has measure zero.
+    \end{enumerate}
+
+\end{enumerate}
+\end{solution}
+
+\newpage
+
+\begin{problem}[Banach Space]
+Recall that in the lecture we have shown that $L^p$ is a Banach Space (a complete normed linear space) for $1\leq p < \infty$. 
+
+\subsubsection*{Part 1: $L^{\infty}$ is a Banach Space}
+\begin{enumerate}
+    \item Let $\{f_n\}$ be a sequence in $L^\infty(E)$ and $\sum_{k=1}^\infty a_k$ a convergent series of positive numbers such that
+    \[
+        \|f_{k+1} - f_k\|_\infty \le a_k \quad \text{for all } k.
+    \]
+    Prove that there is a subset $E_0$ of $E$ which has measure zero and
+    \[
+        |f_{n+k}(x) - f_k(x)| \le \|f_{n+k} - f_k\|_\infty \le \sum_{j=n}^\infty a_j \quad \text{for all } k, n \text{ and all } x \in E \setminus E_0.
+    \]
+    Conclude that there is a function $f \in L^\infty(E)$ such that $\{f_n\} \to f$ uniformly on $E \setminus E_0$.
+    
+    \item Use the preceding result to show that $L^\infty(E)$, normed by the essential supremum norm, is a Banach space.
+\end{enumerate}
+
+\subsubsection*{Part 2: $C[a,b]$ equipped with maximal norm is a Banach Space}
+\begin{enumerate}
+    \item Let $\{f_n\}$ be a sequence in $C[a,b]$ and $\sum_{k=1}^\infty a_k$ a convergent series of positive numbers such that
+    \[
+        \|f_{k+1} - f_k\|_{\max} \le a_k \quad \text{for all } k.
+    \]
+    Prove that
+    \[
+        |f_{n+k}(x) - f_k(x)| \le \|f_{n+k} - f_k\|_{\max} \le \sum_{j=n}^\infty a_j \quad \text{for all } k, n \text{ and all } x \in [a,b].
+    \]
+    Conclude that there is a function $f \in C[a,b]$ such that $\{f_n\} \to f$ uniformly on $[a,b]$.
+
+    \item Use the preceding result to show that $C[a,b]$, normed by the maximum norm, is a Banach space.
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+\newpage
+
+\begin{problem}[Abosolute Continuous Functions]
+In this problem, you will be guided through a series of steps to prove that Lipschitz functions and, more generally, absolutely continuous functions map measurable sets to measurable sets.
+
+\subsubsection*{Part 1: Lipschitz Functions}
+A function $f$ is \textbf{Lipschitz} on $[a, b]$ if there exists a constant $M > 0$ such that $|f(x) - f(y)| \le M|x - y|$ for all $x, y \in [a, b]$.
+\begin{enumerate}
+	\item Show that a Lipschitz function maps a set of measure zero to a set of measure zero.
+	\item Using the fact that any measurable set $E$ can be decomposed as $E = F \cup N$, where $F$ is an $F_\sigma$ set.
+\end{enumerate}
+
+\subsubsection*{Part 2: Increasing Absolutely Continuous Functions}
+This part follows the logic of the exercises from the exercises in section6.5 of Royden problem 38-41. Let $f$ be an \textbf{increasing} function on $[a, b]$.
+\begin{enumerate}
+	\item \textbf{(Problem 38)} Show that $f$ is AC if and only if for every $\epsilon > 0$, there exists a $\delta > 0$ such that for every \emph{countable} disjoint collection $\{(a_k, b_k)\}_{k=1}^\infty \subset [a, b]$, if $\sum_{k=1}^\infty (b_k - a_k) < \delta$, then $\sum_{k=1}^\infty (f(b_k) - f(a_k)) < \epsilon$.
+	
+	\item \textbf{(Problem 39)} Assume f is increasing, Show that $f$ is AC if and only if for every $\epsilon > 0$, there is a $\delta > 0$ such that for any measurable set $E \subseteq [a, b]$, if $m(E) < \delta$, then $m^*(f(E)) < \epsilon$. (Note: We can drop the assumption that f is increasing for the $\Rightarrow$ direction, but not for the others.)
+	
+	\item \textbf{(Problem 40)} Using the result from (b), show that an increasing AC function maps a set of measure zero to a set of measure zero.
+	
+	\item \textbf{(Problem 41)}Using the result from (c) and the fact that an AC function is continuous, prove that an \textbf{increasing} AC function maps any measurable set to a measurable set. (Hint: Use the $E = F \cup N$ decomposition again.)
+\end{enumerate}
+
+\subsubsection*{Part 3: General Absolutely Continuous Functions}
+Now we remove the "increasing" condition. Let $f$ be a general function on $[a, b]$.
+\begin{enumerate}
+	\item Let $V_f([a_k, b_k])$ be the total variation of $f$ on $[a_k, b_k]$. Prove that the standard definition of AC is equivalent to the following:
+	\begin{quote}
+		For every $\epsilon > 0$, there exists a $\delta > 0$ such that for any finite disjoint collection $\{(a_k, b_k)\}_{k=1}^n$, if $\sum_{k=1}^n (b_k - a_k) < \delta$, then $\sum_{k=1}^n V_f([a_k, b_k]) < \epsilon$.
+	\end{quote}
+	
+	\item Using this equivalent "total variation" definition, prove that any \textbf{general} AC function (not necessarily increasing) maps a set of measure zero to a set of measure zero.
+	
+	\item Conclude that any AC function maps measurable sets to measurable sets.
+\end{enumerate}
+\end{problem}
+\begin{solution}
+\subsubsection*{Part 1: Lipschitz Functions}
+\begin{enumerate}
+    \item \textbf{Lipschitz maps measure zero sets to measure zero sets.} \\
+    Let $E \subset [a, b]$ with $m(E) = 0$. Let $M$ be the Lipschitz constant.
+    For any $\epsilon > 0$, there exists a countable collection of open intervals $\{(a_k, b_k)\}$ covering $E$ such that
+    \[
+    \sum_{k=1}^\infty (b_k - a_k) < \frac{\epsilon}{M}.
+    \]
+    Since $f$ is Lipschitz, for any $x, y \in (a_k, b_k)$, we have $|f(x) - f(y)| \le M|x - y| \le M(b_k - a_k)$.
+    Thus, the image $f((a_k, b_k))$ is contained in an interval of length at most $M(b_k - a_k)$.
+    Consequently,
+    \[
+    m^*(f(E)) \le \sum_{k=1}^\infty m(f((a_k, b_k))) \le \sum_{k=1}^\infty M(b_k - a_k) < M \cdot \frac{\epsilon}{M} = \epsilon.
+    \]
+    Since $\epsilon$ is arbitrary, $m(f(E)) = 0$.
+
+    \item \textbf{Lipschitz maps measurable sets to measurable sets.} \\
+    Let $E$ be a measurable set. We can decompose $E$ as $E = F \cup N$, where $F$ is an $F_\sigma$ set (a countable union of compact sets, since we are in $\mathbb{R}$) and $m(N) = 0$.
+    Then $f(E) = f(F) \cup f(N)$.
+    \begin{itemize}
+        \item Since $f$ is Lipschitz, it is continuous. The continuous image of a compact set is compact. Since $F = \bigcup K_n$ is a countable union of compact sets, $f(F) = \bigcup f(K_n)$ is also a countable union of compact sets, hence measurable (Borel).
+        \item From part (a), since $m(N) = 0$, we have $m(f(N)) = 0$. Thus $f(N)$ is measurable.
+    \end{itemize}
+    Therefore, $f(E)$ is the union of two measurable sets, so it is measurable.
+\end{enumerate}
+
+\subsubsection*{Part 2: Increasing Absolutely Continuous Functions}
+\begin{enumerate}
+    \item \textbf{(Problem 38) Countable Interval Definition.} \\
+    ($\Rightarrow$) Suppose $f$ is AC (standard definition with finite collections). Let $\{(a_k, b_k)\}_{k=1}^\infty$ be a countable disjoint collection with $\sum (b_k - a_k) < \delta$. For any finite $N$, the partial sum $\sum_{k=1}^N (b_k - a_k) < \delta$. By the definition of AC, $\sum_{k=1}^N (f(b_k) - f(a_k)) < \epsilon$. Taking the limit as $N \to \infty$, we get $\sum_{k=1}^\infty (f(b_k) - f(a_k)) \le \epsilon$. (Strict inequality can be maintained by choosing slightly smaller parameters, but $\le$ suffices for continuity arguments). \\
+    ($\Leftarrow$) If the condition holds for countable collections, it trivially holds for finite collections (by padding with empty intervals).
+
+    \item \textbf{(Problem 39) Small measure implies small image measure.} \\
+    ($\Rightarrow$) Assume $f$ is AC. Let $\epsilon > 0$. Choose $\delta$ corresponding to $\epsilon$ from the definition of AC.
+    Let $E \subseteq [a, b]$ with $m(E) < \delta$. There exists an open set $O \supseteq E$ composed of disjoint intervals $\{(a_k, b_k)\}$ such that $m(O) = \sum (b_k - a_k) < \delta$.
+    Since $f$ is increasing, $f(O) = \bigcup (f(a_k), f(b_k))$ (ignoring endpoints which have measure zero).
+    Thus, $m(f(E)) \le m(f(O)) = \sum (f(b_k) - f(a_k))$. Since $\sum (b_k - a_k) < \delta$, by AC we have $\sum (f(b_k) - f(a_k)) < \epsilon$. So $m(f(E)) < \epsilon$. \\
+    ($\Leftarrow$) Assume the condition holds. Let $\{(a_k, b_k)\}$ be disjoint intervals with $\sum (b_k - a_k) < \delta$. Let $E = \bigcup (a_k, b_k)$. Then $m(E) < \delta$.
+    Since $f$ is increasing, $f(E)$ is the union of disjoint intervals $(f(a_k), f(b_k))$.
+    The measure $m(f(E)) = \sum (f(b_k) - f(a_k))$. By hypothesis, $m(E) < \delta \implies m(f(E)) < \epsilon$, so $\sum (f(b_k) - f(a_k)) < \epsilon$. Thus $f$ is AC.
+
+    \item \textbf{(Problem 40) AC maps null sets to null sets.} \\
+    Let $m(E) = 0$. For any $\epsilon > 0$, there is a $\delta$ satisfying the condition in (b). Since $m(E) = 0 < \delta$, we have $m^*(f(E)) < \epsilon$. Since $\epsilon$ is arbitrary, $m(f(E)) = 0$.
+
+    \item \textbf{(Problem 41) AC maps measurable sets to measurable sets.} \\
+    Let $E$ be measurable. Write $E = F \cup N$ where $F$ is an $F_\sigma$ set and $m(N) = 0$.
+    Since $f$ is AC, it is continuous. Thus $f(F)$ is measurable (as in Part 1).
+    By (c), $m(f(N)) = 0$, so $f(N)$ is measurable.
+    Thus $f(E)$ is measurable.
+\end{enumerate}
+
+\subsubsection*{Part 3: General Absolutely Continuous Functions}
+\begin{enumerate}
+    \item \textbf{Equivalence with Total Variation.} \\
+    ($\Rightarrow$) If $f$ is AC, then its total variation function $V(x) = V_f([a, x])$ is absolutely continuous (a standard result: $V(x) = \int_a^x |f'(t)| dt$). Thus, applying the AC definition to $V$ gives the result. \\
+    ($\Leftarrow$) Since $|f(b) - f(a)| \le V_f([a, b])$, we have $\sum |f(b_k) - f(a_k)| \le \sum V_f([a_k, b_k])$. If the sum of variations is small, the sum of differences is small.
+
+    \item \textbf{General AC maps measure zero to measure zero.} \\
+    Let $m(E) = 0$. Fix $\epsilon > 0$. Use the $\delta$ from the Total Variation definition in (a).
+    Cover $E$ with disjoint intervals $\{(a_k, b_k)\}$ such that $\sum (b_k - a_k) < \delta$.
+    Then $f(E) \subseteq \bigcup f((a_k, b_k))$.
+    The diameter of the image of an interval is bounded by the total variation: $m(f((a_k, b_k))) \le \sup_{x,y \in (a_k, b_k)} |f(x) - f(y)| \le V_f([a_k, b_k])$.
+    Thus,
+    \[
+    m^*(f(E)) \le \sum m(f((a_k, b_k))) \le \sum V_f([a_k, b_k]) < \epsilon.
+    \]
+    So $m(f(E)) = 0$.
+
+    \item \textbf{Conclusion.} \\
+    Using the decomposition $E = F \cup N$ again:
+    AC functions are continuous, mapping $F_\sigma$ sets to $F_\sigma$ (measurable) sets.
+    By part (b), they map null sets $N$ to null sets $f(N)$.
+    Therefore, any absolutely continuous function maps measurable sets to measurable sets.
+\end{enumerate}
+\end{solution}
+
+\newpage
+
+\begin{problem}[Comparison of Modes of Convergence]
+In this problem, we rigorously establish the relationships between Pointwise Convergence a.e., Convergence in $L^p$ norm, and Convergence in Measure.
+
+\subsubsection*{Part 1: Pointwise Convergence vs. $L^p$ Convergence}
+\begin{enumerate}
+    \item \textbf{($L^p$ Implies Subsequence Convergence)} \\
+    Let $\{f_n\}$ be a sequence in $L^p(E)$ such that $f_n \to f$ in $L^p(E)$. Prove that there exists a subsequence $\{f_{n_k}\}$ such that $f_{n_k}(x) \to f(x)$ almost everywhere on $E$.
+
+    \item \textbf{(Counter-Example: Pointwise $\not\Rightarrow$ $L^p$)} \\
+    Consider $E = [0,1]$ and the sequence $f_n(x) = n \cdot \chi_{(0, 1/n)}(x)$.
+    \begin{enumerate}
+        \item Show that $\lim_{n \to \infty} f_n(x) = 0$ for all $x \in E$ (Pointwise convergence).
+        \item Show that $\|f_n - 0\|_1 = 1$ for all $n$, and thus $f_n$ does \textbf{not} converge to 0 in $L^1$.
+    \end{enumerate}
+
+    \item \textbf{(The $L^p$ Dominated Convergence Theorem)} \\
+    Let $\{f_n\}$ be a sequence of measurable functions converging pointwise a.e.\ to $f$ on $E$. Suppose there exists a function $g \in L^p(E)$ such that $|f_n(x)| \le g(x)$ a.e. for all $n$. Prove that $f_n \to f$ in $L^p(E)$.
+
+    \item \textbf{(Vitali Convergence Theorem for $L^p$)} \\
+    Let $E$ be a measurable set and $1 \le p < \infty$. Suppose $\{f_n\}$ is a sequence in $L^p(E)$ that converges pointwise a.e.\ on $E$ to the function $f$ which belongs to $L^p(E)$. Then
+\begin{gather*}
+    \{f_n\} \to f \text{ in } L^p(E) \\
+    \textit{if and only if} \\
+    \{|f_n|^p\} \text{ is uniformly integrable and tight over } E.
+\end{gather*}
+
+    \item \textbf{(One more $L^p$ Convergence Theorem for $L^p$)}\\ 
+    Let $E$ be a measurable set and $1 \le p < \infty$. Suppose $\{f_n\}$ is a sequence in $L^p(E)$ that converges pointwise a.e.\ on $E$ to the function $f$ which belongs to $L^p(E)$. Then
+\[
+    \{f_n\} \to f \text{ in } L^p(E) \text{ if and only if } \lim_{n \to \infty} \int_E |f_n|^p = \int_E |f|^p.
+\]
+\end{enumerate}
+
+\subsubsection*{Part 2: $L^p$ Convergence vs. Convergence in Measure}
+\begin{enumerate}
+    \item \textbf{($L^p$ Implies Convergence in Measure)} \\
+    Let $f_n \to f$ in $L^p(E)$. Use Chebyshev's Inequality to prove that for any $\epsilon > 0$:
+    \[
+        m(\{x \in E : |f_n(x) - f(x)| \ge \epsilon\}) \le \frac{1}{\epsilon^p} \int_E |f_n - f|^p,
+    \]
+    and conclude that $f_n \to f$ in measure.
+
+    \item \textbf{(Counter-Example: Measure $\not\Rightarrow$ $L^p$)} \\
+    Consider $E = [0,1]$ and the sequence $f_n(x) = n^{1/p} \cdot \chi_{(0, 1/n)}(x)$.
+    \begin{enumerate}
+        \item Show that for any $\epsilon > 0$, $m(\{|f_n| \ge \epsilon\}) \to 0$ as $n \to \infty$ (Convergence in measure).
+        \item Show that $\|f_n\|_p = 1$ for all $n$, and thus $f_n$ does \textbf{not} converge to 0 in $L^p$.
+    \end{enumerate}
+
+    \item \textbf{(Convergence in measure $\Rightarrow$ Convergence in $L^p$ with additional conditions)} \\
+    Prove that a sequence $\{f_n\}$ in $L^p(E)$ converges to $f$ in $L^p(E)$ \textbf{if and only if} $f_n \to f$ in measure and $\{|f_n|^p\}$ is uniformly integrable and tight.
+\end{enumerate}
+
+\subsubsection*{Part 3: Pointwise Convergence vs. Convergence in Measure}
+\begin{enumerate}
+    \item \textbf{(Finite Measure: Pointwise $\Rightarrow$ Measure)} \\
+    Assume $m(E) < \infty$. Prove that if a sequence of measurable functions $\{f_n\}$ converges to $f$ pointwise a.e.\ on $E$, then $f_n \to f$ in measure on $E$.
+
+    \item \textbf{(Counter-Example: Infinite Measure Failure)} \\
+    Consider $E = \mathbb{R}$ and the sequence $f_n = \chi_{[n, n+1]}$.
+    \begin{enumerate}
+        \item Show that $f_n(x) \to 0$ for all $x \in \mathbb{R}$.
+        \item Show that $m(\{x : |f_n(x)| \ge 1/2\}) = 1$ for all $n$, and thus it does \textbf{not} converge in measure.
+    \end{enumerate}
+
+    \item \textbf{(Counter-Example: Measure $\not\Rightarrow$ Pointwise)} \\
+    Consider the "Typewriter Sequence" on $[0,1]$ defined by iterating through intervals $[j/2^k, (j+1)/2^k]$. 
+    Show that this sequence converges to 0 in measure, but $\limsup_{n \to \infty} f_n(x) = 1$ for all $x \in [0,1]$, meaning it converges nowhere pointwise.
+
+    \item \textbf{(Riesz Subsequence Theorem)} \\
+    Prove that if $\{f_n\}$ converges to $f$ in measure on $E$, then there exists a subsequence $\{f_{n_k}\}$ that converges to $f$ pointwise a.e.\ on $E$.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+\subsubsection*{Part 1: Pointwise Convergence vs. $L^p$ Convergence}
+
+\begin{enumerate}
+    \item \textbf{($L^p$ Implies Subsequence Convergence)} \\
+    We are given that $\lim_{n \to \infty} \int_E |f_n - f|^p = 0$. We want to find a subsequence $\{f_{n_k}\}$ such that $f_{n_k} \to f$ a.e.
+    
+    It suffices to show that for every $\epsilon > 0$, the set where the difference is large has measure zero in the limit. Let $E_k(\epsilon) = \{x \in E : |f_{n_k}(x) - f(x)| \ge \epsilon\}$.
+    By Chebyshev's Inequality:
+    \[
+    m(E_k(\epsilon)) \le \frac{1}{\epsilon^p} \int_E |f_{n_k} - f|^p.
+    \]
+    Since $f_n \to f$ in $L^p$, we can choose a subsequence $\{n_k\}$ sufficiently rapidly such that:
+    \[
+    \|f_{n_k} - f\|_p < \frac{1}{2^k}.
+    \]
+    Then, for a fixed $\epsilon$ (or varying $\epsilon_k = 1/k$), we have $\sum_{k=1}^\infty m(E_k) < \infty$. By the \textbf{Borel-Cantelli Lemma}, the set of $x$ belonging to infinitely many $E_k$ has measure zero. Thus, $f_{n_k}(x) \to f(x)$ for almost every $x$.
+
+    \item \textbf{(Measure $\not\Rightarrow L^p$)} \\
+    Counter-example: $f_n(x) = n^{1/p} \chi_{(0, 1/n)}$.
+    Convergence in measure is clear (support shrinks to 0).
+    $L^p$ norm: $\int |f_n|^p = \int_0^{1/n} n \, dx = 1 \not\to 0$.
+
+    \item \textbf{($L^p$ Dominated Convergence Theorem)} \\
+    We want to show $\lim_{n \to \infty} \int_E |f_n - f|^p = 0$. We estimate the integral by splitting the domain $E$.
+    \[
+    \int_E |f_n - f|^p = \int_F |f_n - f|^p + \int_{E \setminus F} |f_n - f|^p.
+    \]
+    \textbf{Step 1 (The Core $F$):} Since $|f_n - f|^p \to 0$ a.e., by \textbf{Egorov's Theorem}, for any $\epsilon > 0$, we can choose a set $F \subset E$ of finite measure such that $f_n \to f$ uniformly on $F$ (except for a small set of measure $\delta$ which we can include in the tail or handle via absolute continuity).
+    Specifically, on the set where convergence is uniform:
+    \[
+    \int_F |f_n - f|^p \le m(F) \cdot \epsilon.
+    \]
+    \textbf{Step 2 (The Tail $E \setminus F$):} For the integral over $E \setminus F$, we use the dominating function $g$.
+    \[
+    \int_{E \setminus F} |f_n - f|^p \le 2^p \int_{E \setminus F} (|f_n|^p + |f|^p) \le 2^{p+1} \int_{E \setminus F} |g|^p.
+    \]
+    Since $g \in L^p$, we can choose $F$ large enough such that $\int_{E \setminus F} |g|^p < \epsilon$.
+    Combining these estimates, $\int_E |f_n - f|^p \to 0$.
+
+    \item \textbf{(Vitali Convergence Theorem for $L^p$)} \\
+    $(\Rightarrow)$ If $f_n \to f$ in $L^p$, then convergence in measure, uniform integrability, and tightness follow immediately from the properties of the integral.
+    
+    $(\Leftarrow)$ Assume $f_n \to f$ in measure, $\{|f_n|^p\}$ is uniformly integrable, and $\{|f_n|^p\}$ is tight. We split the integral:
+    \[
+    \int_E |f_n - f|^p = \int_{E_0} |f_n - f|^p + \int_{E \setminus E_0} |f_n - f|^p.
+    \]
+    \textbf{Tail Control (Tightness):} Choose $E_0$ such that $\sup_n \int_{E \setminus E_0} |f_n|^p < \epsilon$. Note that $|f_n - f|^p \le 2^p(|f_n|^p + |f|^p)$. Thus, the integral over $E \setminus E_0$ is small.
+    
+    \textbf{Core Control (Uniform Integrability):} On the finite set $E_0$, we split further into a set $A$ where $|f_n - f|$ is large, and $E_0 \setminus A$ where it is small.
+    \[
+    \int_{E_0} |f_n - f|^p = \int_{E_0 \setminus A} |f_n - f|^p + \int_A |f_n - f|^p.
+    \]
+    Since $f_n \to f$ in measure, we can ensure $m(A)$ is small. By uniform integrability, $\int_A |f_n - f|^p < \epsilon$. On $E_0 \setminus A$, the difference is uniformly small.
+    Thus, the total integral converges to 0.
+
+    \item \textbf{(Radon-Riesz Theorem)} \\
+    We assume $f_n \to f$ a.e. and $\|f_n\|_p \to \|f\|_p$. Consider the function:
+    \[
+    h_n = 2^{p-1}(|f_n|^p + |f|^p) - |f_n - f|^p.
+    \]
+    Note that $h_n \ge 0$ a.e. and $h_n \to 2^p |f|^p$ pointwise. By \textbf{Fatou's Lemma}:
+    \[
+    \int_E \liminf h_n \le \liminf \int_E h_n.
+    \]
+    Substituting the limits:
+    \[
+    \int_E 2^p |f|^p \le \liminf \left( \int_E 2^{p-1}(|f_n|^p + |f|^p) - \int_E |f_n - f|^p \right).
+    \]
+    Using the norm convergence assumption ($\lim \int |f_n|^p = \int |f|^p$):
+    \[
+    2^p \int |f|^p \le 2^p \int |f|^p - \limsup \int |f_n - f|^p.
+    \]
+    Canceling terms yields $0 \le - \limsup \int |f_n - f|^p$, which implies $\int |f_n - f|^p \to 0$.
+\end{enumerate}
+
+\subsubsection*{Part 2: $L^p$ Convergence vs. Convergence in Measure}
+
+\begin{enumerate}
+    \item \textbf{($L^p$ Implies Measure)} \\
+    Direct application of Chebyshev's Inequality:
+    \[
+    m(\{x : |f_n(x) - f(x)| \ge \epsilon\}) \le \frac{1}{\epsilon^p} \int_E |f_n - f|^p.
+    \]
+    Since the RHS goes to 0, $f_n \to f$ in measure.
+
+    \item \textbf{(Measure $\not\Rightarrow L^p$)} \\
+    Example: $f_n(x) = n^{1/p} \chi_{(0, 1/n)}$. (See manuscript for details).
+
+    \item \textbf{(Measure $\Rightarrow L^p$ with conditions)} \\
+    This is the Generalized Vitali Theorem proven above. The "trick" is to split the set $E$ based on the magnitude of the difference:
+    \[
+    E' = \{x \in E : |f_n(x) - f(x)| \ge \delta\}.
+    \]
+    Then decompose the integral $\int_E |f_n - f|^p$ into the integral over $E'$ (controlled by uniform integrability since $m(E')$ is small) and the integral over $E \setminus E'$ (controlled by the small difference $\delta$). For infinite measure, we first use tightness to restrict to a finite set.
+\end{enumerate}
+
+\subsubsection*{Part 3: Pointwise Convergence vs. Convergence in Measure}
+
+\begin{enumerate}
+    \item \textbf{(Finite Measure: Pointwise $\Rightarrow$ Measure)} \\
+    Let $\epsilon > 0$. Define sets $E_n = \{x : |f_n(x) - f(x)| \ge \epsilon\}$. We want to show $m(E_n) \to 0$.
+    Consider $A_N = \bigcup_{n=N}^\infty E_n = \{x : \exists n \ge N, |f_n(x) - f(x)| \ge \epsilon\}$.
+    Since $f_n \to f$ pointwise, $x \in \bigcap_{N=1}^\infty A_N$ implies $f_n(x)$ does not converge to $f(x)$ (or does so slower than $\epsilon$). Since convergence is a.e., $m(\bigcap A_N) = 0$.
+    Because $A_1 \supseteq A_2 \supseteq \dots$ and $m(A_1) \le m(E) < \infty$, by continuity of measure from above:
+    \[
+    \lim_{N \to \infty} m(A_N) = m\left(\bigcap_{N=1}^\infty A_N\right) = 0.
+    \]
+    Since $E_N \subseteq A_N$, $m(E_N) \to 0$.
+
+    \item \textbf{(Counter-Example: Infinite Measure Failure)} \\
+    \begin{enumerate}
+        \item Fix $x \in \mathbb{R}$. There exists $N > x$. For all $n \ge N$, the interval $[n, n+1]$ lies to the right of $x$, so $f_n(x) = 0$. Thus $f_n \to 0$ pointwise.
+        \item For any $n$, the set where $|f_n| \ge 1/2$ is $[n, n+1]$, which has measure 1. Since the measure is constantly 1, it does not converge to 0.
+    \end{enumerate}
+
+    \item \textbf{(Counter-Example: Measure $\not\Rightarrow$ Pointwise)} \\
+    Let $f_n$ be the typewriter sequence $\chi_{[j/2^k, (j+1)/2^k]}$.
+    \begin{itemize}
+        \item \textbf{Measure:} For any $\epsilon \in (0, 1)$, $m(\{|f_n| \ge \epsilon\}) = 1/2^k$. As $n \to \infty$, $k \to \infty$, so the measure goes to 0.
+        \item \textbf{Pointwise:} For any $x \in [0,1]$, the intervals $[j/2^k, (j+1)/2^k]$ "scan" across $x$ infinitely many times. Thus $f_n(x)$ takes the value 1 for infinitely many $n$, and 0 for infinitely many $n$. Consequently, $\limsup f_n(x) = 1$ and $\liminf f_n(x) = 0$. It converges nowhere.
+    \end{itemize}
+
+    \item \textbf{(Riesz Subsequence Theorem)} \\
+    Since $f_n \to f$ in measure, for every $k \in \mathbb{N}$, we can find an index $n_k$ such that
+    \[
+    m(\{x : |f_{n_k}(x) - f(x)| \ge 1/2^k\}) < \frac{1}{2^k}.
+    \]
+    We can ensure $n_{k+1} > n_k$. Let $E_k = \{x : |f_{n_k}(x) - f(x)| \ge 1/2^k\}$.
+    Consider the set $A = \limsup E_k = \bigcap_{N=1}^\infty \bigcup_{k=N}^\infty E_k$.
+    By Borel-Cantelli (since $\sum m(E_k) < \sum 2^{-k} = 1 < \infty$), we have $m(A) = 0$.
+    For any $x \notin A$, $x$ belongs to only finitely many $E_k$. Thus for sufficiently large $k$, $|f_{n_k}(x) - f(x)| < 1/2^k$. This implies $f_{n_k}(x) \to f(x)$.
+\end{enumerate}
+\end{solution}
+
+\newpage
+\begin{problem}[$L^p$ spaces inclusion relationship]
+In this problem, we examine how the inclusion relationships between $L^p$ spaces depend heavily on the total measure of the underlying space $E$. Assume throughout that $1 \le p < q < \infty$.
+
+\begin{enumerate}
+    \item \textbf{(Finite Measure Space: $m(E) < \infty$)} \\
+    Let $E$ be a measurable set with $m(E) < \infty$.
+    \begin{enumerate}
+        \item Use Hölder's Inequality to prove that $L^q(E) \subseteq L^p(E)$.
+        \item Derive the inequality $\|f\|_p \le C \|f\|_q$ and explicitly determine the constant $C$ in terms of $p, q,$ and $m(E)$.
+        \item Give a counter-example to show that $L^p(E)$ is \textbf{not} contained in $L^q(E)$ (i.e., finding a function with a singularity that is integrable with power $p$ but not $q$).
+    \end{enumerate}
+
+    \item \textbf{(Sequence Space: Counting Measure)} \\
+    Let $E = \mathbb{N}$ equipped with the counting measure (the space $\ell^p$).
+    \begin{enumerate}
+        \item Prove that $\ell^p \subseteq \ell^q$. (Note that this is the \textit{reverse} of the finite measure case).
+        \item Give a counter-example to show that $\ell^q$ is \textbf{not} contained in $\ell^p$ (i.e., finding a sequence that decays fast enough for $q$ but not for $p$).
+    \end{enumerate}
+
+    \item \textbf{(Infinite Measure Space: $m(E) = \infty$)} \\
+    Let $E = (0, \infty)$ equipped with the standard Lebesgue measure.
+    Explain why there is generally \textbf{no inclusion relationship} between $L^p(E)$ and $L^q(E)$ by providing:
+    \begin{enumerate}
+        \item A function $f \in L^p(E)$ but $f \notin L^q(E)$.
+        \item A function $g \in L^q(E)$ but $g \notin L^p(E)$.
+    \end{enumerate}
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}
+    \item \textbf{(Finite Measure Case)}
+    \begin{enumerate}
+        \item Let $f \in L^q(E)$. We compute the $L^p$ norm:
+        \[
+        \|f\|_p^p = \int_E |f|^p \cdot 1 \, dm.
+        \]
+        Apply Hölder's Inequality with exponents $r = q/p$ (since $q > p$, $r > 1$) and its conjugate $r'$.
+        \[
+        \int_E |f|^p \cdot 1 \le \left( \int_E (|f|^p)^{q/p} \right)^{p/q} \left( \int_E 1^{r'} \right)^{1/r'}.
+        \]
+        This simplifies to:
+        \[
+        \|f\|_p^p \le \|f\|_q^p \cdot (m(E))^{1/r'}.
+        \]
+        Since $m(E) < \infty$ and $\|f\|_q < \infty$, we have $\|f\|_p < \infty$, so $f \in L^p(E)$.
+        
+        \item Taking the $p$-th root of the inequality derived above:
+        \[
+        \|f\|_p \le \|f\|_q \cdot m(E)^{\frac{1}{p}(1 - \frac{p}{q})} = \|f\|_q \cdot m(E)^{\frac{1}{p} - \frac{1}{q}}.
+        \]
+        Thus, the constant is $C = m(E)^{\frac{1}{p} - \frac{1}{q}}$.
+        
+        \item \textbf{Counter-example ($L^p \not\subset L^q$):} Let $E = (0, 1)$. Consider $f(x) = x^{-\alpha}$.
+        For $f \in L^p$, we need $p\alpha < 1 \implies \alpha < 1/p$.
+        For $f \notin L^q$, we need $q\alpha \ge 1 \implies \alpha \ge 1/q$.
+        Since $p < q$, we can choose $\alpha$ such that $\frac{1}{q} \le \alpha < \frac{1}{p}$.
+        Then $f \in L^p$ but $f \notin L^q$.
+    \end{enumerate}
+
+    \item \textbf{(Sequence Space Case)}
+    \begin{enumerate}
+        \item Let $\{x_n\} \in \ell^p$. Then $\sum_{n=1}^\infty |x_n|^p < \infty$.
+        Convergence of the series implies $|x_n| \to 0$. Thus, there exists $N$ such that for all $n \ge N$, $|x_n| \le 1$.
+        Since $q > p$, for numbers $|y| \le 1$, we have $|y|^q \le |y|^p$.
+        Thus,
+        \[
+        \sum_{n=N}^\infty |x_n|^q \le \sum_{n=N}^\infty |x_n|^p < \infty.
+        \]
+        Since the tail converges, the whole series converges. Thus $\{x_n\} \in \ell^q$.
+        
+        \item \textbf{Counter-example ($\ell^q \not\subset \ell^p$):} Consider the harmonic-type sequence $x_n = n^{-\alpha}$.
+        We need convergence for $q$ ($\sum n^{-q\alpha} < \infty \implies q\alpha > 1$) and divergence for $p$ ($\sum n^{-p\alpha} = \infty \implies p\alpha \le 1$).
+        Choose $\alpha$ such that $\frac{1}{q} < \alpha \le \frac{1}{p}$.
+        Then $\{x_n\} \in \ell^q$ but $\{x_n\} \notin \ell^p$.
+    \end{enumerate}
+
+    \item \textbf{(Infinite Measure Case)}
+    \begin{enumerate}
+        \item \textbf{$f \in L^p \setminus L^q$ (Decay issue):}
+        We need a function that decays fast enough for $p$ but not for $q$?? 
+        Actually, on infinite domains, $L^p$ requires faster decay than $L^q$ (similar to sequences).
+        Wait, if $p < q$, $x^{-2} \in L^1([1, \infty))$ and $x^{-2} \in L^2([1, \infty))$.
+        Let's use specific $\alpha$.
+        We need $\int_1^\infty x^{-p\alpha} dx < \infty \implies p\alpha > 1$ and $\int_1^\infty x^{-q\alpha} dx = \infty \implies q\alpha \le 1$.
+        This is impossible since $p < q$.
+        Correction: To be in $L^p$ but not $L^q$ on an infinite domain, we usually look at the "fat tail" (behavior at infinity) where the sequence logic applies ($L^p \subset L^q$), OR the "singularity" (behavior at 0) where finite measure logic applies ($L^q \subset L^p$).
+        
+        Let's split the logic:
+        \begin{itemize}
+            \item \textbf{$f \in L^p \setminus L^q$:} We need a function with a singularity near 0 (like finite measure case).
+            Let $f(x) = x^{-\alpha} \chi_{(0,1)}$. Choose $\frac{1}{q} \le \alpha < \frac{1}{p}$.
+            Then $\int |f|^p < \infty$ but $\int |f|^q = \infty$.
+            
+            \item \textbf{$g \in L^q \setminus L^p$:} We need a function with a "fat tail" at infinity (like sequence case).
+            Let $g(x) = x^{-\beta} \chi_{(1, \infty)}$. Choose $\frac{1}{q} < \beta \le \frac{1}{p}$.
+            Then $\int_1^\infty x^{-q\beta} dx < \infty$ (since $q\beta > 1$) but $\int_1^\infty x^{-p\beta} dx = \infty$ (since $p\beta \le 1$).
+        \end{itemize}
+    \end{enumerate}
+\end{enumerate}
+\end{solution}
+
+\newpage
+\begin{problem}[Approximation and Separability]
+    
+\end{problem}
+
+\newpage
+\begin{problem}[The "Standard Library" of Counterexamples]
+In this problem, we examine five classic counterexamples that mark the boundaries of major theorems in Real Analysis (Differentiation, Convergence, and Compactness).
+\subsubsection*{Part 1: The Cantor-Lebesgue Function}
+Let $\phi(x)$ be the Cantor-Lebesgue function on $[0,1]$ and $\psi(x) = \phi(x) + x$.
+\begin{enumerate}
+    \item \textbf{(Differentiation)}
+    Compute $\int_0^1 \phi'(x) \, dx$ and compare it with $\phi(1) - \phi(0)$.
+    What necessary condition for the Fundamental Theorem of Calculus does this function violate?
+    \item \textbf{(Measurability)}
+    The function $\psi$ is a homeomorphism from $[0,1]$ to $[0,2]$.
+    Use $\psi$ to prove that the preimage of a measurable set under a continuous map is \textbf{not necessarily} measurable.
+    (Hint: Consider a non-measurable subset of the image of the Cantor set).
+\end{enumerate}
+
+\subsubsection*{Part 2: The Typewriter Sequence}
+Consider the sequence of indicator functions on $[0,1]$:
+\[ f_1 = \chi_{[0,1]}, \ f_2 = \chi_{[0,1/2]}, \ f_3 = \chi_{[1/2,1]}, \ f_4 = \chi_{[0,1/4]}, \dots \]
+\begin{enumerate}
+    \item Show that $\{f_n\}$ converges to 0 in measure and in $L^p[0,1]$.
+    \item Show that $\{f_n(x)\}$ converges \textbf{nowhere} pointwise on $[0,1]$.
+\end{enumerate}
+
+\subsubsection*{Part 3: The "Spikes" (Mass Escape vs. Norm Escape)}
+Consider the following two sequences on $E=[0,1]$:
+\[ g_n(x) = n \chi_{[0, 1/n]}(x) \quad \text{and} \quad h_n(x) = n^{1/p} \chi_{[0, 1/n]}(x). \]
+\begin{enumerate}
+    \item For $\{g_n\}$, show that $g_n \to 0$ pointwise a.e., but $\lim \int g_n \neq \int \lim g_n$. Which assumption of the Dominated Convergence Theorem fails?
+    \item For $\{h_n\}$ (where $1 \le p < \infty$), show that $h_n \to 0$ pointwise a.e., but $h_n \not\to 0$ in $L^p$. Which assumption of the Vitali Convergence Theorem fails?
+\end{enumerate}
+
+\subsubsection*{Part 4: The Rademacher Functions}
+Let $r_n(t) = \operatorname{sgn}(\sin(2^n \pi t))$ on $[0,1]$.
+\begin{enumerate}
+    \item Show that $r_n \rightharpoonup 0$ (weakly) in $L^p[0,1]$ for $1 < p < \infty$.
+    \item Show that $\{r_n\}$ has \textbf{no} strongly convergent subsequence in $L^p[0,1]$.
+    \item What does this imply about the compactness of the closed unit ball in $L^p$?
+\end{enumerate}
+
+\subsubsection*{Part 5: Constant Functions on Infinite Measure}
+Let $E = \mathbb{R}$ and consider $f(x) \equiv 1$.
+\begin{enumerate}
+    \item Show that $f \in L^\infty(\mathbb{R})$ but $f \notin L^p(\mathbb{R})$ for any $p < \infty$.
+    \item Contrast this with the inclusion relationships for $E = [0,1]$ (where $L^\infty \subset L^p$).
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\subsubsection*{Part 1: The Cantor-Lebesgue Function}
+\begin{enumerate}
+    \item Since $\phi$ is constant on each interval in the complement of the Cantor set $C$ (and $m(C^c) = 1$), we have $\phi'(x) = 0$ almost everywhere.
+    Thus, $\int_0^1 \phi'(x) \, dx = 0$. However, $\phi(1) - \phi(0) = 1 - 0 = 1$.
+    The FTC fails because $\phi$ is not \textbf{absolutely continuous} (it is a singular function).
+    
+    \item Let $C$ be the Cantor set ($m(C)=0$). Since $\psi$ maps $[0,1]$ to $[0,2]$ and stretches the Cantor set to a set of measure 1 ($m(\psi(C)) = 1$), $\psi(C)$ contains a non-measurable set $N$.
+    Let $A = \psi^{-1}(N)$. Since $A \subset C$, $A$ has measure zero and is measurable.
+    However, if we consider the continuous function $g = \psi^{-1}$, the preimage of the measurable set $A$ is the non-measurable set $N$. (Alternatively: The composition of measurable functions need not be measurable).
+\end{enumerate}
+
+\subsubsection*{Part 2: The Typewriter Sequence}
+\begin{enumerate}
+    \item \textbf{Measure/$L^p$:} For any $\epsilon > 0$, $m(\{|f_n| > \epsilon\}) = \text{length}(I_n) \to 0$. Similarly, $\int |f_n|^p = \text{length}(I_n) \to 0$.
+    \item \textbf{Pointwise:} For any $x \in [0,1]$, the intervals $I_n$ "scan" over $x$ infinitely many times. Thus, $f_n(x) = 1$ for infinitely many $n$ and $0$ for infinitely many $n$. The limit exists nowhere.
+\end{enumerate}
+
+\subsubsection*{Part 3: The "Spikes"}
+\begin{enumerate}
+    \item $g_n(x) \to 0$ for all $x > 0$. However, $\int g_n = n \cdot \frac{1}{n} = 1 \neq 0$.
+    The \textbf{Dominated Convergence Theorem} fails because there is no integrable dominating function $G$ such that $|g_n| \le G$ (the "spike" grows arbitrarily high).
+    
+    \item $g_n(x) \to 0$ a.e. and bounded in $L^1 ([0,1])$, but didn't have a weakly convergence subsequence. (That is, the unit ball in $L^1[0,1]$ is not weakly compact.) 
+    \item $h_n(x) \to 0$ a.e., but $\|h_n\|_p^p = \int n \cdot \frac{1}{n} = 1 \neq 0$.
+    The \textbf{Vitali Convergence Theorem} fails because the family $\{|h_n|^p\}$ is not \textbf{uniformly integrable} (mass concentrates at a point too densely).
+
+
+\end{enumerate}
+
+\subsubsection*{Part 4: The Rademacher Functions}
+\begin{enumerate}
+    \item By the Riemann-Lebesgue Lemma (generalized), $\int r_n g \to 0$ for any $g \in L^q$. Thus $r_n \rightharpoonup 0$.
+    \item $\|r_n - r_m\|_p \approx \text{const} > 0$ for $n \neq m$. Since the sequence is not Cauchy, it has no convergent subsequence.
+    \item This implies the closed unit ball in $L^p$ (infinite-dimensional) is \textbf{not compact} in the strong topology.
+\end{enumerate}
+
+\subsubsection*{Part 5: Constant Functions on Infinite Measure}
+\begin{enumerate}
+    \item $\|f\|_\infty = 1 < \infty$. But $\|f\|_p^p = \int_{\mathbb{R}} 1 \, dx = \infty$.
+    \item On finite measure spaces, $L^\infty \subset L^p$. On infinite measure spaces, this inclusion fails (constant functions don't "decay" at infinity).
+\end{enumerate}
+\end{solution}
+
+\newpage
+\begin{problem}[Comparison of Modes of Convergence (Version 2)]
+In this problem, we analyze the subtle relationships between different modes of convergence, specifically focusing on \textbf{subsequence extraction} and the distinction between the reflexive case ($p > 1$) and the non-reflexive case ($p=1$).
+
+\subsubsection*{Part 1: Subsequence Implications on Finite Measure}
+Let $E$ be a set of \textbf{finite measure} and let $\{f_n\}$ be a \textbf{bounded sequence} in $L^p(E)$ for $1 \le p < \infty$.
+Consider the following four properties a sequence might have:
+\begin{enumerate}[label=(\roman*)]
+    \item Strong Convergence: $\{f_n\} \to f$ in $L^p(E)$.
+    \item Weak Convergence: $\{f_n\} \rightharpoonup f$ in $L^p(E)$.
+    \item Pointwise Convergence: $\{f_n\} \to f$ pointwise almost everywhere on $E$.
+    \item Convergence in Measure: $\{f_n\} \to f$ in measure on $E$.
+\end{enumerate}
+
+For each of the cases below, determine if assuming the sequence has \textbf{Property A} implies that there exists a \textbf{subsequence} satisfying \textbf{Property B}.
+\begin{enumerate}
+    \item \textbf{Case $p > 1$ (Reflexive Case):}
+    \begin{enumerate}
+        \item Assume (ii) Weak. Does a subsequence satisfy (i) Strong?
+        \item Assume (iii) Pointwise. Does a subsequence satisfy (i) Strong?
+        \item Assume (iii) Pointwise. Does a subsequence satisfy (ii) Weak?
+        \item Assume (iv) Measure. Does a subsequence satisfy (ii) Weak?
+    \end{enumerate}
+    
+    \item \textbf{Case $p = 1$ (Non-Reflexive Case):}
+    \begin{enumerate}
+        \item Assume (iii) Pointwise. Does a subsequence satisfy (ii) Weak?
+        \item Assume (iv) Measure. Does a subsequence satisfy (ii) Weak?
+    \end{enumerate}
+\end{enumerate}
+
+\subsubsection*{Part 2: Weak Convergence of Translations (Infinite Measure)}
+Let $1 \le p < \infty$ and let $f_0 \in L^p(\mathbb{R})$. Define the sequence of translations $f_n(x) = f_0(x-n)$.
+\begin{enumerate}
+    \item Show that for $1 < p < \infty$, the sequence $\{f_n\}$ converges \textbf{weakly} to 0 in $L^p(\mathbb{R})$.
+    \item Show that for $p = 1$, the sequence $\{f_n\}$ does \textbf{not} necessarily converge weakly to 0. (Provide a specific counterexample).
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\subsubsection*{Part 1: Subsequence Implications}
+
+\textbf{1. Case $p > 1$:}
+\begin{enumerate}
+    \item \textbf{Weak $\Rightarrow$ Strong Subsequence? \textcolor{red}{NO.}} \\
+    \textbf{Counterexample:} Rademacher functions $r_n(t)$ on $[0,1]$. They converge weakly to 0 (Riemann-Lebesgue). However, $\|r_n - 0\|_p = 1$ for all $n$. Since the norm is constant and non-zero, no subsequence can converge strongly to 0.
+    
+    \item \textbf{Pointwise $\Rightarrow$ Strong Subsequence? \textcolor{red}{NO.}} \\
+    \textbf{Counterexample:} The "Spikes" $f_n = n^{1/p} \chi_{[0, 1/n]}$.
+    $f_n \to 0$ pointwise. However, $\|f_n\|_p = 1$ for all $n$. The mass "escapes" but does not vanish. Thus, no subsequence converges strongly.
+    
+    \item \textbf{Pointwise $\Rightarrow$ Weak Subsequence? \textcolor{red}{YES.}} \\
+    Since $p > 1$, $L^p$ is \textbf{reflexive}. The sequence $\{f_n\}$ is bounded in $L^p$. By Kakutani's Theorem (or Banach-Alaoglu), there exists a subsequence $f_{n_k}$ that converges weakly to some limit $g$.
+    Since $f_n \to f$ pointwise, the unique weak limit must be $f$. Thus $f_{n_k} \rightharpoonup f$. (In fact, the whole sequence converges weakly).
+    
+    \item \textbf{Measure $\Rightarrow$ Weak Subsequence? \textcolor{red}{YES.}} \\
+    If $f_n \to f$ in measure, the Riesz Subsequence Theorem guarantees a subsequence $f_{n_k}$ converges to $f$ \textbf{pointwise a.e.}
+    We are then back to the previous case: Bounded $L^p$ sequence ($p>1$) + Pointwise limit $\implies$ Weak limit.
+\end{enumerate}
+
+\textbf{2. Case $p = 1$:}
+\begin{enumerate}
+    \item \textbf{Pointwise $\Rightarrow$ Weak Subsequence? \textcolor{red}{NO.}} \\
+    \textbf{Counterexample:} $f_n = n \chi_{[0, 1/n]}$.
+    $f_n \to 0$ pointwise. $\|f_n\|_1 = 1$.
+    Test weak convergence against $g \equiv 1 \in L^\infty$: $\int f_n g = 1 \ne 0$.
+    Thus it does not converge weakly to 0.
+    
+    \item \textbf{Measure $\Rightarrow$ Weak Subsequence? \textcolor{red}{NO.}} \\
+    Same counterexample as above. $f_n \to 0$ in measure (support shrinks to 0). But the integral against $g=1$ is always 1, so it never converges weakly to 0.
+\end{enumerate}
+
+\subsubsection*{Part 2: Weak Convergence of Translations}
+\begin{enumerate}
+    \item \textbf{Proof for $p > 1$:} \\
+    Let $g \in L^q(\mathbb{R})$ be a test function ($1/p + 1/q = 1$). Since $q < \infty$, continuous functions with compact support, $C_c(\mathbb{R})$, are dense in $L^q$.
+    It suffices to check dense subsets since $\{f_n\}$ is bounded ($\|f_n\|_p = \|f_0\|_p$).
+    Let $\phi \in C_c(\mathbb{R})$ with support in $[-K, K]$.
+    \[ \int_{-\infty}^\infty f_n(x) \phi(x) \, dx = \int_{-K}^K f_0(x-n) \phi(x) \, dx \]
+    For $n$ sufficiently large, the support of $f_0(x-n)$ (effectively centered at $n$) becomes disjoint from $[-K, K]$. Specifically, since $f_0 \in L^p$, its "tails" vanish.
+    \[ \left| \int f_n \phi \right| \le \|\phi\|_\infty \int_{-K}^K |f_0(x-n)| \, dx = \|\phi\|_\infty \int_{-K-n}^{K-n} |f_0(y)| \, dy \]
+    As $n \to \infty$, the integration domain slides to $-\infty$, where the integral vanishes. Thus $f_n \rightharpoonup 0$.
+
+    \item \textbf{Failure for $p = 1$:} \\
+    Take $f_0 = \chi_{[0,1]}$. Then $f_n = \chi_{[n, n+1]}$.
+    Let the test function be $g(x) \equiv 1$. Note that $g \in L^\infty(\mathbb{R})$ (the dual of $L^1$).
+    \[ \int_{-\infty}^\infty f_n(x) g(x) \, dx = \int_n^{n+1} 1 \, dx = 1 \]
+    This integral is constant 1 for all $n$, so it does not converge to 0. Thus $f_n \not\rightharpoonup 0$.
+\end{enumerate}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{10pt}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\multicolumn{5}{|c|}{\textbf{Does Property A imply a Subsequence has Property B?}} \\
+\multicolumn{5}{|c|}{\small (Assume $m(E) < \infty$ and sequence is bounded in $L^p$)} \\
+\hline
+\textbf{Property A $\downarrow$ \textbackslash \ Property B $\rightarrow$} & \textbf{Strong ($L^p$)} & \textbf{Weak ($L^p$)} & \textbf{Pointwise a.e.} & \textbf{Measure} \\
+\hline
+\multicolumn{5}{|c|}{\textit{\textbf{Case 1: Reflexive Range ($1 < p < \infty$)}}} \\
+\hline
+\textbf{Strong} & YES & YES & YES & YES \\
+\hline
+\textbf{Weak} & \textcolor{red}{NO} & YES & \textcolor{red}{NO} & \textcolor{red}{NO} \\
+\hline
+\textbf{Pointwise a.e.} & \textcolor{red}{NO} & \textbf{YES} & YES & YES \\
+\hline
+\textbf{Measure} & \textcolor{red}{NO} & \textbf{YES} & YES & YES \\
+\hline
+\multicolumn{5}{|c|}{\textit{\textbf{Case 2: Non-Reflexive ($p = 1$)}}} \\
+\hline
+\textbf{Pointwise a.e.} & \textcolor{red}{NO} & \textcolor{red}{\textbf{NO}} & YES & YES \\
+\hline
+\textbf{Measure} & \textcolor{red}{NO} & \textcolor{red}{\textbf{NO}} & YES & YES \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+\textbf{Key Differences:}
+\begin{itemize}
+    \item \textbf{Pointwise $\Rightarrow$ Weak:} Holds for $p > 1$ (due to Reflexivity/Dunford-Pettis) but fails for $p=1$ (mass can escape, e.g., $n \chi_{[0, 1/n]}$).
+    \item \textbf{Weak $\Rightarrow$ Pointwise:} Never holds for subsequences (e.g., Rademacher functions oscillate too much).
+\end{itemize}
+
+\end{solution}
+
+\end{document}
