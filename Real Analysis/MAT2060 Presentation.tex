@@ -499,6 +499,26 @@
     \end{proof}
 \end{frame}
 
+\begin{frame}{Problem 17: Diagonal Argument Lemma}
+    \begin{problem}
+        Let $X$ be a metric space with a countable dense subset $S = \{x_1, x_2, \dots \}$. Let $\{f_n\}$ be a sequence of functions in $C(X, \R)$ that is uniformly bounded. Show that there exists a subsequence $\{f_{n_k}\}$ that converges pointwise on $S$.
+    \end{problem}
+    \textit{This is the first step in the proof of the Arzela-Ascoli Theorem.}
+\end{frame}
+
+\begin{frame}{Solution to Problem 17: Diagonal Argument}
+    \begin{proof}
+        \begin{enumerate}
+            \item Consider the sequence evaluated at $x_1$: $\{f_n(x_1)\}$. Since $\{f_n\}$ is uniformly bounded, this scalar sequence is bounded. By Bolzano-Weierstrass, there is a subsequence $\{f_{1,k}\}$ converging at $x_1$.
+            \item From $\{f_{1,k}\}$, extract a subsequence $\{f_{2,k}\}$ converging at $x_2$. Note it still converges at $x_1$.
+            \item Inductively, construct subsequence $\{f_{m,k}\}$ converging at $x_1, \dots, x_m$.
+            \item \textbf{Diagonal Sequence:} Let $g_k = f_{k,k}$.
+            \item For any fixed $x_m \in S$, the sequence $\{g_k\}$ eventually becomes a subsequence of $\{f_{m,k}\}$ (for $k \ge m$), so it converges at $x_m$.
+            \item Thus, $\{g_k\}$ converges pointwise on $S$.
+        \end{enumerate}
+    \end{proof}
+\end{frame}
+
 % ============================================================
 % TOPIC 5: BAIRE CATEGORY THEOREM
 % ============================================================
@@ -515,7 +535,7 @@
     If $X = \bigcup A_n$ with $A_n$ nowhere dense, then $\bar{A}_n$ has empty interior, so $U_n = (\bar{A}_n)^c$ is open and dense. BCT implies $\bigcap U_n \neq \emptyset$, so $X \neq \bigcup \bar{A}_n \supseteq \bigcup A_n$.
 \end{frame}
 
-\begin{frame}{Problem 17: Removing Lines from $\R^2$}
+\begin{frame}{Problem 18: Removing Lines from $\R^2$}
     \begin{problem}
         Let $\{l_i\}_{i=1}^\infty$ be a countable collection of straight lines in $\R^2$. Show that $\R^2 \setminus \bigcup_{i=1}^\infty l_i$ is dense in $\R^2$.
     \end{problem}
@@ -524,7 +544,7 @@
     \textit{We will provide a direct proof using nested balls (simulating the proof of BCT) as suggested in the notes.}
 \end{frame}
 
-\begin{frame}{Solution to Problem 17 (Nested Balls)}
+\begin{frame}{Solution to Problem 18 (Nested Balls)}
     \begin{proof}
         Let $B_0$ be an arbitrary open ball in $\R^2$. We want to show $B_0 \cap (\R^2 \setminus \bigcup l_i) \neq \emptyset$.
         
@@ -539,7 +559,7 @@
     \end{proof}
 \end{frame}
 
-\begin{frame}{Problem 18: Generic Nowhere Differentiability}
+\begin{frame}{Problem 19: Generic Nowhere Differentiability}
     \begin{problem}
         Let $C[0,1]$ be the complete metric space of continuous functions equipped with the sup-norm.
         Show that the set of functions which are nowhere differentiable is of the \textbf{Second Category} (i.e., "most" continuous functions are nowhere differentiable).
@@ -549,7 +569,7 @@
     \textit{This is a classic application of BCT, credited to Banach and Mazurkiewicz.}
 \end{frame}
 
-\begin{frame}{Solution to Problem 18 (1/4): Setup}
+\begin{frame}{Solution to Problem 19 (1/4): Setup}
     \textbf{Goal:} Show that the set of functions differentiable at even one point is of the \textbf{First Category}.
     
     Define the set $E_n$ for each $n \in \N$:
@@ -562,7 +582,7 @@
     We must show each $E_n$ is \textbf{nowhere dense}.
 \end{frame}
 
-\begin{frame}{Solution to Problem 18 (2/4): Closedness}
+\begin{frame}{Solution to Problem 19 (2/4): Closedness}
     \textbf{Step 1: Show $E_n$ is closed.}
     Let $\{f_k\} \subset E_n$ be a sequence converging uniformly to $f$.
     \begin{itemize}
@@ -574,7 +594,7 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Solution to Problem 18 (3/4): Nowhere Dense}
+\begin{frame}{Solution to Problem 19 (3/4): Nowhere Dense}
     \textbf{Step 2: Show $E_n$ has empty interior.}
     It suffices to show that for any $f \in C[0,1]$ and $\eps > 0$, there exists $g \in B(f, \eps)$ such that $g \notin E_n$.
     \begin{itemize}
@@ -587,7 +607,7 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Solution to Problem 18 (4/4): Conclusion}
+\begin{frame}{Solution to Problem 19 (4/4): Conclusion}
     \begin{proof}[Final Argument]
         \begin{enumerate}
             \item We showed each $E_n$ is closed and has empty interior, i.e., $E_n$ is \textbf{nowhere dense}.
@@ -599,14 +619,14 @@
     \end{proof}
 \end{frame}
 
-\begin{frame}{Problem 19: Generic Nowhere Monotonicity}
+\begin{frame}{Problem 20: Generic Nowhere Monotonicity}
     \begin{problem}
         Let $C[0,1]$ be the space of continuous functions on $[0,1]$. Show that the set of functions which are nowhere monotone (i.e., not monotone on any sub-interval) is of the \textbf{Second Category} (generic).
     \end{problem}
     \textit{This result implies that "most" continuous functions wiggle infinitely often at all scales.}
 \end{frame}
 
-\begin{frame}{Solution to Problem 19 (1/2): Setup \& Closedness}
+\begin{frame}{Solution to Problem 20 (1/2): Setup \& Closedness}
     Let $M \subset C[0,1]$ be the set of functions monotone on some open sub-interval. We show $M$ is of the First Category.
     
     Let $\{I_n\}_{n=1}^\infty$ enumerate all open intervals in $[0,1]$ with rational endpoints.
@@ -618,7 +638,7 @@
     Similarly, $M_n^-$ is closed.
 \end{frame}
 
-\begin{frame}{Solution to Problem 19 (2/2): Nowhere Dense \& Conclusion}
+\begin{frame}{Solution to Problem 20 (2/2): Nowhere Dense \& Conclusion}
     \textbf{Step 2: Nowhere Dense.}
     We show $M_n^+$ has empty interior. Let $f \in M_n^+$ and $\eps > 0$.
     \begin{itemize}
@@ -631,6 +651,48 @@
     \textbf{Conclusion:}
     $M$ is a countable union of nowhere dense sets $\implies$ First Category.
     The complement (nowhere monotone functions) is Second Category.
+\end{frame}
+
+\begin{frame}{Problem 21: Continuity on Dense Subsets}
+    \begin{problem}
+        Suppose $f: \R \to \R$ is continuous on a dense subset $D \subseteq \R$. Show that the set of all discontinuity points of $f$ must be of the \textbf{First Category}.
+    \end{problem}
+    \textit{Note: As a consequence of BCT, we cannot have a function continuous precisely on $\Q$ and discontinuous on $\R \setminus \Q$, because $\R \setminus \Q$ is of Second Category.}
+\end{frame}
+
+\begin{frame}{Solution to Problem 21}
+    \begin{proof}
+        Let $C(f)$ be the set of continuity points and $D(f)$ be the set of discontinuity points.
+        Recall that $D(f)$ is always an $F_\sigma$ set (countable union of closed sets).
+        $$ D(f) = \bigcup_{n=1}^\infty \{ x \mid \omega_f(x) \ge 1/n \} $$
+        where $\omega_f(x)$ is the oscillation of $f$ at $x$. The sets $A_n = \{ x \mid \omega_f(x) \ge 1/n \}$ are closed.
+        
+        We are given that $D \subseteq C(f)$ is dense in $\R$.
+        Since $C(f)$ is dense, $D(f)$ has empty interior (if it contained an interval, that interval would contain points of $D$, a contradiction).
+        Thus, each closed set $A_n \subseteq D(f)$ has empty interior, making $A_n$ nowhere dense.
+        Therefore, $D(f) = \bigcup A_n$ is a countable union of nowhere dense sets (First Category).
+    \end{proof}
+\end{frame}
+
+\begin{frame}{Problem 22: Pointwise Limits (Baire Class 1)}
+    \begin{problem}
+        Suppose $f_n: \R \to \R$ is a sequence of continuous functions, and $f(x) = \lim_{n \to \infty} f_n(x)$ exists for all $x$. Show that the set of discontinuity points of $f$ is of the \textbf{First Category}.
+    \end{problem}
+    \textit{This means $f$ is continuous on a dense, Second Category set (almost continuous).}
+\end{frame}
+
+\begin{frame}{Solution to Problem 22}
+    \begin{proof}
+        This is the \textbf{Baire Classification Theorem}. A pointwise limit of continuous functions is a Baire Class 1 function.
+        For such functions, the set of points of discontinuity $D(f)$ is always of the First Category.
+        
+        \textbf{Sketch:}
+        Define the oscillation $\omega_f(x)$. We check sets $F_k = \{x \mid \omega_f(x) \ge 1/k\}$.
+        We can express these sets using the continuity of $f_n$.
+        It can be shown that $D(f)$ is an $F_\sigma$ set of first category.
+        Specifically, Baire proved that for Baire-1 functions, the set of continuity points $C(f)$ is a dense $G_\delta$ set.
+        Since $\R$ is complete, a dense $G_\delta$ set is Second Category (comeager), so $D(f)$ is First Category (meager).
+    \end{proof}
 \end{frame}
 
 % ============================================================
@@ -649,13 +711,13 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Problem 20: Taylor Series}
+\begin{frame}{Problem 23: Taylor Series}
     \begin{problem}
         Compute the second-order Taylor expansion of $f(x, y) = e^x \cos y$ at the point $(0, 0)$. Use the operator notation $h \frac{\partial}{\partial x} + k \frac{\partial}{\partial y}$ in your solution.
     \end{problem}
 \end{frame}
 
-\begin{frame}{Solution to Problem 20}
+\begin{frame}{Solution to Problem 23}
     Let $\mathbf{h} = (h, k) = (x, y)$ since we expand at $(0,0)$. The operator is $D = x \frac{\partial}{\partial x} + y \frac{\partial}{\partial y}$.
     $$ f(x,y) \approx \sum_{j=0}^2 \frac{1}{j!} D^j f(0,0) = f(0,0) + Df(0,0) + \frac{1}{2} D^2 f(0,0) $$
     \begin{itemize}
@@ -668,7 +730,7 @@
     $$ f(x,y) \approx 1 + x + \frac{1}{2}(x^2 - y^2) $$
 \end{frame}
 
-\begin{frame}{Problem 21: IFT in $\R^2 \times \R^2$}
+\begin{frame}{Problem 24: IFT in $\R^2 \times \R^2$}
     \begin{problem}
         Consider a $C^1$ mapping $F: \R^4 \to \R^2$, where we write points as $(x,y,u,v)$ and $F(x,y,u,v) = 0$.
         \begin{enumerate}
@@ -679,14 +741,14 @@
     \end{problem}
 \end{frame}
 
-\begin{frame}{Solution to Problem 21 (1/2): Statement}
+\begin{frame}{Solution to Problem 24 (1/2): Statement}
     \textbf{Theorem:} Let $F = (F_1, F_2)$ be a $C^1$ mapping near $P_0 = (x_0, y_0, u_0, v_0)$ such that $F(P_0) = 0$.
     If the $2 \times 2$ matrix of partial derivatives with respect to the dependent variables $u, v$ is invertible at $P_0$:
     $$ \det \frac{\partial(F_1, F_2)}{\partial(u, v)} = \det \begin{pmatrix} \partial_u F_1 & \partial_v F_1 \\ \partial_u F_2 & \partial_v F_2 \end{pmatrix} \neq 0, $$
     then there exists a neighborhood $U$ of $(x_0, y_0)$ and a unique $C^1$ function $G: U \to \R^2$, $G(x,y) = (u(x,y), v(x,y))$, such that $F(x,y,u(x,y),v(x,y)) = 0$ for all $(x,y) \in U$.
 \end{frame}
 
-\begin{frame}{Solution to Problem 21 (2/2): Derivative Formula Proof}
+\begin{frame}{Solution to Problem 24 (2/2): Derivative Formula Proof}
     \textbf{Proof:} We differentiate the identity $F(x, y, u(x,y), v(x,y)) = 0$ with respect to the independent variables. By the Chain Rule, for any variable $\xi \in \{x, y\}$:
     $$ \frac{\partial F}{\partial \xi} + \frac{\partial F}{\partial u} \frac{\partial u}{\partial \xi} + \frac{\partial F}{\partial v} \frac{\partial v}{\partial \xi} = 0 $$
     Writing this in matrix form for the Jacobian of the implicit function $D G = \begin{pmatrix} u_x & u_y \\ v_x & v_y \end{pmatrix}$:
@@ -696,7 +758,7 @@
     $$ \begin{pmatrix} u_x & u_y \\ v_x & v_y \end{pmatrix} = - \begin{pmatrix} F_{1u} & F_{1v} \\ F_{2u} & F_{2v} \end{pmatrix}^{-1} \begin{pmatrix} F_{1x} & F_{1y} \\ F_{2x} & F_{2y} \end{pmatrix} $$
 \end{frame}
 
-\begin{frame}{Problem 22: IFT Calculation}
+\begin{frame}{Problem 25: IFT Calculation}
     \begin{problem}
         Consider the system:
         $$ \begin{cases} xu + yv + uv = 1 \\ xu^3 + yv^3 = 1 \end{cases} $$
@@ -709,7 +771,7 @@
     \textit{This applies the IFT conditions and formula from Problem 20.}
 \end{frame}
 
-\begin{frame}{Solution to Problem 22: Calculation}
+\begin{frame}{Solution to Problem 25: Calculation}
     Let $F_1 = xu + yv + uv - 1$ and $F_2 = xu^3 + yv^3 - 1$.
     \begin{itemize}
         \item \textbf{1. Verify Solution:} $1(1) + 1(0) + 1(0) = 1$ and $1(1)^3 + 1(0)^3 = 1$. \checkmark
@@ -761,7 +823,7 @@
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{Problem 23: Feynman's Trick Practice}
+\begin{frame}{Problem 26: Feynman's Trick Practice}
     \begin{problem}
         Find the following integrals:
         \begin{enumerate}
@@ -771,7 +833,7 @@
     \end{problem}
 \end{frame}
 
-\begin{frame}{Solution to Problem 23 (1/2): Part (a)}
+\begin{frame}{Solution to Problem 26 (1/2): Part (a)}
     \textbf{Technique: Parameter Integration}
     Observe that $\frac{x^b - x^a}{\ln x} = \int_a^b x^y \, dy$.
     $$ I = \int_0^1 \left( \int_a^b x^y \, dy \right) dx $$
@@ -781,7 +843,7 @@
     $$ I = \big[ \ln(y+1) \big]_a^b = \ln(b+1) - \ln(a+1) = \ln\left(\frac{b+1}{a+1}\right) $$
 \end{frame}
 
-\begin{frame}{Solution to Problem 23 (2/2): Part (b)}
+\begin{frame}{Solution to Problem 26 (2/2): Part (b)}
     \textbf{Technique: Variable Substitution}
     Let $x = \tan \theta$, so $dx = \sec^2 \theta \, d\theta$. Limits: $0 \to 0, 1 \to \pi/4$.
     $$ I = \int_0^{\pi/4} \frac{\ln(1+\tan\theta)}{1+\tan^2\theta} \sec^2\theta \, d\theta = \int_0^{\pi/4} \ln(1+\tan\theta) \, d\theta $$
@@ -792,7 +854,7 @@
     $$ I = \int_0^{\pi/4} (\ln 2 - \ln(1+\tan\theta)) \, d\theta = \frac{\pi}{4}\ln 2 - I \implies I = \frac{\pi}{8} \ln 2 $$
 \end{frame}
 
-\begin{frame}{Problem 24: Improper Integrals with Parameters}
+\begin{frame}{Problem 27: Improper Integrals with Parameters}
     \begin{problem}
         Compute:
         \begin{enumerate}
@@ -802,7 +864,7 @@
     \end{problem}
 \end{frame}
 
-\begin{frame}{Solution to Problem 24 (1/2): Part (a)}
+\begin{frame}{Solution to Problem 27 (1/2): Part (a)}
     Let $I(y) = \int_0^\infty e^{-px} \frac{\sin yx}{x} \, dx$. Then $J = I(b) - I(a)$.
     Differentiate w.r.t. parameter $y$:
     $$ I'(y) = \int_0^\infty e^{-px} \frac{\partial}{\partial y}\left(\frac{\sin yx}{x}\right) dx = \int_0^\infty e^{-px} \cos(yx) \, dx $$
@@ -814,7 +876,7 @@
     $$ J = \arctan\left(\frac{b}{p}\right) - \arctan\left(\frac{a}{p}\right) $$
 \end{frame}
 
-\begin{frame}{Solution to Problem 24 (2/2): Part (b)}
+\begin{frame}{Solution to Problem 27 (2/2): Part (b)}
     \textbf{Dirichlet Integral:}
     We can view this as the limit of part (a) as $p \to 0^+$ (with $b=a$ and the second term 0, effectively).
     Alternatively, define $K(p) = \int_0^\infty e^{-px} \frac{\sin ax}{x} dx$ for $p \ge 0$.
@@ -825,6 +887,11 @@
     
     If $a < 0$, the sign flips. Thus:
     $$ \int_0^\infty \frac{\sin ax}{x} \, dx = \frac{\pi}{2} \operatorname{sgn}(a) $$
+\end{frame}
+
+\begin{frame}
+    \centering
+    \Large Good luck with the Final!
 \end{frame}
 
 \end{document}
