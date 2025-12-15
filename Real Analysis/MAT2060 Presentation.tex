@@ -419,17 +419,47 @@
 % ============================================================
 \section{Arzela-Ascoli Theorem}
 
-\begin{frame}{Overview: Arzela-Ascoli Theorem}
-    \textbf{Theorem:} Let $X$ be a compact metric space. A subset $K \subseteq C(X, \R)$ is compact in the uniform topology if and only if $K$ is:
+\begin{frame}{Arzela-Ascoli: Sequential Version}
+    \textbf{Context:} 
+    In finite dimensions ($\mathbb{R}^n$), the Bolzano-Weierstrass theorem tells us that every bounded sequence has a convergent subsequence. In infinite-dimensional function spaces, boundedness is not enough.
+
+    \vspace{1em}
+
+    \textbf{Theorem (Sequential):} 
+    Let $X$ be a compact metric space. If a sequence $\{f_n\} \subset C(X, \mathbb{R})$ is:
     \begin{enumerate}
-        \item \textbf{Closed},
-        \item \textbf{Bounded} (pointwise bounded, which implies uniformly bounded on compact $X$), and
+        \item \textbf{Uniformly Bounded} ($\exists M, \forall n, x: |f_n(x)| \le M$), and
+        \item \textbf{Equicontinuous},
+    \end{enumerate}
+    then $\{f_n\}$ contains a \textbf{uniformly convergent subsequence}.
+
+    \vspace{1em}
+    
+    \textbf{Key Concept:} 
+    A set where every sequence has a convergent subsequence (whose limit might be outside the set) is called \textbf{Relatively Compact}.
+\end{frame}
+
+\begin{frame}{Arzela-Ascoli: Topological Characterization}
+    \textbf{Transition:} 
+    To characterize \textit{Compact} sets (sets that contain their limit points), we combine relative compactness with the "Closed" property.
+
+    \vspace{0.5em}
+
+    \textbf{Theorem (Topological):} 
+    Let $X$ be a compact metric space. A subset $K \subseteq C(X, \mathbb{R})$ is \textbf{compact} in the uniform topology if and only if $K$ is:
+    \begin{enumerate}
+        \item \textbf{Closed} (contains all its limit points),
+        \item \textbf{Uniformly Bounded}*, and
         \item \textbf{Equicontinuous}.
     \end{enumerate}
-    
+
     \vspace{0.5em}
-    \textbf{Interpretation:}
-    This theorem characterizes the compact sets in the infinite-dimensional space $C(X, \R)$. It is the function space analog of the Heine-Borel theorem, adding the condition of "equicontinuity" to replace the loss of finite dimensionality.
+    {\footnotesize \textit{*Note: On a compact domain $X$, Pointwise Boundedness + Equicontinuity $\implies$ Uniform Boundedness.}}
+
+    \vspace{1em}
+    
+    \textbf{Intuition:} 
+    This is the infinite-dimensional analog of the \textbf{Heine-Borel Theorem}. In $\mathbb{R}^n$, Closed + Bounded $\iff$ Compact. In $C(X, \mathbb{R})$, we must add "Equicontinuity" to handle the infinite dimensions.
 \end{frame}
 
 \begin{frame}{Problem 14: Equicontinuity Definitions}
@@ -833,26 +863,135 @@
     \end{problem}
 \end{frame}
 
-\begin{frame}{Solution to Problem 26 (1/2): Part (a)}
-    \textbf{Technique: Parameter Integration}
-    Observe that $\frac{x^b - x^a}{\ln x} = \int_a^b x^y \, dy$.
-    $$ I = \int_0^1 \left( \int_a^b x^y \, dy \right) dx $$
-    By Fubini's Theorem (justification required for improper integral, but valid here since integrand is positive and measurable):
-    $$ I = \int_a^b \left( \int_0^1 x^y \, dx \right) dy $$
-    $$ I = \int_a^b \left[ \frac{x^{y+1}}{y+1} \right]_0^1 dy = \int_a^b \frac{1}{y+1} \, dy $$
-    $$ I = \big[ \ln(y+1) \big]_a^b = \ln(b+1) - \ln(a+1) = \ln\left(\frac{b+1}{a+1}\right) $$
+\begin{frame}{Solution to Problem 26 (1/4): Part (a) — Setup}
+\textbf{Technique: Feynman Trick (Differentiation under the Integral Sign)}
+
+Define the parameter-dependent integral
+\[
+F(t) := \int_0^1 \frac{x^t - 1}{\ln x} \, dx, \qquad t>0.
+\]
+
+Observe that the required integral can be written as
+\[
+I = \int_0^1 \frac{x^b - x^a}{\ln x} \, dx = F(b) - F(a).
+\]
+
+Differentiate $F(t)$ with respect to $t$:
+\[
+F'(t)
+= \int_0^1 \frac{\partial}{\partial t}
+\left( \frac{x^t - 1}{\ln x} \right) dx
+= \int_0^1 x^t \, dx.
+\]
+
+Evaluating the integral,
+\[
+F'(t) = \frac{1}{t+1}.
+\]
 \end{frame}
 
-\begin{frame}{Solution to Problem 26 (2/2): Part (b)}
-    \textbf{Technique: Variable Substitution}
-    Let $x = \tan \theta$, so $dx = \sec^2 \theta \, d\theta$. Limits: $0 \to 0, 1 \to \pi/4$.
-    $$ I = \int_0^{\pi/4} \frac{\ln(1+\tan\theta)}{1+\tan^2\theta} \sec^2\theta \, d\theta = \int_0^{\pi/4} \ln(1+\tan\theta) \, d\theta $$
-    Use the symmetry property $\int_0^a f(x)dx = \int_0^a f(a-x)dx$:
-    $$ I = \int_0^{\pi/4} \ln\left(1+\tan\left(\frac{\pi}{4}-\theta\right)\right) d\theta $$
-    Using $\tan(\frac{\pi}{4}-\theta) = \frac{1-\tan\theta}{1+\tan\theta}$:
-    $$ 1 + \tan\left(\frac{\pi}{4}-\theta\right) = 1 + \frac{1-\tan\theta}{1+\tan\theta} = \frac{2}{1+\tan\theta} $$
-    $$ I = \int_0^{\pi/4} (\ln 2 - \ln(1+\tan\theta)) \, d\theta = \frac{\pi}{4}\ln 2 - I \implies I = \frac{\pi}{8} \ln 2 $$
+\begin{frame}{Solution to Problem 26 (2/4): Part (a) — Evaluation}
+
+Integrate $F'(t)$ with respect to $t$:
+\[
+F(t) = \int \frac{1}{t+1} \, dt = \ln(t+1) + C.
+\]
+
+Determine the constant using $F(0)$:
+\[
+F(0) = \int_0^1 \frac{1-1}{\ln x} \, dx = 0
+\quad \Rightarrow \quad C=0.
+\]
+
+Thus,
+\[
+F(t) = \ln(t+1).
+\]
+
+Finally,
+\[
+\boxed{
+I = F(b) - F(a)
+= \ln(b+1) - \ln(a+1)
+= \ln\!\left(\frac{b+1}{a+1}\right)
+}
+\]
 \end{frame}
+
+
+\begin{frame}{Solution to Problem 26 (3/4): Part (b) — Setup}
+\textbf{Technique: Feynman Trick with a Parameter}
+
+Define
+\[
+F(\alpha) := \int_0^1 \frac{\ln(1+\alpha x)}{1+x^2} \, dx,
+\qquad \alpha \ge 0.
+\]
+
+The desired integral is
+\[
+I = F(1).
+\]
+
+Differentiate under the integral sign:
+\[
+F'(\alpha)
+= \int_0^1 \frac{x}{(1+\alpha x)(1+x^2)} \, dx.
+\]
+
+Using partial fractions,
+\[
+\frac{x}{(1+\alpha x)(1+x^2)}
+= \frac{1}{\alpha^2+1}
+\left(
+\frac{1}{1+\alpha x}
+- \frac{\alpha - x}{1+x^2}
+\right).
+\]
+\end{frame}
+
+\begin{frame}{Solution to Problem 26 (4/4): Part (b) — Evaluation}
+
+Substitute into $F'(\alpha)$:
+\[
+F'(\alpha)
+= \frac{1}{\alpha^2+1}
+\left[
+\int_0^1 \frac{dx}{1+\alpha x}
+- \int_0^1 \frac{\alpha - x}{1+x^2} \, dx
+\right].
+\]
+
+Compute each integral:
+\[
+\int_0^1 \frac{dx}{1+\alpha x} = \frac{1}{\alpha}\ln(1+\alpha),
+\]
+\[
+\int_0^1 \frac{dx}{1+x^2} = \frac{\pi}{4},
+\qquad
+\int_0^1 \frac{x}{1+x^2} dx = \frac12 \ln 2.
+\]
+
+Thus,
+\[
+F'(\alpha)
+= \frac{1}{\alpha^2+1}
+\left(
+\frac{1}{\alpha}\ln(1+\alpha)
+- \alpha\frac{\pi}{4}
++ \frac12 \ln 2
+\right).
+\]
+
+Integrating from $0$ to $1$ and using $F(0)=0$, we obtain
+\[
+\boxed{
+I = F(1) = \frac{\pi}{8}\ln 2
+}
+\]
+\end{frame}
+
+
 
 \begin{frame}{Problem 27: Improper Integrals with Parameters}
     \begin{problem}

@@ -1,0 +1,251 @@
+\documentclass[10pt, aspectratio=169]{beamer}
+
+% --- THEME SETTINGS ---
+\usetheme{Madrid}
+\usecolortheme{default}
+\usefonttheme[onlymath]{serif} % Professional math fonts
+
+% --- NAVIGATION BAR SETTINGS ---
+\useoutertheme[subsection=false]{miniframes} 
+\setbeamercolor{section in head/foot}{fg=white, bg=black}
+\setbeamercolor{subsection in head/foot}{fg=white, bg=structure.fg!75!black}
+\setbeamercolor{mini frame}{fg=gray!50, bg=gray} 
+
+% --- PACKAGES ---
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{xcolor}
+\usepackage{mathrsfs}
+
+% --- METADATA ---
+\title[Differential Forms]{A Quick Introduction to Differential Forms}
+\subtitle{And Generalized Stokes's Theorem}
+\author[Cola]{Cola}
+\institute[CUHKSZ]{The Chinese University of Hong Kong, Shenzhen}
+\date{\today}
+
+\begin{document}
+
+% --- TITLE PAGE ---
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% --- SECTION 1: MOTIVATION ---
+\section{Motivation}
+
+\begin{frame}{Unification of Calculus}
+    The primary goal of differential forms is to provide a \textbf{unified framework} for the various integration theorems of vector calculus.
+    
+    \begin{itemize}
+        \item Green's Theorem (2D)
+        \item Stokes's Theorem (3D Curl)
+        \item Divergence Theorem (3D)
+    \end{itemize}
+    \vfill
+    All these are specific instances of the \textbf{Generalized Stokes's Formula}:
+    \begin{equation*}
+        \int_{\partial D} \omega = \int_{D} d\omega
+    \end{equation*}
+\end{frame}
+
+\begin{frame}{Classical Examples: 2D}
+    \begin{block}{Green's Formula (Line Integrals)}
+        \begin{equation}
+            \int_{\partial D} P dx + Q dy = \iint_{D} \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dx dy
+        \end{equation}
+    \end{block}
+    
+    \begin{block}{2D Flux}
+        \begin{equation}
+            \int_{\partial D} -Q dx + P dy = \iint_{D} \left(\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y}\right) dx dy
+        \end{equation}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Classical Examples: 3D}
+    \begin{block}{Divergence Theorem}
+        \begin{equation}
+            \iint_{\partial D} P dydz + Q dxdz + R dxdy = \iiint_{D} \left(\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z}\right) dx dy dz
+        \end{equation}
+    \end{block}
+    \vfill
+    In this theory, we work in $\mathbb{R}^n$ with coordinates $x^1, x^2, \dots, x^n$.
+\end{frame}
+
+% --- SECTION 2: DEFINITIONS ---
+\section{Forms}
+
+\begin{frame}{0-Forms and 1-Forms}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{0-Forms}
+                Smooth functions $f: \mathbb{R}^n \to \mathbb{R}$, i.e., $f \in C^\infty(\mathbb{R}^n)$.
+                \textit{Example:} $f(\mathbf{x}) = \sum_{i=1}^n (x^i)^2$.
+            \end{block}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{1-Forms}
+                Vector space spanned by $\{ dx^1, \dots, dx^n \}$.
+                \textit{Example:} $\omega = (x^1)^2 dx^1 + (x^2) dx^2$.
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{2-Forms and the Wedge Product}
+    A $\binom{n}{2}$ dimensional space spanned by $\{ dx^i \wedge dx^j \}$.
+    
+    \begin{block}{Properties of $\wedge$}
+        \begin{enumerate}
+            \item \textbf{Anti-symmetry:} $dx^i \wedge dx^j = -dx^j \wedge dx^i$
+            \item \textbf{Nilpotency:} $dx^i \wedge dx^i = 0$
+        \end{enumerate}
+    \end{block}
+    
+    \textit{Example:} $\omega = f dx^1 \wedge dx^2 + g dx^2 \wedge dx^3$.
+\end{frame}
+
+\begin{frame}{$k$-Forms ($1 \leq k \leq n$)}
+    A space spanned by $\{ dx^{i_1} \wedge dx^{i_2} \wedge \dots \wedge dx^{i_k} \}$ with dimension $\binom{n}{k}$.
+    
+    \begin{itemize}
+        \item \textbf{Anti-symmetry:} Swapping any two indices flips the sign.
+        \item \textbf{Vanishing:} If $k > n$, the form is identically zero because at least one $dx^i$ must repeat.
+    \end{itemize}
+\end{frame}
+
+% --- SECTION 3: DERIVATIVES ---
+\section{Derivatives}
+
+\begin{frame}{The Exterior Derivative $d$}
+    The map $d: \Omega^k(\mathbb{R}^n) \to \Omega^{k+1}(\mathbb{R}^n)$ is defined as:
+    
+    \begin{itemize}
+        \item \textbf{On 0-forms:} $df = \sum_i \frac{\partial f}{\partial x^i} dx^i$.
+        \item \textbf{On $k$-forms:} If $\omega = \sum a_{I} dx^{I}$, then:
+        \begin{equation*}
+            d\omega = \sum d a_{I} \wedge dx^{I}
+        \end{equation*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Examples of Exterior Differentiation}
+    \begin{example}[n=2, 1-form $\to$ 2-form]
+        $\omega = P dx + Q dy \implies d\omega = \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dx \wedge dy$
+    \end{example}
+
+    \begin{example}[n=3, 2-form $\to$ 3-form]
+        $\omega = P dy \wedge dz + Q dx \wedge dz + R dx \wedge dy$ \\
+        $d\omega = \left(\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z}\right) dx \wedge dy \wedge dz$
+    \end{example}
+\end{frame}
+
+% --- SECTION 4: INTEGRATION ---
+\section{Integration}
+
+\begin{frame}{Integration of $k$-Forms}
+    Suppose $D \subseteq \mathbb{R}^n$ is a $k$-dimensional region and $\omega = \sum a_{I} dx^{I}$ is a $k$-form.
+    
+    \begin{equation}
+        \int_D \omega := \sum \int_D a_{i_1 \dots i_k} dx^{i_1} \dots dx^{i_k}
+    \end{equation}
+
+    \textit{Example (n=3):} Surface integral of a 2-form:
+    \begin{equation*}
+        \int_S \omega = \int_S P dydz + \int_S Q dxdz + \int_S R dxdy
+    \end{equation*}
+\end{frame}
+
+% --- SECTION 5: STOKES ---
+\section{Stokes}
+
+\begin{frame}{The Generalized Stokes's Theorem}
+    
+    \begin{theorem}
+        Let $D$ be a $(k+1)$-dimensional region with boundary $\partial D$. If $\omega$ is a $k$-form, then:
+        \begin{equation}
+            \int_{D} d\omega = \int_{\partial D} \omega
+        \end{equation}
+    \end{theorem}
+    
+    \begin{itemize}
+        \item \textbf{Dimension $n=3$:} Recovers the Divergence and Curl theorems.
+        \item \textbf{Dimension $n=2$:} Recovers Green's Theorem.
+        \item \textbf{Dimension $n=1$:} Recovers the Fundamental Theorem of Calculus.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Case $n=1$: Fundamental Theorem of Calculus}
+    Let $D = [a, b]$ be a 1-dimensional region in $\mathbb{R}^1$. The boundary is $\partial D = \{b\} - \{a\}$.
+    
+    \begin{block}{Derivation}
+        Let $\omega = f(x)$ be a 0-form. Then $d\omega = f'(x) dx$.
+        Applying Generalized Stokes:
+        \begin{equation*}
+            \int_{D} d\omega = \int_{[a,b]} f'(x) dx
+        \end{equation*}
+        \begin{equation*}
+            \int_{\partial D} \omega = f(b) - f(a)
+        \end{equation*}
+    \end{block}
+    
+    This yields the standard Fundamental Theorem of Calculus:
+    \begin{equation*}
+        \int_{a}^{b} f'(x) dx = f(b) - f(a)
+    \end{equation*}
+\end{frame}
+
+\begin{frame}{Case $n=2$: Green's Theorem}
+    Let $D \subset \mathbb{R}^2$ be a region with boundary curve $\partial D$.
+    
+    
+    \begin{block}{Derivation}
+        Let $\omega = P dx + Q dy$ be a 1-form. We calculate the 2-form $d\omega$:
+        \begin{align*}
+            d\omega &= dP \wedge dx + dQ \wedge dy \\
+            &= \left( \frac{\partial P}{\partial x} dx + \frac{\partial P}{\partial y} dy \right) \wedge dx + \left( \frac{\partial Q}{\partial x} dx + \frac{\partial Q}{\partial y} dy \right) \wedge dy \\
+            &= \frac{\partial P}{\partial y} dy \wedge dx + \frac{\partial Q}{\partial x} dx \wedge dy \\
+            &= \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right) dx \wedge dy
+        \end{align*}
+    \end{block}
+    Generalized Stokes $\int_D d\omega = \int_{\partial D} \omega$ recovers Green's Theorem.
+\end{frame}
+
+\begin{frame}{Case $n=3$: Classical Stokes's Theorem}
+    Let $S \subset \mathbb{R}^3$ be a 2D surface with boundary curve $\partial S = C$.
+    
+    
+    \begin{block}{Derivation}
+        Let $\omega = F_1 dx + F_2 dy + F_3 dz$ (a 1-form representing vector field $\mathbf{F}$).
+        The exterior derivative $d\omega$ is a 2-form:
+        \begin{equation*}
+            d\omega = \left( \frac{\partial F_3}{\partial y} - \frac{\partial F_2}{\partial z} \right) dy \wedge dz + \left( \frac{\partial F_1}{\partial z} - \frac{\partial F_3}{\partial x} \right) dz \wedge dx + \left( \frac{\partial F_2}{\partial x} - \frac{\partial F_1}{\partial y} \right) dx \wedge dy
+        \end{equation*}
+    \end{block}
+    Integrating $d\omega$ over $S$ is equivalent to the flux of $\nabla \times \mathbf{F}$, yielding:
+    \begin{equation*}
+        \iint_S (\nabla \times \mathbf{F}) \cdot d\mathbf{S} = \oint_C \mathbf{F} \cdot d\mathbf{r}
+    \end{equation*}
+\end{frame}
+
+\begin{frame}{Case $n=3$: Divergence Theorem}
+    Let $V \subset \mathbb{R}^3$ be a 3D solid with boundary surface $\partial V = S$.
+    
+    
+    \begin{block}{Derivation}
+        Let $\omega = P dy \wedge dz + Q dz \wedge dx + R dx \wedge dy$ be a 2-form.
+        \begin{align*}
+            d\omega &= dP \wedge dy \wedge dz + dQ \wedge dz \wedge dx + dR \wedge dx \wedge dy \\
+            &= \frac{\partial P}{\partial x} dx \wedge dy \wedge dz + \frac{\partial Q}{\partial y} dy \wedge dz \wedge dx + \frac{\partial R}{\partial z} dz \wedge dx \wedge dy \\
+            &= \left( \frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z} \right) dx \wedge dy \wedge dz
+        \end{align*}
+    \end{block}
+    Generalized Stokes $\int_V d\omega = \int_S \omega$ recovers the Divergence Theorem:
+    \begin{equation*}
+        \iiint_V (\nabla \cdot \mathbf{F}) dV = \iint_S \mathbf{F} \cdot d\mathbf{S}
+    \end{equation*}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,134 @@
+\documentclass[11pt]{article}
+
+% --- Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsfonts, amsthm}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{hyperref}
+
+% --- Page Setup ---
+\geometry{
+    a4paper,
+    total={170mm,257mm},
+    left=20mm,
+    top=20mm,
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+% --- Title ---
+\title{Lecture Notes: Differential Forms}
+\author{Mathematics Department}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% New content from 2025-12-15
+
+% Section: Introduction
+This note is a quick introduction to differential forms.
+The aim is to introduce the subject to unify the formula:
+Generalized Stokes formula.
+
+\begin{equation}
+    \int_{\partial D}\vec{V}\cdot d\vec{\varphi} := \int_{\partial D} P dx + Q dy = \iint_{D} \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dx dy
+\end{equation}
+
+\begin{equation}
+    \int_{\partial D}\vec{V}\cdot d\vec{u} := \int_{\partial D} -P dx + Q dy = \iint_{D} \left(\frac{\partial Q}{\partial x} + \frac{\partial P}{\partial y}\right) dx dy
+\end{equation}
+
+\begin{equation}
+    \int_{\partial D}\vec{V}\cdot d\vec{n} := \iint_{\partial D} P dydz + Q dxdz + R dxdy = \iiint_{D} \left(\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z}\right) dx dy dz
+\end{equation}
+
+As $\int_{\partial D} \omega = \int_{D} d\omega$.
+
+From now on, we restrict ourselves in $\mathbb{R}^n$ with coordinates $x^1, x^2, \dots, x^n$.
+
+% Section: Forms
+\subsection*{0-forms:}
+All smooth functions $f: \mathbb{R}^n \to \mathbb{R}$, $C^\infty(\mathbb{R}^n, \mathbb{R})$.
+e.g.: $f(x_1, \dots, x_n) = x_1^2 + x_2^2 + \dots + x_n^2$
+
+\subsection*{1-forms:}
+A $n$-dimensional vector space over $C^\infty(\mathbb{R}^n, \mathbb{R})$.
+Span$_{C^\infty(\mathbb{R}^n, \mathbb{R})} \{ dx^1, dx^2, \dots, dx^n \}$, where $dx^1, dx^2, \dots, dx^n$ are canonical differential 1-forms.
+Here we just treat it as a "pure symbol".
+e.g., $\omega = (x^1)^2 dx^1 + (x^2) dx^2$.
+
+\subsection*{2-forms:}
+A $\binom{n}{2}$ dimensional vector space over $C^\infty(\mathbb{R}^n, \mathbb{R})$.
+Span$_{C^\infty(\mathbb{R}^n, \mathbb{R})} \{ dx^i \wedge dx^j \}$.
+Here we require $dx^i \wedge dx^i = 0$ and $dx^i \wedge dx^j = -dx^j \wedge dx^i$.
+The dimension is $\binom{n}{2}$.
+
+e.g.: $\omega = f(x^1, \dots, x^n) dx^1 \wedge dx^2 + g(x^1, \dots, x^n) dx^2 \wedge dx^3$.
+
+\subsection*{$k$-forms ($1 \leq k \leq n$):}
+A $\binom{n}{k}$ dimensional vector space over $C^\infty(\mathbb{R}^n, \mathbb{R})$.
+Span$_{C^\infty(\mathbb{R}^n, \mathbb{R})} \{ dx^{i_1} \wedge dx^{i_2} \wedge \dots \wedge dx^{i_k} \}$, where we require:
+$dx^i \wedge dx^j \wedge dx^k = -dx^j \wedge dx^i \wedge dx^k$,
+$dx^i \wedge dx^i \wedge dx^k = 0$ (the so-called anti-symmetric property).
+
+If $k > n$, then it must be 0, since $dx^1 \wedge dx^2 \wedge \dots \wedge dx^n \wedge dx^1 = 0$ (since two $dx^1$ appear).
+
+% Section: Exterior Derivatives
+\section*{Exterior derivatives $d$}
+We want to define a map that maps $k$-forms to $(k+1)$-forms:
+$d: \Omega^k(\mathbb{R}^n) \to \Omega^{k+1}(\mathbb{R}^n)$, where $\omega \mapsto d\omega$.
+
+\subsection*{0-forms $\to$ 1-forms}
+$f \to df = \sum_i \frac{\partial f}{\partial x^i} dx^i$.
+
+\subsection*{$k$-forms $\to$ $(k+1)$-forms}
+$\omega = \sum a_{i_1 \dots i_k} dx^{i_1} \wedge \dots \wedge dx^{i_k} \implies d\omega = \sum d a_{i_1 \dots i_k} \wedge dx^{i_1} \wedge \dots \wedge dx^{i_k}$.
+
+\subsubsection*{Examples:}
+$n=3$: 2-forms $\to$ 3-forms:
+$\omega = P dy \wedge dz + Q dx \wedge dz + R dx \wedge dy$.
+$d\omega = \left(\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z}\right) dx \wedge dy \wedge dz$.
+
+$n=2$: 1-forms $\to$ 2-forms:
+$\omega = P dx + Q dy \implies d\omega = \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dx \wedge dy$.
+
+% Section: Integration
+\section*{Integration of $k$-forms}
+Suppose $D \subseteq \mathbb{R}^n$ is a $k$-dimensional region, $\omega \in \Omega^k(\mathbb{R}^n)$,
+$\omega = \sum a_{i_1 \dots i_k} dx^{i_1} \wedge \dots \wedge dx^{i_k}$.
+Define $\int_D \omega := \sum \int_D a_{i_1 \dots i_k} dx^{i_1} \dots dx^{i_k}$.
+
+\subsubsection*{Example:}
+$n=3$. $\omega = P dy \wedge dz + Q dx \wedge dz + R dx \wedge dy$.
+$S \subseteq \mathbb{R}^3$ a two-dimensional surface.
+$\int_S \omega := \int_S P dy dz + \int_S Q dx dz + \int_S R dx dy$.
+
+% Section: Stokes's Theorem
+\section*{Stokes's Theorem}
+Suppose $D$ is a $(k+1)$-dimensional region, and $\partial D$ is its $k$-dimensional boundary region.
+If $\omega$ is a $k$-form, then $d\omega$ is a $(k+1)$-form.
+We have two integrals defined: $\int_D d\omega$ and $\int_{\partial D} \omega$.
+Stokes's theorem claims that:
+\begin{equation}
+    \int_D d\omega = \int_{\partial D} \omega
+\end{equation}
+
+\subsubsection*{Examples}
+1. $n=3$: $\omega = P dy \wedge dz + Q dx \wedge dz + R dx \wedge dy$.
+$d\omega = \left(\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z}\right) dx \wedge dy \wedge dz$.
+$\int_D d\omega = \int_{\partial D} \omega$ is just the divergence theorem.
+
+2. $n=2$: $\omega = P dx + Q dy$.
+$d\omega = \left(-\frac{\partial P}{\partial y} + \frac{\partial Q}{\partial x}\right) dx dy$.
+$\int_D d\omega = \int_{\partial D} \omega$ is Green's formula.
+
+\end{document}
+
+
+
